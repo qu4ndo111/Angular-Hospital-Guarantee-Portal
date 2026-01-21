@@ -43,8 +43,8 @@
               }
             ],
             "styles": [
-              "src/styles.scss",
-              "node_modules/primeicons/primeicons.css"
+              "src/tailwinds.css",
+              "src/styles.scss"
             ]
           },
           "configurations": {

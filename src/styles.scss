@@ -1,11 +1,83 @@
-@use "tailwindcss";
+/* You can add global styles to this file, and also import other style files */
+@use "primeicons/primeicons.css";
 @use "@fontsource/inter/400.css" as inter400;
 @use "@fontsource/inter/500.css" as inter500;
 @use "@fontsource/inter/600.css" as inter600;
 @use "@fontsource/inter/700.css" as inter700;
-/* Scan all HTML and TS files in the src directory */
-/* You can add global styles to this file, and also import other style files */
+
+/* ===== TAILWIND V4 DARK MODE CONFIG ===== */
+
+
 
 body {
-    font-family: 'Inter', sans-serif;
+  font-family: 'Inter', sans-serif;
+}
+
+/* ===== CSS VARIABLES - LIGHT MODE (Default) ===== */
+:root {
+  /* Brand Colors */
+  --color-primary: #3b82f6;
+  --color-secondary: #8b5cf6;
+  --color-error: #ef4444;
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+
+  /* Background Colors */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f3f4f6;
+  --bg-card: #ffffff;
+
+  /* Text Colors */
+  --text-primary: #1f2937;
+  --text-secondary: #6b7280;
+  --text-muted: #9ca3af;
+
+  /* Border & Radius */
+  --border-color: #e5e7eb;
+  --border-card: rgba(255, 255, 255, 0.12);
+  --border-radius: 8px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+  --shadow-card: rgba(0, 0, 0, 0.5);
+}
+
+/* ===== CSS VARIABLES - DARK MODE ===== */
+[data-theme="dark"] {
+  /* Background Colors */
+  --bg-primary: #0f172a;
+  /* slate-900 */
+  --bg-secondary: #111827;
+  /* gray-900 */
+  --bg-card: rgba(15, 23, 42, 0.65);
+
+  /* Text Colors */
+  --text-primary: #f9fafb;
+  /* gray-50 */
+  --text-secondary: #d1d5db;
+  /* gray-300 */
+  --text-muted: #9ca3af;
+  /* gray-400 */
+
+  /* Border & Shadows */
+  --border-color: #4b5563;
+  /* gray-600 */
+  --border-card: rgba(255, 255, 255, 0.12);
+  --shadow-card: rgba(0, 0, 0, 0.8);
+}
+
+.dark {
+  --bg-primary: #0f172a;
+  --bg-secondary: #111827;
+  --bg-card: rgba(15, 23, 42, 0.65);
+
+  --text-primary: #f9fafb;
+  --text-secondary: #d1d5db;
+  --text-muted: #9ca3af;
+
+  --border-color: #4b5563;
+  --border-card: rgba(255, 255, 255, 0.12);
+  --shadow-card: rgba(0, 0, 0, 0.8);
 }
