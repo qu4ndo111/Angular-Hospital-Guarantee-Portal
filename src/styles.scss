@@ -1,1 +1,11 @@
+@use "tailwindcss";
+@use "@fontsource/inter/400.css" as inter400;
+@use "@fontsource/inter/500.css" as inter500;
+@use "@fontsource/inter/600.css" as inter600;
+@use "@fontsource/inter/700.css" as inter700;
+/* Scan all HTML and TS files in the src directory */
 /* You can add global styles to this file, and also import other style files */
+
+body {
+    font-family: 'Inter', sans-serif;
+}
