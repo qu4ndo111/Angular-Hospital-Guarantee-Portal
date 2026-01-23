@@ -2,13 +2,16 @@
   "auth": {
     "login": {
       "title": "Login",
-      "email": "Email",
+      "logo": "Logo",
+      "email": "Email or Username",
       "password": "Password",
       "rememberMe": "Remember me",
-      "forgotPassword": "Forgot password?",
+      "forgotPassword": "Forgot your password?",
       "submit": "Login",
       "noAccount": "Don't have an account?",
-      "register": "Register now"
+      "registerLink": "Register",
+      "required": "{{ field }} is required",
+      "passwordPattern": "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character."
     },
     "register": {
       "title": "Register",

@@ -1,8 +1,35 @@
-<div class="border rounded-lg login-card" style="padding: 20px 16px;">
-  <div class="text-center">
-    Logo
-  </div>
-  <div>
-
+<div *transloco="let t">
+  <div class="border rounded-lg login-card" style="padding: 20px 16px;">
+    <div class="text-center text-xl">
+      {{ t('auth.login.logo') }}
+    </div>
+    <div>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="flex flex-col gap-5">
+        <div class="field flex flex-col gap-2">
+          <label class="text-sm required" for="email">{{ t('auth.login.email') }}</label>
+          <input id="email" type="email" pInputText formControlName="email">
+          <p class="text-xs text-red-500" *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">{{ t('auth.login.required', { field: t('auth.login.email') }) }}</p>
+        </div>
+        <div class="field flex flex-col gap-2">
+          <label class="text-sm required" for="password">{{ t('auth.login.password') }}</label>
+          <p-password class="" id="password" [fluid]="true" [feedback]="false" [toggleMask]="true" formControlName="password" />
+          <p class="text-xs text-red-500" *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">{{ loginForm.get('password')?.errors?.['required'] ? t('auth.login.required', { field: t('auth.login.password') }) : t('auth.login.passwordPattern') }}</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <i class="pi pi-exclamation-circle"></i>
+          <a class="text-sm cursor-pointer" routerLink="/auth/forgot-password" style="color: var(--color-primary);">{{
+            t('auth.login.forgotPassword') }}</a>
+        </div>
+        <div class="flex">
+          <button pButton class="w-full" [label]="t('auth.login.submit')" type="submit"></button>
+        </div>
+        <div class="flex">
+          <p class="text-sm">{{ t('auth.login.noAccount') }} <a class="cursor-pointer" routerLink="/auth/register-account"
+              style="color: var(--color-primary);">{{
+              t('auth.login.registerLink')
+              }}</a></p>
+        </div>
+      </form>
+    </div>
   </div>
 </div>
