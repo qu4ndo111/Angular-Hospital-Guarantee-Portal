@@ -20,7 +20,7 @@
         "src/app/shared/*"
       ],
       "@assets/*": [
-        "src/assets/*"
+        "public/assets/*"
       ],
       "@environments/*": [
         "src/environments/*"

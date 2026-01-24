@@ -11,17 +11,30 @@
       "noAccount": "Chưa có tài khoản?",
       "registerLink": "Đăng ký",
       "required": "{{ field }} không được để trống",
-      "passwordPattern": "Mật khẩu phải có ít nhất 8 ký tự, bao gồm chữ hoa, chữ thường, số và ký tự đặc biệt."
+      "passwordPattern": "Mật khẩu phải có ít nhất 8 ký tự, bao gồm chữ hoa, chữ thường, số và ký tự đặc biệt.",
+      "passwordError": "Mật khẩu không chính xác, vui lòng thử lại.",
+      "loginSuccess": "Đăng nhập thành công"
     },
     "register": {
       "title": "Đăng ký",
+      "username": "Tên đăng nhập",
       "name": "Họ và tên",
       "email": "Email",
       "password": "Mật khẩu",
       "confirmPassword": "Xác nhận mật khẩu",
       "submit": "Đăng ký",
       "haveAccount": "Đã có tài khoản?",
-      "login": "Đăng nhập"
+      "login": "Đăng nhập",
+      "emailError": "Email không hợp lệ",
+      "usernameError": "Tên đăng nhập không được để trống",
+      "passwordPattern": "Mật khẩu phải có ít nhất 8 ký tự, bao gồm chữ hoa, chữ thường, số và ký tự đặc biệt.",
+      "confirmPasswordError": "Xác nhận mật khẩu không chính xác, vui lòng thử lại.",
+      "registerSuccess": "Đăng ký thành công"
+    },
+    "forgotPassword": {
+      "title": "Quên mật khẩu",
+      "email": "Email",
+      "submit": "Gửi"
     }
   },
   "common": {
@@ -31,6 +44,7 @@
     "edit": "Sửa",
     "create": "Tạo mới",
     "search": "Tìm kiếm",
-    "actions": "Hành động"
+    "actions": "Hành động",
+    "back": "Quay lại"
   }
 }

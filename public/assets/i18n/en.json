@@ -11,17 +11,30 @@
       "noAccount": "Don't have an account?",
       "registerLink": "Register",
       "required": "{{ field }} is required",
-      "passwordPattern": "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character."
+      "passwordPattern": "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character.",
+      "passwordError": "Password is incorrect, please try again.",
+      "loginSuccess": "Login successfully"
     },
     "register": {
       "title": "Register",
+      "username": "Username",
       "name": "Full name",
       "email": "Email",
       "password": "Password",
       "confirmPassword": "Confirm password",
       "submit": "Register",
       "haveAccount": "Already have an account?",
-      "login": "Login"
+      "login": "Login",
+      "emailError": "Email is invalid",
+      "usernameError": "Username is required",
+      "passwordPattern": "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character.",
+      "confirmPasswordError": "Confirm password is incorrect, please try again.",
+      "registerSuccess": "Register successfully"
+    },
+    "forgotPassword": {
+      "title": "Forgot Password",
+      "email": "Email",
+      "submit": "Submit"
     }
   },
   "common": {
@@ -31,6 +44,7 @@
     "edit": "Edit",
     "create": "Create",
     "search": "Search",
-    "actions": "Actions"
+    "actions": "Actions",
+    "back": "Back"
   }
 }
