@@ -1,50 +1,66 @@
 {
   "auth": {
+    "common": {
+      "logo": "Logo",
+      "email": "Email",
+      "username": "Tên đăng nhập",
+      "password": "Mật khẩu",
+      "confirmPassword": "Xác nhận mật khẩu",
+      "code": "Mã xác nhận"
+    },
+    "validation": {
+      "required": "{{ field }} không được để trống",
+      "emailInvalid": "Địa chỉ email không hợp lệ",
+      "passwordPattern": "Mật khẩu phải có ít nhất 8 ký tự, bao gồm chữ hoa, chữ thường, số và ký tự đặc biệt",
+      "passwordMismatch": "Mật khẩu xác nhận không khớp",
+      "passwordIncorrect": "Mật khẩu không chính xác, vui lòng thử lại"
+    },
     "login": {
       "title": "Đăng nhập",
-      "logo": "Logo",
-      "email": "Email hoặc Tên đăng nhập",
-      "password": "Mật khẩu",
+      "emailOrUsername": "Email hoặc Tên đăng nhập",
       "rememberMe": "Ghi nhớ đăng nhập",
-      "forgotPassword": "Quên mật khẩu?",
-      "submit": "Đăng nhập",
-      "noAccount": "Chưa có tài khoản?",
+      "forgotPasswordLink": "Quên mật khẩu?",
+      "submitButton": "Đăng nhập",
+      "noAccountText": "Chưa có tài khoản?",
       "registerLink": "Đăng ký",
-      "required": "{{ field }} không được để trống",
-      "passwordPattern": "Mật khẩu phải có ít nhất 8 ký tự, bao gồm chữ hoa, chữ thường, số và ký tự đặc biệt.",
-      "passwordError": "Mật khẩu không chính xác, vui lòng thử lại.",
-      "loginSuccess": "Đăng nhập thành công"
+      "success": "Đăng nhập thành công"
     },
     "register": {
       "title": "Đăng ký",
-      "username": "Tên đăng nhập",
-      "name": "Họ và tên",
-      "email": "Email",
-      "password": "Mật khẩu",
-      "confirmPassword": "Xác nhận mật khẩu",
-      "submit": "Đăng ký",
-      "haveAccount": "Đã có tài khoản?",
-      "login": "Đăng nhập",
-      "emailError": "Email không hợp lệ",
-      "usernameError": "Tên đăng nhập không được để trống",
-      "passwordPattern": "Mật khẩu phải có ít nhất 8 ký tự, bao gồm chữ hoa, chữ thường, số và ký tự đặc biệt.",
-      "confirmPasswordError": "Xác nhận mật khẩu không chính xác, vui lòng thử lại.",
-      "registerSuccess": "Đăng ký thành công"
+      "fullName": "Họ và tên",
+      "submitButton": "Đăng ký",
+      "haveAccountText": "Đã có tài khoản?",
+      "loginLink": "Đăng nhập",
+      "success": "Đăng ký thành công! Đang chuyển đến trang đăng nhập..."
     },
     "forgotPassword": {
       "title": "Quên mật khẩu",
-      "email": "Email",
-      "submit": "Gửi"
+      "stepEmail": {
+        "description": "Nhập địa chỉ email của bạn và chúng tôi sẽ gửi cho bạn mã xác nhận",
+        "submitButton": "Gửi mã xác nhận"
+      },
+      "stepVerify": {
+        "description": "Mã đã được gửi đến",
+        "resendLink": "Gửi lại mã",
+        "submitButton": "Xác thực mã"
+      },
+      "stepReset": {
+        "description": "Tạo mật khẩu mới cho tài khoản của bạn",
+        "submitButton": "Đặt lại mật khẩu"
+      },
+      "success": "Đặt lại mật khẩu thành công! Đang chuyển đến trang đăng nhập..."
     }
   },
   "common": {
-    "save": "Lưu",
-    "cancel": "Hủy",
-    "delete": "Xóa",
-    "edit": "Sửa",
-    "create": "Tạo mới",
-    "search": "Tìm kiếm",
-    "actions": "Hành động",
-    "back": "Quay lại"
+    "actions": {
+      "save": "Lưu",
+      "cancel": "Hủy",
+      "delete": "Xóa",
+      "edit": "Sửa",
+      "create": "Tạo mới",
+      "submit": "Gửi",
+      "back": "Quay lại"
+    },
+    "search": "Tìm kiếm"
   }
 }

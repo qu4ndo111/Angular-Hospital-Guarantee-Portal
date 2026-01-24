@@ -1,59 +1,65 @@
 <div *transloco="let t">
   <div class="border rounded-lg login-card flex flex-col gap-5" style="padding: 20px 16px;">
     <div class="text-center text-xl">
-      {{ t('auth.login.logo') }}
+      {{ t('auth.common.logo') }}
     </div>
     <div>
       <p class="text-2xl text-center">{{ t('auth.register.title') }}</p>
     </div>
     <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="flex flex-col gap-5">
       <div class="flex flex-col gap-2">
-        <label class="text-sm required" for="username">{{ t('auth.register.username') }}</label>
-        <input type="text" [placeholder]="t('auth.register.username')" pInputText id="username" name="username" formControlName="username"/>
+        <label class="text-sm required" for="username">{{ t('auth.common.username') }}</label>
+        <input type="text" [placeholder]="t('auth.common.username')" pInputText id="username" name="username"
+          formControlName="username" />
         @if(registerForm.get('username')?.invalid && registerForm.get('username')?.touched) {
-          <p class="text-xs text-red-500">{{ t('auth.login.required', { field: t('auth.register.username') }) }}</p>
+        <p class="text-xs text-red-500">{{ t('auth.validation.required', { field: t('auth.common.username') }) }}</p>
         }
       </div>
       <div class="flex flex-col gap-2">
-        <label class="text-sm required" for="email">{{ t('auth.register.email') }}</label>
-        <input type="email" [placeholder]="t('auth.register.email')" pInputText id="email" name="email" formControlName="email"/>
+        <label class="text-sm required" for="email">{{ t('auth.common.email') }}</label>
+        <input type="email" [placeholder]="t('auth.common.email')" pInputText id="email" name="email"
+          formControlName="email" />
         @if(registerForm.get('email')?.invalid && registerForm.get('email')?.touched) {
-          @if(registerForm.get('email')?.hasError('required')) {
-            <p class="text-xs text-red-500">{{ t('auth.login.required', { field: t('auth.register.email') }) }}</p>
-          } @else if(registerForm.get('email')?.hasError('email')) {
-            <p class="text-xs text-red-500">{{ t('auth.register.emailError') }}</p>
-          }
+        @if(registerForm.get('email')?.hasError('required')) {
+        <p class="text-xs text-red-500">{{ t('auth.validation.required', { field: t('auth.common.email') }) }}</p>
+        } @else if(registerForm.get('email')?.hasError('email')) {
+        <p class="text-xs text-red-500">{{ t('auth.validation.emailInvalid') }}</p>
+        }
         }
       </div>
       <div class="flex flex-col gap-2">
-        <label class="text-sm required" for="password">{{ t('auth.register.password') }}</label>
-        <p-password type="password" [placeholder]="t('auth.register.password')" [fluid]="true" [toggleMask]="true" id="password" name="password" formControlName="password"/>
+        <label class="text-sm required" for="password">{{ t('auth.common.password') }}</label>
+        <p-password type="password" [placeholder]="t('auth.common.password')" [fluid]="true" [toggleMask]="true"
+          id="password" name="password" formControlName="password" />
         @if(registerForm.get('password')?.invalid && registerForm.get('password')?.touched) {
-          @if(registerForm.get('password')?.hasError('required')) {
-            <p class="text-xs text-red-500">{{ t('auth.login.required', { field: t('auth.register.password') }) }}</p>
-          } @else if(registerForm.get('password')?.hasError('pattern')) {
-            <p class="text-xs text-red-500">{{ t('auth.login.passwordPattern') }}</p>
-          }
+        @if(registerForm.get('password')?.hasError('required')) {
+        <p class="text-xs text-red-500">{{ t('auth.validation.required', { field: t('auth.common.password') }) }}</p>
+        } @else if(registerForm.get('password')?.hasError('pattern')) {
+        <p class="text-xs text-red-500">{{ t('auth.validation.passwordPattern') }}</p>
+        }
         }
       </div>
       <div class="flex flex-col gap-2">
-        <label class="text-sm required" for="confirmPassword">{{ t('auth.register.confirmPassword') }}</label>
-        <p-password type="password" [feedback]="false" [placeholder]="t('auth.register.confirmPassword')" [toggleMask]="true" [fluid]="true" id="confirmPassword"
-          name="confirmPassword" formControlName="confirmPassword"/>
-          @if(registerForm.get('confirmPassword')?.invalid && registerForm.get('confirmPassword')?.touched) {
-            @if(registerForm.get('confirmPassword')?.hasError('mismatch')) {
-              <p class="text-xs text-red-500">{{ t('auth.login.passwordError') }}</p>
-            } @else {
-              <p class="text-xs text-red-500">{{ t('auth.login.required', { field: t('auth.register.confirmPassword') }) }}</p>
-            }
-          }
+        <label class="text-sm required" for="confirmPassword">{{ t('auth.common.confirmPassword') }}</label>
+        <p-password type="password" [feedback]="false" [placeholder]="t('auth.common.confirmPassword')"
+          [toggleMask]="true" [fluid]="true" id="confirmPassword" name="confirmPassword"
+          formControlName="confirmPassword" />
+        @if(registerForm.get('confirmPassword')?.invalid && registerForm.get('confirmPassword')?.touched) {
+        @if(registerForm.get('confirmPassword')?.hasError('mismatch')) {
+        <p class="text-xs text-red-500">{{ t('auth.validation.passwordMismatch') }}</p>
+        } @else {
+        <p class="text-xs text-red-500">{{ t('auth.validation.required', { field: t('auth.common.confirmPassword') }) }}
+        </p>
+        }
+        }
       </div>
       <div class="flex">
-        <button pButton [loading]="loading" class="w-full" [label]="t('auth.register.submit')" type="submit"></button>
+        <button pButton [loading]="loading" class="w-full" [label]="t('auth.register.submitButton')"
+          type="submit"></button>
       </div>
       <div class="flex">
-        <p>{{ t('auth.register.haveAccount') }} <a class="cursor-pointer" routerLink="/auth/login"
-            style="color: var(--color-primary);">{{t('auth.register.login')}}</a></p>
+        <p>{{ t('auth.register.haveAccountText') }} <a class="cursor-pointer" routerLink="/auth/login"
+            style="color: var(--color-primary);">{{t('auth.register.loginLink')}}</a></p>
       </div>
     </form>
   </div>

@@ -1,50 +1,66 @@
 {
   "auth": {
+    "common": {
+      "logo": "Logo",
+      "email": "Email",
+      "username": "Username",
+      "password": "Password",
+      "confirmPassword": "Confirm password",
+      "code": "Verification code"
+    },
+    "validation": {
+      "required": "{{ field }} is required",
+      "emailInvalid": "Email address is invalid",
+      "passwordPattern": "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character",
+      "passwordMismatch": "Passwords do not match",
+      "passwordIncorrect": "Password is incorrect, please try again"
+    },
     "login": {
       "title": "Login",
-      "logo": "Logo",
-      "email": "Email or Username",
-      "password": "Password",
+      "emailOrUsername": "Email or Username",
       "rememberMe": "Remember me",
-      "forgotPassword": "Forgot your password?",
-      "submit": "Login",
-      "noAccount": "Don't have an account?",
+      "forgotPasswordLink": "Forgot your password?",
+      "submitButton": "Login",
+      "noAccountText": "Don't have an account?",
       "registerLink": "Register",
-      "required": "{{ field }} is required",
-      "passwordPattern": "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character.",
-      "passwordError": "Password is incorrect, please try again.",
-      "loginSuccess": "Login successfully"
+      "success": "Login successfully"
     },
     "register": {
       "title": "Register",
-      "username": "Username",
-      "name": "Full name",
-      "email": "Email",
-      "password": "Password",
-      "confirmPassword": "Confirm password",
-      "submit": "Register",
-      "haveAccount": "Already have an account?",
-      "login": "Login",
-      "emailError": "Email is invalid",
-      "usernameError": "Username is required",
-      "passwordPattern": "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character.",
-      "confirmPasswordError": "Confirm password is incorrect, please try again.",
-      "registerSuccess": "Register successfully"
+      "fullName": "Full name",
+      "submitButton": "Register",
+      "haveAccountText": "Already have an account?",
+      "loginLink": "Login",
+      "success": "Registration successful! Redirecting to login..."
     },
     "forgotPassword": {
       "title": "Forgot Password",
-      "email": "Email",
-      "submit": "Submit"
+      "stepEmail": {
+        "description": "Enter your email address and we'll send you a verification code",
+        "submitButton": "Send verification code"
+      },
+      "stepVerify": {
+        "description": "Code sent to",
+        "resendLink": "Resend code",
+        "submitButton": "Verify code"
+      },
+      "stepReset": {
+        "description": "Create a new password for your account",
+        "submitButton": "Reset password"
+      },
+      "success": "Password reset successfully! Redirecting to login..."
     }
   },
   "common": {
-    "save": "Save",
-    "cancel": "Cancel",
-    "delete": "Delete",
-    "edit": "Edit",
-    "create": "Create",
-    "search": "Search",
-    "actions": "Actions",
-    "back": "Back"
+    "actions": {
+      "save": "Save",
+      "cancel": "Cancel",
+      "delete": "Delete",
+      "edit": "Edit",
+      "create": "Create",
+      "submit": "Submit",
+      "back": "Back"
+    },
+    "search": "Search"
   }
 }

@@ -34,17 +34,17 @@ export class Login implements OnInit {
   }
 
   onSubmit() {
-    if(this.loginForm.invalid) return
+    if (this.loginForm.invalid) return
 
     this.loading = true;
     this.authService.login(this.loginForm.value).pipe(finalize(() => {
       this.loading = false;
     })).subscribe({
       next: (res) => {
-        this.messageService.add({ severity: 'success', summary: 'Success', detail: this.translocoService.translate('auth.login.loginSuccess') });
+        this.messageService.add({ severity: 'success', summary: 'Success', detail: this.translocoService.translate('auth.login.success') });
       },
       error: (err) => {
-        this.messageService.add({ severity: 'error', summary: 'Error', detail: this.translocoService.translate('auth.login.passwordError') });
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: this.translocoService.translate('auth.validation.passwordIncorrect') });
       }
     })
   }

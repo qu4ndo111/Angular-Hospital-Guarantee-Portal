@@ -36,7 +36,7 @@ export class RegisterAccount implements OnInit {
     });
 
     this.registerForm.get('confirmPassword')?.valueChanges.subscribe((value) => {
-      if(value && this.registerForm.get('password')?.value !== value) {
+      if (value && this.registerForm.get('password')?.value !== value) {
         this.registerForm.get('confirmPassword')?.setErrors({ mismatch: true });
       } else {
         this.registerForm.get('confirmPassword')?.setErrors(null);
@@ -45,12 +45,12 @@ export class RegisterAccount implements OnInit {
   }
 
   onSubmit() {
-    if(this.registerForm.invalid) return
+    if (this.registerForm.invalid) return
     this.loading = true
-    this.authService.registerAccount(this.registerForm.value).pipe(finalize(() => {this.loading = false})).subscribe({
+    this.authService.registerAccount(this.registerForm.value).pipe(finalize(() => { this.loading = false })).subscribe({
       next: (res) => {
-        if(res) {
-          this.messageService.add({ severity: 'success', summary: 'Success', detail: this.translocoService.translate('auth.register.registerSuccess') });
+        if (res) {
+          this.messageService.add({ severity: 'success', summary: 'Success', detail: this.translocoService.translate('auth.register.success') });
           this.registerForm.reset();
           this.router.navigate(['/auth/login']);
         }
