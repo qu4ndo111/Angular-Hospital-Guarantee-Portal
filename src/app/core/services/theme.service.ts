@@ -45,6 +45,15 @@ export class ThemeService {
     });
   }
 
+  initTheme() {
+    const saved = localStorage.getItem('theme') as Theme;
+    if (saved) {
+      this.setTheme(saved);
+    } else {
+      this.detectSystemTheme();
+    }
+  }
+
   getTheme() {
     return this.theme.asReadonly();
   }

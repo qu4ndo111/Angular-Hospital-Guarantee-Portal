@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
@@ -22,9 +22,9 @@ import { MessageService } from 'primeng/api';
 })
 export class Login implements OnInit {
   loginForm: FormGroup = new FormGroup({});
-  loading: boolean = false;
+  loading = signal(false);
 
-  constructor(private fb: FormBuilder, private authService: AuthService, private messageService: MessageService, private translocoService: TranslocoService) { }
+  constructor(private fb: FormBuilder, private authService: AuthService, private messageService: MessageService, private translocoService: TranslocoService, private router: Router) { }
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
@@ -36,12 +36,14 @@ export class Login implements OnInit {
   onSubmit() {
     if (this.loginForm.invalid) return
 
-    this.loading = true;
+    this.loading.set(true);
     this.authService.login(this.loginForm.value).pipe(finalize(() => {
-      this.loading = false;
+      this.loading.set(false);
     })).subscribe({
       next: (res) => {
         this.messageService.add({ severity: 'success', summary: 'Success', detail: this.translocoService.translate('auth.login.success') });
+        this.loginForm.reset();
+        this.router.navigate(['/']);
       },
       error: (err) => {
         this.messageService.add({ severity: 'error', summary: 'Error', detail: this.translocoService.translate('auth.validation.passwordIncorrect') });

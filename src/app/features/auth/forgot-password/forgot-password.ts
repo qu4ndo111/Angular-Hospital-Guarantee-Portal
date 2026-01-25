@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, computed, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 
@@ -18,10 +18,10 @@ export class ForgotPassword implements OnInit {
   forgotForm: FormGroup = new FormGroup({});
   verifyForm: FormGroup = new FormGroup({});
   resetForm: FormGroup = new FormGroup({});
-  loadingSend: boolean = false;
-  loadingVerify: boolean = false;
-  loadingReset: boolean = false;
-  forgotState: 'forgot' | 'verify' | 'reset' = 'forgot';
+  loadingSend = signal(false);
+  loadingVerify = signal(false);
+  loadingReset = signal(false);
+  forgotState = signal<'forgot' | 'verify' | 'reset'>('forgot');
 
   constructor(private fb: FormBuilder) {
 
@@ -51,14 +51,23 @@ export class ForgotPassword implements OnInit {
   }
 
   sendOpt() {
-    this.forgotState = 'verify';
+    const canProcess = computed(() => this.forgotForm.valid && this.forgotState() === 'forgot')
+    if(!canProcess()) return
+    this.forgotState.set('verify');
+    this.loadingSend.set(true)
   }
 
   verifyOpt() {
-    this.forgotState = 'reset';
+    const canProcess = computed(() => this.verifyForm.valid && this.forgotState() === 'verify')
+    if(!canProcess()) return
+    this.forgotState.set('reset');
+    this.loadingVerify.set(true)
   }
 
   resetPassword() {
-    this.forgotState = 'forgot';
+    const canProcess = computed(() => this.resetForm.valid && this.forgotState() === 'reset')
+    if(!canProcess()) return
+    this.forgotState.set('forgot');
+    this.loadingReset.set(true)
   }
 }

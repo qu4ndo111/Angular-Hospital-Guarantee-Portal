@@ -31,7 +31,7 @@
             t('auth.login.forgotPasswordLink') }}</a>
         </div>
         <div class="flex">
-          <button pButton [loading]="loading" class="w-full" [label]="t('auth.login.submitButton')"
+          <button pButton [loading]="loading()" class="w-full" [label]="t('auth.login.submitButton')"
             type="submit"></button>
         </div>
         <div class="flex">

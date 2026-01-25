@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 
@@ -23,7 +23,7 @@ import { AuthService } from '../services/auth.service';
 export class RegisterAccount implements OnInit {
 
   registerForm: FormGroup = new FormGroup({});
-  loading: boolean = false;
+  loading = signal(false);
 
   constructor(private fb: FormBuilder, private authService: AuthService, private messageService: MessageService, private translocoService: TranslocoService, private router: Router) { }
 
@@ -46,8 +46,8 @@ export class RegisterAccount implements OnInit {
 
   onSubmit() {
     if (this.registerForm.invalid) return
-    this.loading = true
-    this.authService.registerAccount(this.registerForm.value).pipe(finalize(() => { this.loading = false })).subscribe({
+    this.loading.set(true)
+    this.authService.registerAccount(this.registerForm.value).pipe(finalize(() => { this.loading.set(false) })).subscribe({
       next: (res) => {
         if (res) {
           this.messageService.add({ severity: 'success', summary: 'Success', detail: this.translocoService.translate('auth.register.success') });

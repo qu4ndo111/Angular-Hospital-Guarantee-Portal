@@ -4,6 +4,8 @@ import { RouterOutlet } from '@angular/router';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 
+import { ThemeService } from './core/services/theme.service';
+
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet, ToastModule],
@@ -13,4 +15,8 @@ import { MessageService } from 'primeng/api';
 })
 export class App {
   protected readonly title = signal('angular-business-base');
+
+  constructor(private themeService: ThemeService) {
+    this.themeService.initTheme();
+  }
 }
