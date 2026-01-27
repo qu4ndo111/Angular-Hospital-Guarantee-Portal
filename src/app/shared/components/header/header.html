@@ -24,10 +24,9 @@
     <app-theme-toggle></app-theme-toggle>
 
     <!-- User Avatar (Simple) -->
-    <div class="user-avatar" title="User Profile">
+    <div class="user-avatar" (click)="menu.toggle($event)" title="User Profile">
       <span class="user-name">U</span>
     </div>
-
     <!--
         ========================================
         OPTIONAL FEATURES (Uncomment as needed)
@@ -54,3 +53,4 @@
         -->
   </div>
 </header>
+<p-menu #menu [model]="items" [popup]="true" />

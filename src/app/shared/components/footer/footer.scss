@@ -1,0 +1,40 @@
+.app-footer {
+    background: var(--surface-ground);
+    border-top: 1px solid var(--surface-border);
+    padding: 1rem 1.5rem;
+    margin-top: auto;
+
+    .footer-content {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        max-width: 1400px;
+        margin: 0 auto;
+        font-size: 0.875rem;
+        color: var(--text-color-secondary);
+    }
+
+    .copyright {
+        font-weight: 400;
+    }
+
+    .version {
+        font-family: monospace;
+        font-size: 0.8rem;
+        opacity: 0.7;
+    }
+}
+
+// Responsive
+@media (max-width: 768px) {
+    .app-footer {
+        padding: 1rem;
+
+        .footer-content {
+            flex-direction: column;
+            gap: 0.5rem;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+    }
+}

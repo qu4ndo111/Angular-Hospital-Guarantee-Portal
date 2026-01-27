@@ -51,6 +51,13 @@
       "success": "Đặt lại mật khẩu thành công! Đang chuyển đến trang đăng nhập..."
     }
   },
+  "header": {
+    "profile": "Hồ sơ",
+    "logout": "Đăng xuất"
+  },
+  "menu": {
+    "dashboard": "Dashboard"
+  },
   "common": {
     "actions": {
       "save": "Lưu",

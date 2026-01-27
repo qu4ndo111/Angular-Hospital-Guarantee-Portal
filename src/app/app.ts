@@ -5,6 +5,7 @@ import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 
 import { ThemeService } from './core/services/theme.service';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-root',
@@ -16,7 +17,12 @@ import { ThemeService } from './core/services/theme.service';
 export class App {
   protected readonly title = signal('angular-business-base');
 
-  constructor(private themeService: ThemeService) {
+  constructor(
+    private themeService: ThemeService,
+    private translocoService: TranslocoService
+  ) {
     this.themeService.initTheme();
+
+    this.translocoService.load(this.translocoService.getActiveLang()).subscribe();
   }
 }

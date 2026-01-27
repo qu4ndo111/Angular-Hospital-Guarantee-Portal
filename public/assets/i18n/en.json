@@ -51,6 +51,16 @@
       "success": "Password reset successfully! Redirecting to login..."
     }
   },
+  "header": {
+    "profile": "Profile",
+    "logout": "Logout"
+  },
+  "menu": {
+    "dashboard": "Dashboard",
+    "users": "Users",
+    "roles": "Roles",
+    "permissions": "Permissions"
+  },
   "common": {
     "actions": {
       "save": "Save",

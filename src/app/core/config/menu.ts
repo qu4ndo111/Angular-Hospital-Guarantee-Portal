@@ -33,7 +33,7 @@ export interface MenuItem {
 export const MENU_ITEMS: MenuItem[] = [
     // Dashboard - Most apps need this
     {
-        label: 'Dashboard',
+        label: 'menu.dashboard',
         icon: 'pi pi-home',
         routerLink: '/dashboard',
     },

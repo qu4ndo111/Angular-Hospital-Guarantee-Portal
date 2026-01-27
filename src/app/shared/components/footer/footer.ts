@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
 
+import moment from 'moment';
+
+import { environment } from '../../../../environments/environments';
+
 @Component({
   selector: 'app-footer',
   imports: [],
@@ -7,5 +11,7 @@ import { Component } from '@angular/core';
   styleUrl: './footer.scss',
 })
 export class Footer {
-
+  currentYear = moment().year();
+  appVersion = environment.app.version;
 }
+

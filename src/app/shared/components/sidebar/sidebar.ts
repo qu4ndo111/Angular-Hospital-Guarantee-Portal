@@ -1,14 +1,18 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+
+import { TranslocoModule } from '@jsverse/transloco';
+
 import { AccordionModule } from 'primeng/accordion';
 import { BadgeModule } from 'primeng/badge';
 import { RippleModule } from 'primeng/ripple';
+
 import { MENU_ITEMS, MenuItem, hasChildren } from '../../../core/config/menu';
 
 @Component({
   selector: 'app-sidebar',
-  imports: [CommonModule, RouterModule, AccordionModule, BadgeModule, RippleModule],
+  imports: [CommonModule, RouterModule, AccordionModule, BadgeModule, RippleModule, TranslocoModule],
   templateUrl: './sidebar.html',
   styleUrl: './sidebar.scss',
 })

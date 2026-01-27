@@ -1,14 +1,48 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
+
+import { TranslocoService, TranslocoModule } from '@jsverse/transloco';
+
 import { ThemeToggleComponent } from '../theme-toggle/theme-toggle.component';
 import { LanguageSwitcherComponent } from '../language-switcher/language-switcher.component';
 
+import { MenuModule } from 'primeng/menu';
+import { MenuItem } from 'primeng/api';
+import { Subscription } from 'rxjs';
+
 @Component({
   selector: 'app-header',
-  imports: [CommonModule, ThemeToggleComponent, LanguageSwitcherComponent],
+  imports: [CommonModule, ThemeToggleComponent, LanguageSwitcherComponent, MenuModule, TranslocoModule],
   templateUrl: './header.html',
   styleUrl: './header.scss',
 })
-export class Header {
+export class Header implements OnInit, OnDestroy {
+  items: MenuItem[] | undefined;
+  private langChangeSubscription?: Subscription;
 
+  constructor(private translocoService: TranslocoService) { }
+
+  ngOnInit(): void {
+    this.langChangeSubscription = this.translocoService.langChanges$.subscribe(() => {
+      this.updateMenuItems();
+    });
+
+    this.updateMenuItems();
+  }
+
+  ngOnDestroy(): void {
+    this.langChangeSubscription?.unsubscribe();
+  }
+
+  private updateMenuItems(): void {
+    this.items = [
+      {
+        label: this.translocoService.translate('header.logout'),
+        icon: 'pi pi-sign-out',
+        command: () => {
+          console.log('Logout');
+        }
+      }
+    ]
+  }
 }
