@@ -1,0 +1,48 @@
+// ============================================
+// SIMPLE TABLE STYLING
+// ============================================
+::ng-deep .simple-table {
+
+  // Header
+  .p-datatable-thead>tr>th {
+    background: var(--surface-50);
+    color: var(--text-color);
+    font-weight: 600;
+    padding: 1rem;
+    border-bottom: 1px solid var(--surface-border);
+  }
+
+  // Body
+  .p-datatable-tbody>tr {
+    >td {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--surface-border);
+    }
+
+    &:hover {
+      background: var(--surface-hover);
+    }
+  }
+}
+
+// ============================================
+// EMPTY STATE
+// ============================================
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 2rem;
+  color: var(--text-color-secondary);
+
+  i {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+  }
+
+  p {
+    margin: 0;
+  }
+}

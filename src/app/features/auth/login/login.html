@@ -30,9 +30,8 @@
           <a class="text-sm cursor-pointer" routerLink="/auth/forgot-password" style="color: var(--color-primary);">{{
             t('auth.login.forgotPasswordLink') }}</a>
         </div>
-        <div class="flex">
-          <button pButton [loading]="loading()" class="w-full" [label]="t('auth.login.submitButton')"
-            type="submit"></button>
+        <div class="flex w-full">
+          <app-button [type]="'submit'" [disabled]="loginForm.invalid" [label]="t('auth.login.submitButton')" [loading]="loading()" (onClick)="onSubmit()"></app-button>
         </div>
         <div class="flex">
           <p class="text-sm">{{ t('auth.login.noAccountText') }} <a class="cursor-pointer"

@@ -31,7 +31,8 @@
       "submitButton": "Register",
       "haveAccountText": "Already have an account?",
       "loginLink": "Login",
-      "success": "Registration successful! Redirecting to login..."
+      "success": "Registration successful! Redirecting to login...",
+      "error": "Registration failed! Please try again."
     },
     "forgotPassword": {
       "title": "Forgot Password",

@@ -1,0 +1,42 @@
+<p-table [value]="value" [columns]="columns" [loading]="loading" [paginator]="paginator" [rows]="rows"
+  [rowsPerPageOptions]="rowsPerPageOptions" [rowHover]="true" class="simple-table">
+  <ng-template pTemplate="header" let-columns>
+    <tr>
+      @for(col of columns; track col.field) {
+      <th [pSortableColumn]="col.sortable ? col.field : ''" [ngStyle]="{ width: col.width }">
+        {{ col.header }}
+        @if (col.sortable) {
+        <p-sortIcon [field]="col.field" />
+        }
+      </th>
+      }
+    </tr>
+  </ng-template>
+
+  <ng-template pTemplate="body" let-rowData let-columns="columns">
+    <tr>
+      @for(col of columns; track col.field) {
+      <td>
+        @if (col.template && hasTemplate(col.template)) {
+        <ng-container
+          *ngTemplateOutlet="getTemplate(col.template)!; context: { $implicit: rowData, rowData: rowData }" />
+        }
+        @else {
+        {{ getCellValue(rowData, col) }}
+        }
+      </td>
+      }
+    </tr>
+  </ng-template>
+
+  <ng-template pTemplate="emptymessage">
+    <tr>
+      <td [attr.colspan]="columns.length">
+        <div class="empty-state">
+          <i class="pi pi-inbox"></i>
+          <p>No records found</p>
+        </div>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>

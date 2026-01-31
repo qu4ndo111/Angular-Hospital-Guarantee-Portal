@@ -9,6 +9,7 @@ import { LanguageSwitcherComponent } from '../language-switcher/language-switche
 import { MenuModule } from 'primeng/menu';
 import { MenuItem } from 'primeng/api';
 import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -20,7 +21,7 @@ export class Header implements OnInit, OnDestroy {
   items: MenuItem[] | undefined;
   private langChangeSubscription?: Subscription;
 
-  constructor(private translocoService: TranslocoService) { }
+  constructor(private translocoService: TranslocoService, private router: Router) { }
 
   ngOnInit(): void {
     this.langChangeSubscription = this.translocoService.langChanges$.subscribe(() => {
@@ -40,9 +41,14 @@ export class Header implements OnInit, OnDestroy {
         label: this.translocoService.translate('header.logout'),
         icon: 'pi pi-sign-out',
         command: () => {
-          console.log('Logout');
+          this.logout();
         }
       }
     ]
+  }
+
+  logout() {
+    localStorage.removeItem('accessToken');
+    this.router.navigate(['/auth/login']);
   }
 }

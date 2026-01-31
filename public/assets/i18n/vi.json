@@ -31,7 +31,8 @@
       "submitButton": "Đăng ký",
       "haveAccountText": "Đã có tài khoản?",
       "loginLink": "Đăng nhập",
-      "success": "Đăng ký thành công! Đang chuyển đến trang đăng nhập..."
+      "success": "Đăng ký thành công! Đang chuyển đến trang đăng nhập...",
+      "error": "Đăng ký thất bại! Vui lòng thử lại."
     },
     "forgotPassword": {
       "title": "Quên mật khẩu",

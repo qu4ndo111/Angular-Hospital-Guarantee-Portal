@@ -54,8 +54,8 @@
         }
       </div>
       <div class="flex">
-        <button pButton [loading]="loading()" class="w-full" [label]="t('auth.register.submitButton')"
-          type="submit"></button>
+        <app-button [disabled]="registerForm.invalid" [loading]="loading()" class="w-full" [label]="t('auth.register.submitButton')"
+          type="submit"></app-button>
       </div>
       <div class="flex">
         <p>{{ t('auth.register.haveAccountText') }} <a class="cursor-pointer" routerLink="/auth/login"

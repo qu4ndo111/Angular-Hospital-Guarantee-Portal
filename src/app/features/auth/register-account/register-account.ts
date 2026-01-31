@@ -7,16 +7,17 @@ import { TranslocoService } from '@jsverse/transloco';
 
 import { finalize } from 'rxjs';
 
-import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { MessageService } from 'primeng/api';
 
 import { AuthService } from '../services/auth.service';
+import { Button } from '@app/shared/ui/button/button';
+import { ToastService } from '@app/shared/services/toast.service';
 
 @Component({
   selector: 'app-register-account',
-  imports: [TranslocoModule, ReactiveFormsModule, InputTextModule, PasswordModule, ButtonModule, RouterLink],
+  imports: [TranslocoModule, ReactiveFormsModule, InputTextModule, PasswordModule, Button, RouterLink],
   templateUrl: './register-account.html',
   styleUrl: './register-account.scss',
 })
@@ -25,7 +26,7 @@ export class RegisterAccount implements OnInit {
   registerForm: FormGroup = new FormGroup({});
   loading = signal(false);
 
-  constructor(private fb: FormBuilder, private authService: AuthService, private messageService: MessageService, private translocoService: TranslocoService, private router: Router) { }
+  constructor(private fb: FormBuilder, private authService: AuthService, private toastService: ToastService, private translocoService: TranslocoService, private router: Router) { }
 
   ngOnInit(): void {
     this.registerForm = this.fb.group({
@@ -50,13 +51,13 @@ export class RegisterAccount implements OnInit {
     this.authService.registerAccount(this.registerForm.value).pipe(finalize(() => { this.loading.set(false) })).subscribe({
       next: (res) => {
         if (res) {
-          this.messageService.add({ severity: 'success', summary: 'Success', detail: this.translocoService.translate('auth.register.success') });
+          this.toastService.showSuccess(this.translocoService.translate('auth.register.success'))
           this.registerForm.reset();
           this.router.navigate(['/auth/login']);
         }
       },
       error: (err) => {
-        this.messageService.add({ severity: 'error', summary: 'Error', detail: err.message });
+        this.toastService.showError(err.message || this.translocoService.translate('auth.register.error'))
       }
     })
   }

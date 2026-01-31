@@ -5,18 +5,18 @@ import { Router, RouterLink } from '@angular/router';
 
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
-import { ButtonModule } from 'primeng/button';
 
 import { TranslocoModule } from '@jsverse/transloco';
 import { TranslocoService } from '@jsverse/transloco';
 
 import { AuthService } from '../services/auth.service';
 import { finalize } from 'rxjs';
-import { MessageService } from 'primeng/api';
+import { Button } from 'src/app/shared/ui/button/button';
+import { ToastService } from '@app/shared/services/toast.service';
 
 @Component({
   selector: 'app-login',
-  imports: [InputTextModule, PasswordModule, FormsModule, ReactiveFormsModule, ButtonModule, TranslocoModule, CommonModule, RouterLink],
+  imports: [InputTextModule, PasswordModule, FormsModule, ReactiveFormsModule, Button, TranslocoModule, CommonModule, RouterLink],
   templateUrl: './login.html',
   styleUrl: './login.scss',
 })
@@ -24,7 +24,7 @@ export class Login implements OnInit {
   loginForm: FormGroup = new FormGroup({});
   loading = signal(false);
 
-  constructor(private fb: FormBuilder, private authService: AuthService, private messageService: MessageService, private translocoService: TranslocoService, private router: Router) { }
+  constructor(private fb: FormBuilder, private authService: AuthService, private toastService: ToastService, private translocoService: TranslocoService, private router: Router) { }
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
@@ -41,12 +41,12 @@ export class Login implements OnInit {
       this.loading.set(false);
     })).subscribe({
       next: (res) => {
-        this.messageService.add({ severity: 'success', summary: 'Success', detail: this.translocoService.translate('auth.login.success') });
+        this.toastService.showSuccess(this.translocoService.translate('auth.login.success'));
         this.loginForm.reset();
         this.router.navigate(['/']);
       },
       error: (err) => {
-        this.messageService.add({ severity: 'error', summary: 'Error', detail: this.translocoService.translate('auth.validation.passwordIncorrect') });
+        this.toastService.showError(this.translocoService.translate('auth.validation.passwordIncorrect'))
       }
     })
   }
