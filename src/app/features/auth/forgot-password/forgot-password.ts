@@ -54,12 +54,6 @@ export class ForgotPassword implements OnInit {
   }
 
   sendOpt() {
-    this.confirmDialogService.showConfirmDialog('Are you sure you want to proceed?', 'Confirmation', () => {
-      this.forgotState.set('verify');
-      this.loadingSend.set(true)
-    }, () => {
-      this.loadingSend.set(false)
-    })
     const canProcess = computed(() => this.forgotForm.valid && this.forgotState() === 'forgot')
     if(!canProcess()) return
     this.forgotState.set('verify');
