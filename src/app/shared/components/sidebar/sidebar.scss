@@ -192,6 +192,11 @@
                 font-size: 0.95rem;
                 font-weight: 500;
             }
+
+            &:hover .menu-icon {
+                color: var(--highlight-text-color);
+                transform: scale(1.1);
+            }
         }
     }
 
@@ -279,6 +284,16 @@
         &:hover {
             background: var(--surface-300);
         }
+    }
+}
+
+::ng-deep app-sidebar {
+    .p-accordionheader {
+        background: transparent !important;
+    }
+
+    .p-accordioncontent-content {
+        background: transparent !important;
     }
 }
 

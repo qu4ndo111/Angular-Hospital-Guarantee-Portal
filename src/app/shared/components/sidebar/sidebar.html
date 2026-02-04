@@ -21,10 +21,10 @@
           <!-- Accordion menu item (with children) -->
           @if(hasChildren(item)) {
           <div class="menu-accordion">
-            <p-accordion [multiple]="true">
-              <p-accordion-panel>
+            <p-accordion [value]="[item.label]" [multiple]="true">
+              <p-accordion-panel [value]="item.label">
                 <!-- Header -->
-                <ng-template pTemplate="header">
+                <p-accordion-header>
                   <div class="accordion-header">
                     <i [class]="item.icon" class="menu-icon"></i>
                     <span class="menu-label">{{ t(item.label) }}</span>
@@ -34,22 +34,25 @@
                     </span>
                     }
                   </div>
-                </ng-template>
+                </p-accordion-header>
 
                 <!-- Content (Children) -->
-                <div class="submenu-items">
-                  @for(child of item.children; track $index) {
-                  <a [routerLink]="child.routerLink" routerLinkActive="active" class="submenu-item" pRipple>
-                    <i [class]="child.icon" class="submenu-icon"></i>
-                    <span class="submenu-label">{{ t(child.label) }}</span>
-                    @if(child.badge) {
-                    <span class="p-badge p-badge-sm" [ngClass]="'p-badge-' + (child.badgeSeverity || 'info')">
-                      {{ child.badge }}
-                    </span>
+
+                <p-accordion-content>
+                  <div class="submenu-items">
+                    @for(child of item.children; track $index) {
+                    <a [routerLink]="child.routerLink" routerLinkActive="active" class="submenu-item" pRipple>
+                      <i [class]="child.icon" class="submenu-icon"></i>
+                      <span class="submenu-label">{{ t(child.label) }}</span>
+                      @if(child.badge) {
+                      <span class="p-badge p-badge-sm" [ngClass]="'p-badge-' + (child.badgeSeverity || 'info')">
+                        {{ child.badge }}
+                      </span>
+                      }
+                    </a>
                     }
-                  </a>
-                  }
-                </div>
+                  </div>
+                </p-accordion-content>
               </p-accordion-panel>
             </p-accordion>
           </div>
