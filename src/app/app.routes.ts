@@ -32,7 +32,10 @@ export const routes: Routes = [
     loadComponent: () => import('./layouts/main-layout/main-layout').then((m) => m.MainLayout),
     canActivate: [authGuard],
     children: [
-
+      {
+        path: 'dashboard',
+        loadComponent: () => import('./features/dashboard/dashboard').then((m) => m.Dashboard)
+      }
     ]
   }
 ];

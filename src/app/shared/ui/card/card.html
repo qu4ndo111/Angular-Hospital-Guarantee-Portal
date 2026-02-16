@@ -1,0 +1,11 @@
+@if(!loading) {
+  <p-card [style]="{width: width}">
+  <div (click)="onClick()" class="flex flex-col items-center justify-center gap-4">
+    <i style="font-size: 1.5rem;" [ngClass]="'pi ' + icon"></i>
+    <p class="text-2xl">{{ label }}</p>
+    <p class="text-xl">{{ value }}</p>
+  </div>
+</p-card>
+} @else {
+  <p-skeleton [style]="{width: width, height: '15rem'}"></p-skeleton>
+}
