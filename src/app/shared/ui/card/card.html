@@ -1,11 +1,13 @@
-@if(!loading) {
-  <p-card [style]="{width: width}">
-  <div (click)="onClick()" class="flex flex-col items-center justify-center gap-4">
-    <i style="font-size: 1.5rem;" [ngClass]="'pi ' + icon"></i>
-    <p class="text-2xl">{{ label }}</p>
-    <p class="text-xl">{{ value }}</p>
+@if (!loading) {
+<p-card class="stat-card" [ngClass]="{ 'clickable': clickable }" (click)="onClick()">
+  <div class="stat-card__body">
+    <div class="stat-card__icon-wrap" [style.background-color]="iconBg || null">
+      <i [ngClass]="icon"></i>
+    </div>
+    <p class="stat-card__value">{{ value }}</p>
+    <p class="stat-card__label">{{ label }}</p>
   </div>
 </p-card>
 } @else {
-  <p-skeleton [style]="{width: width, height: '15rem'}"></p-skeleton>
+<p-skeleton class="stat-card-skeleton"></p-skeleton>
 }
