@@ -28,7 +28,6 @@ export interface MenuItem {
  * ========================================
  * STARTER MENU - Generic Placeholders
  * ========================================
- * Replace with client-specific menu items
  */
 export const MENU_ITEMS: MenuItem[] = [
     // Dashboard - Most apps need this
@@ -39,7 +38,6 @@ export const MENU_ITEMS: MenuItem[] = [
     },
 
     // Example nested menu (Module 1)
-    // Replace with actual feature module
     {
         label: 'Module 1',
         icon: 'pi pi-box',
