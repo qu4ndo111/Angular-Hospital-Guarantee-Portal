@@ -57,7 +57,13 @@
     "logout": "Đăng xuất"
   },
   "menu": {
-    "dashboard": "Dashboard"
+    "dashboard": "Dashboard",
+    "users": "Users",
+    "roles": "Roles",
+    "permissions": "Permissions",
+    "guarantee": "Bảo lãnh",
+    "guarantee.list": "Danh sách",
+    "guarantee.create": "Tạo mới"
   },
   "common": {
     "actions": {
@@ -71,5 +77,66 @@
       "ok": "Đồng ý"
     },
     "search": "Tìm kiếm"
+  },
+  "guarantee": {
+    "lookupPopup": {
+      "title": "Tra cứu thông tin",
+      "cccd": "Số CCCD/CMND",
+      "name": "Họ và tên",
+      "dateOfBirth": "Ngày sinh",
+      "phone": "Số điện thoại",
+      "subtitle": "Nhập thông tin để tìm kiếm hồ sơ bệnh nhân",
+      "placeholderCccd": "Nhập số CCCD",
+      "placeholderName": "Nhập họ tên",
+      "placeholderDate": "Chọn ngày",
+      "button": "Tra cứu"
+    },
+    "create": {
+      "title": "Tạo mới yêu cầu bảo lãnh",
+      "lookupSection": {
+        "title": "Tra cứu thông tin",
+        "subtitle": "Nhập thông tin để tìm kiếm hồ sơ bệnh nhân",
+        "button": "Tra cứu"
+      },
+      "personalSection": {
+        "title": "Thông tin cá nhân",
+        "subtitle": "Dữ liệu được tự động điền sau khi tra cứu thành công",
+        "gender": "Giới tính",
+        "address": "Địa chỉ",
+        "empty": "Trống"
+      },
+      "treatmentSection": {
+        "title": "Thông tin điều trị",
+        "subtitle": "Cung cấp chi tiết phiên khám chữa bệnh",
+        "hospital": "Bệnh viện",
+        "hospitalPlaceholder": "Nhập tên bệnh viện",
+        "department": "Khoa điều trị",
+        "departmentPlaceholder": "Nhập tên khoa",
+        "treatmentType": "Hình thức điều trị",
+        "treatmentTypePlaceholder": "Chọn hình thức",
+        "admissionDate": "Ngày nhập viện",
+        "estimatedDischargeDate": "Ngày xuất viện (dự kiến)",
+        "types": {
+          "inpatient": "Nội trú",
+          "outpatient": "Ngoại trú",
+          "surgery": "Phẫu thuật",
+          "emergency": "Cấp cứu"
+        }
+      },
+      "insuranceSection": {
+        "title": "Thông tin bảo hiểm",
+        "subtitle": "Kê khai thông tin thẻ và tài liệu đính kèm",
+        "contractNo": "Số hợp đồng bảo hiểm",
+        "contractNoPlaceholder": "Nhập số hợp đồng",
+        "insuranceCardNo": "Mã thẻ bảo hiểm",
+        "insuranceCardNoPlaceholder": "Nhập mã thẻ",
+        "estimatedAmount": "Số tiền dự kiến (VND)",
+        "attachment": "Tài liệu đính kèm (Giấy nhập viện, Chỉ định...)"
+      },
+      "actions": {
+        "cancel": "Hủy yêu cầu",
+        "submit": "Gửi yêu cầu bảo lãnh"
+      }
+    }
   }
 }

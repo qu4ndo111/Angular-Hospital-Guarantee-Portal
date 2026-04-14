@@ -1,0 +1,41 @@
+@if(vm$ | async; as vm) {
+<div class="mb-6 border-b border-surface-200 dark:border-surface-700 pb-6">
+  <h2 class="text-xl font-bold text-surface-900 dark:text-surface-0 mb-2">{{ 'guarantee.lookupPopup.title' | transloco }}</h2>
+  <form class="grid grid-cols-1 md:grid-cols-12 gap-4" [formGroup]="lookupForm" (ngSubmit)="lookup()">
+  <div class="md:col-span-3 flex flex-col gap-2">
+    <div class="flex items-center gap-2">
+      <label class="font-medium text-surface-900 dark:text-surface-0 text-sm">{{ 'guarantee.lookupPopup.cccd' | transloco }}</label>
+      <i class="pi pi-id-card"></i>
+    </div>
+    <span class="p-input-icon-left w-full relative">
+      <input type="text" class="w-full" pInputText [placeholder]="'guarantee.lookupPopup.placeholderCccd' | transloco" formControlName="cccd" />
+    </span>
+  </div>
+  <div class="md:col-span-4 flex flex-col gap-2">
+    <div class="flex items-center gap-2">
+      <label class="font-medium text-surface-900 dark:text-surface-0 text-sm">{{ 'guarantee.lookupPopup.name' | transloco }}</label>
+      <i class="pi pi-user"></i>
+    </div>
+    <span class="p-input-icon-left w-full">
+      <input type="text" class="w-full" pInputText [placeholder]="'guarantee.lookupPopup.placeholderName' | transloco" formControlName="name" />
+    </span>
+  </div>
+  <div class="md:col-span-3 flex flex-col gap-2">
+    <div class="flex items-center gap-2">
+      <label class="font-medium text-surface-900 dark:text-surface-0 text-sm">{{ 'guarantee.lookupPopup.dateOfBirth' | transloco }}</label>
+      <i class="pi pi-calendar"></i>
+    </div>
+    <p-datepicker [fluid]="true" appendTo="body" [placeholder]="'guarantee.lookupPopup.placeholderDate' | transloco" formControlName="dateOfBirth"
+      iconDisplay="input"></p-datepicker>
+  </div>
+  <div class="md:col-span-2 flex items-end">
+    <button pButton [disabled]="lookupForm.invalid" type="submit" [label]="'guarantee.lookupPopup.button' | transloco" icon="pi pi-search"
+      class="w-full shadow-sm"></button>
+  </div>
+</form>
+</div>
+<app-data-table [value]="vm.patients" [paginator]="false" [columns]="columns"></app-data-table>
+<div class="flex justify-end mt-3">
+  <button pButton>{{ 'common.actions.ok' | transloco }}</button>
+</div>
+}

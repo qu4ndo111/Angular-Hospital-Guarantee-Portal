@@ -40,6 +40,14 @@ export const routes: Routes = [
         path: '',
         redirectTo: 'dashboard',
         pathMatch: 'full'
+      },
+      {
+        path: 'guarantee/create',
+        loadComponent: () => import('./features/guarantee/guarantee-create-new/guarantee-create-new').then((m) => m.GuaranteeCreateNew)
+      },
+      {
+        path: 'guarantee/list',
+        loadComponent: () => import('./features/guarantee/guarantee-list/guarantee-list').then((m) => m.GuaranteeList)
       }
     ]
   }

@@ -44,6 +44,13 @@ body {
   --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
   --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
   --shadow-card: rgba(0, 0, 0, 0.5);
+
+  /* PrimeNG / Data Table mapped variables */
+  --surface-50: var(--bg-secondary);
+  --surface-border: var(--border-color);
+  --surface-hover: var(--highlight-bg);
+  --text-color: var(--text-primary);
+  --text-color-secondary: var(--text-secondary);
 }
 
 /* ===== CSS VARIABLES - DARK MODE ===== */

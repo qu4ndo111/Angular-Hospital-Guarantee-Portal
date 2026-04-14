@@ -39,18 +39,18 @@ export const MENU_ITEMS: MenuItem[] = [
 
     // Example nested menu (Module 1)
     {
-        label: 'Module 1',
+        label: 'menu.guarantee',
         icon: 'pi pi-box',
         children: [
             {
-                label: 'List View',
+                label: 'menu.guarantee.list',
                 icon: 'pi pi-list',
-                routerLink: '/module1/list',
+                routerLink: '/guarantee/list',
             },
             {
-                label: 'Create New',
+                label: 'menu.guarantee.create',
                 icon: 'pi pi-plus',
-                routerLink: '/module1/create',
+                routerLink: '/guarantee/create',
             },
         ],
     },

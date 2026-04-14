@@ -60,7 +60,10 @@
     "dashboard": "Dashboard",
     "users": "Users",
     "roles": "Roles",
-    "permissions": "Permissions"
+    "permissions": "Permissions",
+    "guarantee": "Guarantee",
+    "guarantee.list": "List",
+    "guarantee.create": "Create"
   },
   "common": {
     "actions": {
@@ -74,5 +77,66 @@
       "ok": "OK"
     },
     "search": "Search"
+  },
+  "guarantee": {
+    "lookupPopup": {
+      "title": "Information Lookup",
+      "cccd": "ID Card / Passport No.",
+      "name": "Full Name",
+      "dateOfBirth": "Date of Birth",
+      "phone": "Phone Number",
+      "subtitle": "Enter information to search for patient records",
+      "placeholderCccd": "Enter ID No.",
+      "placeholderName": "Enter name",
+      "placeholderDate": "Select date",
+      "button": "Lookup"
+    },
+    "create": {
+      "title": "Create Guarantee Request",
+      "lookupSection": {
+        "title": "Information Lookup",
+        "subtitle": "Enter information to search for patient records",
+        "button": "Lookup"
+      },
+      "personalSection": {
+        "title": "Personal Information",
+        "subtitle": "Data is automatically populated after a successful lookup",
+        "gender": "Gender",
+        "address": "Address",
+        "empty": "Empty"
+      },
+      "treatmentSection": {
+        "title": "Treatment Information",
+        "subtitle": "Provide details of the medical session",
+        "hospital": "Hospital",
+        "hospitalPlaceholder": "Enter hospital name",
+        "department": "Department",
+        "departmentPlaceholder": "Enter department name",
+        "treatmentType": "Treatment Type",
+        "treatmentTypePlaceholder": "Select type",
+        "admissionDate": "Admission Date",
+        "estimatedDischargeDate": "Estimated Discharge Date",
+        "types": {
+          "inpatient": "Inpatient",
+          "outpatient": "Outpatient",
+          "surgery": "Surgery",
+          "emergency": "Emergency"
+        }
+      },
+      "insuranceSection": {
+        "title": "Insurance Information",
+        "subtitle": "Declare card information and attachments",
+        "contractNo": "Insurance Contract No.",
+        "contractNoPlaceholder": "Enter contract no.",
+        "insuranceCardNo": "Insurance Card No.",
+        "insuranceCardNoPlaceholder": "Enter card no.",
+        "estimatedAmount": "Estimated Amount (VND)",
+        "attachment": "Attachments (Admission Paper, Prescription...)"
+      },
+      "actions": {
+        "cancel": "Cancel Request",
+        "submit": "Submit Guarantee Request"
+      }
+    }
   }
 }
