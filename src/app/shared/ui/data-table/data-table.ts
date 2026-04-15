@@ -34,6 +34,9 @@ export class DataTable<T = any> {
   @Input() paginator: boolean = true;
   @Input() rows: number = 10;
   @Input() rowsPerPageOptions: number[] = [10, 25, 50];
+  @Input() selectionMode: 'single' | 'multiple' | null = null;
+
+  @Output() rowSelect = new EventEmitter<T | T[]>();
 
 
   private templateMap: Map<string, TemplateRef<any>> = new Map();

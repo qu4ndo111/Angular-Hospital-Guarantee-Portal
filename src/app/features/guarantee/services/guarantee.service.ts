@@ -1,5 +1,5 @@
 import { Injectable, signal } from '@angular/core';
-import { Observable, delay, of } from 'rxjs';
+import { Observable, delay, of, tap } from 'rxjs';
 import { GuaranteeRequest, Patient, GuaranteeStatus } from '../models/guarantee.model';
 
 @Injectable({
@@ -110,7 +110,15 @@ export class GuaranteeService {
     return of(this.guaranteeRequests()).pipe(delay(400));
   }
 
-  addRequest(request: GuaranteeRequest): void {
-      this.guaranteeRequests.update(reqs => [request, ...reqs]);
+  getGuaranteeRequestsById(cccd: string): Observable<GuaranteeRequest | undefined> {
+    const guarantee = this.guaranteeRequests().find((rq) => rq.patientId === cccd)
+    return of(guarantee)
+  }
+
+  addRequest(request: GuaranteeRequest): Observable<GuaranteeRequest> {
+      return of(request).pipe(
+        delay(400),
+        tap(() => this.guaranteeRequests.update(reqs => [request, ...reqs]))
+      )
   }
 }

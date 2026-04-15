@@ -74,13 +74,15 @@
       "create": "Tạo mới",
       "submit": "Gửi",
       "back": "Quay lại",
-      "ok": "Đồng ý"
+      "ok": "Đồng ý",
+      "close": "Đóng"
     },
     "search": "Tìm kiếm"
   },
   "guarantee": {
     "lookupPopup": {
-      "title": "Tra cứu thông tin",
+      "title": "Thông tin người được bảo hiểm",
+      "lookupTitle": "Tra cứu thông tin",
       "cccd": "Số CCCD/CMND",
       "name": "Họ và tên",
       "dateOfBirth": "Ngày sinh",
@@ -89,7 +91,11 @@
       "placeholderCccd": "Nhập số CCCD",
       "placeholderName": "Nhập họ tên",
       "placeholderDate": "Chọn ngày",
-      "button": "Tra cứu"
+      "button": "Tra cứu",
+      "noData": {
+        "title": "Không tìm thấy hồ sơ",
+        "message": "Chúng tôi không tìm thấy bệnh nhân nào khớp với tiêu chí tìm kiếm của bạn. Vui lòng kiểm tra lại số định danh hoặc thông tin tra cứu."
+      }
     },
     "create": {
       "title": "Tạo mới yêu cầu bảo lãnh",
@@ -136,6 +142,45 @@
       "actions": {
         "cancel": "Hủy yêu cầu",
         "submit": "Gửi yêu cầu bảo lãnh"
+      }
+    },
+    "list": {
+      "title": "Danh sách hồ sơ bảo lãnh",
+      "search": {
+        "placeholder": "Tìm kiếm theo số hồ sơ..."
+      },
+      "filter": {
+        "button": "Lọc",
+        "tooltip": "Mở bộ lọc nâng cao",
+        "active": "Đang lọc",
+        "clearAll": "Xóa tất cả"
+      },
+      "actions": {
+        "createNew": "Tạo mới",
+        "view": "Xem chi tiết",
+        "edit": "Chỉnh sửa"
+      },
+      "table": {
+        "title": "Danh sách hồ sơ",
+        "subtitle": "Toàn bộ yêu cầu bảo lãnh viện phí",
+        "records": "hồ sơ",
+        "cols": {
+          "id": "Số hồ sơ",
+          "patientName": "Họ và tên",
+          "patientId": "Số CCCD",
+          "treatmentType": "Hình thức",
+          "admissionDate": "Ngày nhập viện",
+          "estimatedAmount": "Dự kiến (VND)",
+          "status": "Trạng thái"
+        }
+      },
+      "status": {
+        "draft": "Nháp",
+        "submitted": "Đã gửi",
+        "reviewing": "Đang xét",
+        "approved": "Đã duyệt",
+        "rejected": "Từ chối",
+        "paid": "Đã thanh toán"
       }
     }
   }

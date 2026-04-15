@@ -1,4 +1,3 @@
-@if(vm$ | async; as vm) {
 <div class="mb-6 border-b border-surface-200 dark:border-surface-700 pb-6">
   <h2 class="text-xl font-bold text-surface-900 dark:text-surface-0 mb-2">{{ 'guarantee.lookupPopup.title' | transloco }}</h2>
   <form class="grid grid-cols-1 md:grid-cols-12 gap-4" [formGroup]="lookupForm" (ngSubmit)="lookup()">
@@ -34,8 +33,22 @@
   </div>
 </form>
 </div>
-<app-data-table [value]="vm.patients" [paginator]="false" [columns]="columns"></app-data-table>
-<div class="flex justify-end mt-3">
-  <button pButton>{{ 'common.actions.ok' | transloco }}</button>
-</div>
+@if(vm$ | async; as vm) {
+<app-data-table [loading]="loading()" [value]="vm.patients" [paginator]="false" [columns]="columns"
+  selectionMode="single" (rowSelect)="onPatientSelect($event)"></app-data-table>
+} @else {
+  <div class="flex flex-col items-center justify-center py-12 px-4 rounded-xl border border-dashed border-surface-200 dark:border-surface-700 bg-surface-50/50 dark:bg-surface-900/50 mt-4 animate-fadein duration-500">
+    <div class="relative mb-6">
+      <div class="absolute -inset-4 bg-primary/10 rounded-full blur-xl animate-pulse"></div>
+      <div class="w-20 h-20 bg-surface-0 dark:bg-surface-800 rounded-2xl shadow-lg flex items-center justify-center relative border border-surface-100 dark:border-surface-700">
+        <i class="pi pi-search-plus text-4xl text-primary opacity-80"></i>
+      </div>
+    </div>
+    <h3 class="text-xl font-bold text-surface-900 dark:text-surface-0 mb-2">
+      {{ 'guarantee.lookupPopup.noData.title' | transloco }}
+    </h3>
+  </div>
 }
+<div class="flex justify-end mt-3">
+  <button pButton (click)="ref.close()">{{ 'common.actions.close' | transloco }}</button>
+</div>

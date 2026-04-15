@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, signal } from '@angular/core';
 
 import { Title } from '../../../shared/components/title/title';
 
@@ -13,6 +13,12 @@ import { SelectModule } from 'primeng/select';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { FileUploadModule } from 'primeng/fileupload';
 import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
+import { Patient } from '../models/guarantee.model';
+import { Router } from '@angular/router';
+import moment from 'moment';
+import { GuaranteeService } from '../services/guarantee.service';
+import { exhaustMap, tap } from 'rxjs';
+import { ToastService } from '@app/shared/services/toast.service';
 
 @Component({
   selector: 'app-guarantee-create-new',
@@ -26,10 +32,10 @@ export class GuaranteeCreateNew implements OnInit {
   menu: MenuItem[] = [];
   lookupForm!: FormGroup;
   guaranteeForm!: FormGroup;
-
+  loading = signal<boolean>(false)
   treatmentTypes: any[] = [];
 
-  constructor(private fb: FormBuilder, private dialogService: DialogService, private translocoService: TranslocoService) { }
+  constructor(private fb: FormBuilder, private dialogService: DialogService, private translocoService: TranslocoService, private router: Router, private guaranteeService: GuaranteeService, private toastMessage: ToastService, private cdr: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.translocoService.langChanges$.subscribe(() => {
@@ -52,6 +58,14 @@ export class GuaranteeCreateNew implements OnInit {
     });
 
     this.guaranteeForm = this.fb.group({
+      // --- Patient info (auto-filled from lookup) ---
+      patientId: [{ value: '', disabled: true }],
+      patientName: [{ value: '', disabled: true }],
+      dateOfBirth: [{ value: '', disabled: true }],
+      gender: [{ value: '', disabled: true }],
+      phone: [{ value: '', disabled: true }],
+      address: [{ value: '', disabled: true }],
+      // --- Guarantee info (user fills) ---
       department: [''],
       treatmentType: ['', Validators.required],
       admissionDate: ['', Validators.required],
@@ -64,7 +78,7 @@ export class GuaranteeCreateNew implements OnInit {
 
   lookup() {
     this.lookupRef = this.dialogService.open(LookupPopup, {
-      header: this.translocoService.translate('guarantee.lookupPopup.title'),
+      header: this.translocoService.translate('guarantee.lookupPopup.lookupTitle'),
       width: '50%',
       contentStyle: { 'max-height': '500px', 'overflow': 'auto' },
       data: this.lookupForm.value,
@@ -73,5 +87,49 @@ export class GuaranteeCreateNew implements OnInit {
         '640px': '90vw'
       }
     });
+
+    this.lookupRef?.onClose.subscribe((item: Patient) => {
+      if (!item) return;
+      this.guaranteeForm.patchValue({
+        patientId: item.id,
+        patientName: item.name,
+        dateOfBirth: moment(item.dateOfBirth).format('YYYY-MM-DD'),
+        gender: item.gender,
+        phone: item.phone,
+        address: item.address,
+      });
+    })
+  }
+
+  close() {
+    this.router.navigate(['/guarantee/list'])
+  }
+
+  createNewGurantee() {
+    this.loading.set(true)
+    try {
+      const body = {
+        ...this.guaranteeForm.value,
+        id: `GRT-${new Date().getFullYear()}-${String(Date.now()).slice(-6)}`,
+        estimatedDischargeDate: moment(this.guaranteeForm.value.estimatedDischargeDate).format('YYYY-MM-DD'),
+        admissionDate: moment(this.guaranteeForm.value.admissionDate).format('YYYY-MM-DD'),
+      }
+      this.guaranteeService.addRequest(body).subscribe({
+        next: (res) => {
+          if(res) {
+            this.toastMessage.showSuccess('')
+          }
+        },
+        error: (err) => {
+          this.toastMessage.showError('')
+        }
+      })
+    } catch (error) {
+      this.toastMessage.showError('')
+    } finally {
+      this.loading.set(false)
+      this.cdr.markForCheck()
+    }
+
   }
 }

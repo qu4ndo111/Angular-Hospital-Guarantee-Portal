@@ -1,1 +1,158 @@
-<p>guarantee-list works!</p>
+<app-title [title]="'guarantee.list.title' | transloco" [menu]="menu"></app-title>
+
+<div class="flex flex-col gap-6 p-6 lg:px-8">
+  <!-- Toolbar: Search + Filter + Create -->
+  <div
+    class="bg-surface-0 dark:bg-surface-900 shadow-md rounded-2xl p-4 border border-surface-200 dark:border-surface-700 transition-all hover:shadow-lg">
+    <div class="flex flex-col sm:flex-row items-start sm:items-center gap-3">
+
+      <!-- Left: Search + Filter -->
+      <div class="flex items-center gap-2 flex-1 min-w-0">
+        <!-- Search input -->
+        <div class="relative flex-1 max-w-sm">
+          <i class="pi pi-search absolute left-3 top-1/2 -translate-y-1/2 text-surface-400 dark:text-surface-500 text-sm pointer-events-none"></i>
+          <input
+            id="guarantee-search-input"
+            type="text"
+            pInputText
+            [(ngModel)]="searchKeyword"
+            [placeholder]="'guarantee.list.search.placeholder' | transloco"
+            class="w-full pl-9"
+          />
+        </div>
+
+        <!-- Filter button -->
+        <button
+          id="guarantee-filter-btn"
+          pButton
+          type="button"
+          icon="pi pi-sliders-h"
+          [label]="'guarantee.list.filter.button' | transloco"
+          severity="secondary"
+          outlined="true"
+          (click)="openFilter()"
+          pTooltip="{{ 'guarantee.list.filter.tooltip' | transloco }}"
+          tooltipPosition="bottom"
+        ></button>
+      </div>
+
+      <!-- Right: Create new -->
+      <button
+        id="guarantee-create-btn"
+        pButton
+        type="button"
+        icon="pi pi-plus"
+        [label]="'guarantee.list.actions.createNew' | transloco"
+        (click)="navigateToCreate()"
+      ></button>
+    </div>
+
+    <!-- Active filter chips (placeholder row, shown when filters are active) -->
+    @if (hasActiveFilters) {
+      <div class="mt-3 flex flex-wrap items-center gap-2 pt-3 border-t border-surface-200 dark:border-surface-700">
+        <span class="text-sm text-surface-500 dark:text-surface-400 font-medium">{{ 'guarantee.list.filter.active' | transloco }}:</span>
+        @for (chip of activeFilterChips; track chip.key) {
+          <p-tag
+            [value]="chip.label"
+            severity="secondary"
+            styleClass="cursor-pointer hover:opacity-80 transition-opacity flex items-center gap-1"
+            (click)="removeFilter(chip.key)"
+          >
+          </p-tag>
+        }
+        <button
+          pButton
+          type="button"
+          [label]="'guarantee.list.filter.clearAll' | transloco"
+          severity="danger"
+          text="true"
+          size="small"
+          icon="pi pi-times"
+          (click)="clearAllFilters()"
+        ></button>
+      </div>
+    }
+  </div>
+
+  <!-- DataTable Card -->
+  <div
+    class="bg-surface-0 dark:bg-surface-900 shadow-md rounded-2xl border border-surface-200 dark:border-surface-700 overflow-hidden transition-all hover:shadow-lg">
+
+    <!-- Section header -->
+    <div class="flex items-center justify-between px-6 py-4 border-b border-surface-200 dark:border-surface-700">
+      <div class="flex items-center gap-3">
+        <div
+          class="w-9 h-9 rounded-full bg-primary-100 dark:bg-primary-900/40 flex items-center justify-center text-primary-600 dark:text-primary-400">
+          <i class="pi pi-file-edit text-lg"></i>
+        </div>
+        <div>
+          <h2 class="text-base font-semibold text-surface-900 dark:text-surface-0">
+            {{ 'guarantee.list.table.title' | transloco }}
+          </h2>
+          <p class="text-xs text-surface-500 dark:text-surface-400">
+            {{ 'guarantee.list.table.subtitle' | transloco }}
+          </p>
+        </div>
+      </div>
+      <p-tag
+        [value]="totalRecords + ' ' + ('guarantee.list.table.records' | transloco)"
+        severity="secondary"
+      ></p-tag>
+    </div>
+
+    <!-- Table -->
+    <div class="p-4">
+      <app-data-table
+        [value]="guaranteeList"
+        [columns]="columns"
+        [loading]="loading"
+        [paginator]="true"
+        [rows]="10"
+        [rowsPerPageOptions]="[10, 25, 50]"
+      >
+        <!-- Status template -->
+        <ng-template pTemplate="status" let-rowData>
+          <p-tag
+            [value]="getStatusLabel(rowData.status)"
+            [severity]="getStatusSeverity(rowData.status)"
+          ></p-tag>
+        </ng-template>
+
+        <!-- Amount template -->
+        <ng-template pTemplate="estimatedAmount" let-rowData>
+          <span class="font-medium tabular-nums">
+            {{ rowData.estimatedAmount | number:'1.0-0' }} ₫
+          </span>
+        </ng-template>
+
+        <!-- Actions template -->
+        <ng-template pTemplate="actions" let-rowData>
+          <div class="flex items-center gap-1">
+            <button
+              pButton
+              type="button"
+              icon="pi pi-eye"
+              severity="info"
+              text="true"
+              rounded="true"
+              size="small"
+              [pTooltip]="'guarantee.list.actions.view' | transloco"
+              tooltipPosition="top"
+            ></button>
+            <button
+              pButton
+              type="button"
+              icon="pi pi-pencil"
+              severity="secondary"
+              text="true"
+              rounded="true"
+              size="small"
+              [pTooltip]="'guarantee.list.actions.edit' | transloco"
+              tooltipPosition="top"
+            ></button>
+          </div>
+        </ng-template>
+      </app-data-table>
+    </div>
+  </div>
+</div>

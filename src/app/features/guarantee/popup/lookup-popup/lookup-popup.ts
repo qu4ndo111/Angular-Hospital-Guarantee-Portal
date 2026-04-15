@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 
 import { DataTable } from '@app/shared/ui/data-table/data-table';
 
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { BehaviorSubject, catchError, map, Observable, of, switchMap } from 'rxjs';
+import { BehaviorSubject, catchError, map, Observable, of, switchMap, tap } from 'rxjs';
 import { GuaranteeService } from '../../services/guarantee.service';
 import { TableColumn } from '@app/shared/ui/data-table/data-table.model';
 import { AsyncPipe } from '@angular/common';
@@ -12,6 +12,7 @@ import { ButtonModule } from 'primeng/button';
 import { DatePicker } from 'primeng/datepicker';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
+import { Patient } from '../../models/guarantee.model';
 
 
 interface LookupPopupData {
@@ -32,14 +33,18 @@ interface LookupPopupData {
 export class LookupPopup implements OnInit {
 
   lookupForm!: FormGroup;
+  loading = signal(false);
+  data$ = new BehaviorSubject<LookupPopupData>({
+    cccd: ''
+  })
 
   vm$!: Observable<any>
   columns: TableColumn[] = [
   ];
 
-  constructor(private ref: DynamicDialogRef, private config: DynamicDialogConfig, private guaranteeService: GuaranteeService, private translocoService: TranslocoService, private fb: FormBuilder) {
+  constructor(public ref: DynamicDialogRef, private config: DynamicDialogConfig, private guaranteeService: GuaranteeService, private translocoService: TranslocoService, private fb: FormBuilder) {
     this.columns = [
-      { field: 'id', header: this.translocoService.translate('guarantee.lookupPopup.cccd') },
+      { field: 'id', header: this.translocoService.translate('guarantee.lookupPopup.cccd'),  },
       { field: 'name', header: this.translocoService.translate('guarantee.lookupPopup.name') },
       { field: 'dateOfBirth', header: this.translocoService.translate('guarantee.lookupPopup.dateOfBirth') },
       { field: 'phone', header: this.translocoService.translate('guarantee.lookupPopup.phone') }
@@ -52,25 +57,32 @@ export class LookupPopup implements OnInit {
       name: [''],
       dateOfBirth: [''],
     })
-    const data$ = new BehaviorSubject<LookupPopupData>(this.config.data);
-    this.vm$ = data$.pipe(
+    this.data$.next(this.config.data)
+    this.vm$ = this.data$.pipe(
+      tap(() => this.loading.set(true)),
       switchMap(({ cccd }) => {
         return this.guaranteeService.getPatientById(cccd);
       }),
       map((res: any) => {
-        return {
-          patients: [res]
+        if (res) {
+          return {
+            patients: [res]
+          }
         }
+        return undefined
       }),
       catchError((error) => {
-        return of({
-          patients: []
-        })
-      })
+        return of(undefined)
+      }),
+      tap(() => this.loading.set(false)),
     );
   }
 
   lookup() {
+    this.data$.next(this.lookupForm.value)
+  }
 
+  onPatientSelect(patient: Patient): void {
+    this.ref.close(patient);
   }
 }

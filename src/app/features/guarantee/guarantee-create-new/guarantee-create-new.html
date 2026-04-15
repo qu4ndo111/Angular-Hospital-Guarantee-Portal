@@ -16,7 +16,7 @@
     </div>
 
     <form class="grid grid-cols-1 md:grid-cols-12 gap-4" [formGroup]="lookupForm" (ngSubmit)="lookup()">
-      <div class="md:col-span-3 flex flex-col gap-2">
+      <div class="md:col-span-3 flex flex-col gap-2 justify-end">
         <div class="flex items-center gap-2 required">
           <label class="font-medium text-surface-900 dark:text-surface-0 text-sm">{{ 'guarantee.lookupPopup.cccd' | transloco }}</label>
           <i class="pi pi-id-card"></i>
@@ -25,7 +25,7 @@
           <input type="text" class="w-full" pInputText [placeholder]="'guarantee.lookupPopup.placeholderCccd' | transloco" formControlName="cccd" />
         </span>
       </div>
-      <div class="md:col-span-4 flex flex-col gap-2">
+      <div class="md:col-span-4 flex flex-col gap-2 justify-end">
         <div class="flex items-center gap-2">
           <label class="font-medium text-surface-900 dark:text-surface-0 text-sm">{{ 'guarantee.lookupPopup.name' | transloco }}</label>
           <i class="pi pi-user"></i>
@@ -34,7 +34,7 @@
           <input type="text" class="w-full" pInputText [placeholder]="'guarantee.lookupPopup.placeholderName' | transloco" formControlName="name" />
         </span>
       </div>
-      <div class="md:col-span-3 flex flex-col gap-2">
+      <div class="md:col-span-3 flex flex-col gap-2 justify-end">
         <div class="flex items-center gap-2">
           <label class="font-medium text-surface-900 dark:text-surface-0 text-sm">{{ 'guarantee.lookupPopup.dateOfBirth' | transloco }}</label>
           <i class="pi pi-calendar"></i>
@@ -49,68 +49,67 @@
     </form>
   </div>
 
-  <!-- Thông tin cá nhân Section -->
-  <div
-    class="bg-surface-0 dark:bg-surface-900 shadow-md rounded-2xl p-6 border border-surface-200 dark:border-surface-700 transition-all hover:shadow-lg">
-    <div class="flex items-center gap-3 mb-6">
-      <div
-        class="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900/40 flex items-center justify-center text-blue-600 dark:text-blue-400">
-        <i class="pi pi-user text-xl"></i>
+  <form [formGroup]="guaranteeForm" class="flex flex-col gap-8" (ngSubmit)="createNewGurantee()">
+    <!-- Thông tin cá nhân Section -->
+    <div
+      class="bg-surface-0 dark:bg-surface-900 shadow-md rounded-2xl p-6 border border-surface-200 dark:border-surface-700 transition-all hover:shadow-lg">
+      <div class="flex items-center gap-3 mb-6">
+        <div
+          class="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900/40 flex items-center justify-center text-blue-600 dark:text-blue-400">
+          <i class="pi pi-user text-xl"></i>
+        </div>
+        <div>
+          <h2 class="text-xl font-bold text-surface-900 dark:text-surface-0">{{ 'guarantee.create.personalSection.title' | transloco }}</h2>
+          <p class="text-surface-500 dark:text-surface-400 text-sm">{{ 'guarantee.create.personalSection.subtitle' | transloco }}</p>
+        </div>
       </div>
-      <div>
-        <h2 class="text-xl font-bold text-surface-900 dark:text-surface-0">{{ 'guarantee.create.personalSection.title' | transloco }}</h2>
-        <p class="text-surface-500 dark:text-surface-400 text-sm">{{ 'guarantee.create.personalSection.subtitle' | transloco }}
-        </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
+        <div class="flex flex-col gap-2">
+          <div class="flex items-center gap-2">
+            <label class="font-medium text-surface-500 dark:text-surface-400 text-sm">{{ 'guarantee.lookupPopup.cccd' | transloco }}</label>
+            <i class="pi pi-id-card"></i>
+          </div>
+          <input type="text" class="w-full" pInputText formControlName="patientId" [placeholder]="'guarantee.create.personalSection.empty' | transloco" />
+        </div>
+        <div class="flex flex-col gap-2">
+          <div class="flex items-center gap-2">
+            <label class="font-medium text-surface-500 dark:text-surface-400 text-sm">{{ 'guarantee.lookupPopup.name' | transloco }}</label>
+            <i class="pi pi-user"></i>
+          </div>
+          <input type="text" class="w-full" pInputText formControlName="patientName" [placeholder]="'guarantee.create.personalSection.empty' | transloco" />
+        </div>
+        <div class="flex flex-col gap-2">
+          <div class="flex items-center gap-2">
+            <label class="font-medium text-surface-500 dark:text-surface-400 text-sm">{{ 'guarantee.lookupPopup.dateOfBirth' | transloco }}</label>
+            <i class="pi pi-calendar"></i>
+          </div>
+          <p-datepicker [fluid]="true" formControlName="dateOfBirth" [placeholder]="'guarantee.create.personalSection.empty' | transloco" iconDisplay="input"></p-datepicker>
+        </div>
+        <div class="flex flex-col gap-2">
+          <div class="flex items-center gap-2">
+            <label class="font-medium text-surface-500 dark:text-surface-400 text-sm">{{ 'guarantee.create.personalSection.gender' | transloco }}</label>
+            <i class="pi pi-users"></i>
+          </div>
+          <input type="text" class="w-full" pInputText formControlName="gender" [placeholder]="'guarantee.create.personalSection.empty' | transloco" />
+        </div>
+        <div class="flex flex-col gap-2">
+          <div class="flex items-center gap-2">
+            <label class="font-medium text-surface-500 dark:text-surface-400 text-sm">{{ 'guarantee.lookupPopup.phone' | transloco }}</label>
+            <i class="pi pi-phone"></i>
+          </div>
+          <input type="text" class="w-full" pInputText formControlName="phone" [placeholder]="'guarantee.create.personalSection.empty' | transloco" />
+        </div>
+        <div class="flex flex-col gap-2">
+          <div class="flex items-center gap-2">
+            <label class="font-medium text-surface-500 dark:text-surface-400 text-sm">{{ 'guarantee.create.personalSection.address' | transloco }}</label>
+            <i class="pi pi-map-marker"></i>
+          </div>
+          <input type="text" class="w-full" pInputText formControlName="address" [placeholder]="'guarantee.create.personalSection.empty' | transloco" />
+        </div>
       </div>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
-      <div class="flex flex-col gap-2">
-        <div class="flex items-center gap-2">
-          <label class="font-medium text-surface-500 dark:text-surface-400 text-sm">{{ 'guarantee.lookupPopup.cccd' | transloco }}</label>
-          <i class="pi pi-id-card"></i>
-        </div>
-        <input type="text" class="w-full" disabled pInputText [placeholder]="'guarantee.create.personalSection.empty' | transloco" />
-      </div>
-      <div class="flex flex-col gap-2">
-        <div class="flex items-center gap-2">
-          <label class="font-medium text-surface-500 dark:text-surface-400 text-sm">{{ 'guarantee.lookupPopup.name' | transloco }}</label>
-          <i class="pi pi-user"></i>
-        </div>
-        <input type="text" class="w-full" disabled pInputText [placeholder]="'guarantee.create.personalSection.empty' | transloco" />
-      </div>
-      <div class="flex flex-col gap-2">
-        <div class="flex items-center gap-2">
-          <label class="font-medium text-surface-500 dark:text-surface-400 text-sm">{{ 'guarantee.lookupPopup.dateOfBirth' | transloco }}</label>
-          <i class="pi pi-calendar"></i>
-        </div>
-        <p-datepicker [fluid]="true" disabled [placeholder]="'guarantee.create.personalSection.empty' | transloco" iconDisplay="input"></p-datepicker>
-      </div>
-      <div class="flex flex-col gap-2">
-        <div class="flex items-center gap-2">
-          <label class="font-medium text-surface-500 dark:text-surface-400 text-sm">{{ 'guarantee.create.personalSection.gender' | transloco }}</label>
-          <i class="pi pi-users"></i>
-        </div>
-        <input type="text" class="w-full" disabled pInputText [placeholder]="'guarantee.create.personalSection.empty' | transloco" />
-      </div>
-      <div class="flex flex-col gap-2">
-        <div class="flex items-center gap-2 required">
-          <label class="font-medium text-surface-500 dark:text-surface-400 text-sm">{{ 'guarantee.lookupPopup.phone' | transloco }}</label>
-          <i class="pi pi-phone"></i>
-        </div>
-        <input type="text" class="w-full" disabled pInputText [placeholder]="'guarantee.create.personalSection.empty' | transloco" />
-      </div>
-      <div class="flex flex-col gap-2">
-        <div class="flex items-center gap-2">
-          <label class="font-medium text-surface-500 dark:text-surface-400 text-sm">{{ 'guarantee.create.personalSection.address' | transloco }}</label>
-          <i class="pi pi-map-marker"></i>
-        </div>
-        <input type="text" class="w-full" disabled pInputText [placeholder]="'guarantee.create.personalSection.empty' | transloco" />
-      </div>
-    </div>
-  </div>
-
-  <form [formGroup]="guaranteeForm" class="flex flex-col gap-8">
     <!-- Thông tin điều trị Section -->
     <div class="bg-surface-0 dark:bg-surface-900 shadow-md rounded-2xl p-6 border border-surface-200 dark:border-surface-700 transition-all hover:shadow-lg">
       <div class="flex items-center gap-3 mb-6">
@@ -186,8 +185,8 @@
 
       <!-- Nút hành động -->
       <div class="mt-8 flex justify-end gap-3 border-t border-surface-200 dark:border-surface-700 pt-6">
-        <button pButton type="button" [label]="'guarantee.create.actions.cancel' | transloco" icon="pi pi-times" severity="secondary" outlined="true"></button>
-        <button pButton type="button" [label]="'guarantee.create.actions.submit' | transloco" icon="pi pi-check" iconPos="right" [disabled]="guaranteeForm.invalid"></button>
+        <button pButton type="button" [label]="'guarantee.create.actions.cancel' | transloco" icon="pi pi-times" (click)="close()"severity="secondary" outlined="true"></button>
+        <button pButton type="submit" [label]="'guarantee.create.actions.submit' | transloco" icon="pi pi-check" iconPos="right" [disabled]="guaranteeForm.invalid"></button>
       </div>
     </div>
   </form>

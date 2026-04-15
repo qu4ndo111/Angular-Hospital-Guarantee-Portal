@@ -74,13 +74,15 @@
       "create": "Create",
       "submit": "Submit",
       "back": "Back",
-      "ok": "OK"
+      "ok": "OK",
+      "close": "Close"
     },
     "search": "Search"
   },
   "guarantee": {
     "lookupPopup": {
-      "title": "Information Lookup",
+      "title": "Insured Person Information",
+      "lookupTitle": "Information Lookup",
       "cccd": "ID Card / Passport No.",
       "name": "Full Name",
       "dateOfBirth": "Date of Birth",
@@ -89,7 +91,11 @@
       "placeholderCccd": "Enter ID No.",
       "placeholderName": "Enter name",
       "placeholderDate": "Select date",
-      "button": "Lookup"
+      "button": "Lookup",
+      "noData": {
+        "title": "No Records Found",
+        "message": "We couldn't find any patient matching your search criteria. Please double-check the ID number or search terms."
+      }
     },
     "create": {
       "title": "Create Guarantee Request",
@@ -136,6 +142,45 @@
       "actions": {
         "cancel": "Cancel Request",
         "submit": "Submit Guarantee Request"
+      }
+    },
+    "list": {
+      "title": "Guarantee Request List",
+      "search": {
+        "placeholder": "Search by record number..."
+      },
+      "filter": {
+        "button": "Filter",
+        "tooltip": "Open advanced filters",
+        "active": "Filtering by",
+        "clearAll": "Clear all"
+      },
+      "actions": {
+        "createNew": "Create New",
+        "view": "View Details",
+        "edit": "Edit"
+      },
+      "table": {
+        "title": "Record List",
+        "subtitle": "All hospital guarantee requests",
+        "records": "records",
+        "cols": {
+          "id": "Record No.",
+          "patientName": "Full Name",
+          "patientId": "ID Card No.",
+          "treatmentType": "Type",
+          "admissionDate": "Admission Date",
+          "estimatedAmount": "Est. Amount (VND)",
+          "status": "Status"
+        }
+      },
+      "status": {
+        "draft": "Draft",
+        "submitted": "Submitted",
+        "reviewing": "Reviewing",
+        "approved": "Approved",
+        "rejected": "Rejected",
+        "paid": "Paid"
       }
     }
   }

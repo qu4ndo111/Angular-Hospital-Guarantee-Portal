@@ -1,5 +1,6 @@
 <p-table [value]="value" [columns]="columns" [showGridlines]="true" [loading]="loading" [paginator]="paginator" [rows]="rows"
-  [rowsPerPageOptions]="rowsPerPageOptions" [rowHover]="true" class="simple-table">
+  [rowsPerPageOptions]="rowsPerPageOptions" [rowHover]="true" class="simple-table"
+  [selectionMode]="selectionMode" (onRowSelect)="rowSelect.emit($event.data)">
   <ng-template pTemplate="header" let-columns>
     <tr>
       @for(col of columns; track col.field) {
@@ -14,7 +15,7 @@
   </ng-template>
 
   <ng-template pTemplate="body" let-rowData let-columns="columns">
-    <tr>
+    <tr [class.cursor-pointer]="selectionMode" (click)="selectionMode && rowSelect.emit(rowData)">
       @for(col of columns; track col.field) {
       <td>
         @if (col.template && hasTemplate(col.template)) {
