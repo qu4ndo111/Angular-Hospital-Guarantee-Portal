@@ -1,6 +1,6 @@
 import { Injectable, signal } from '@angular/core';
 import { Observable, delay, of, tap } from 'rxjs';
-import { GuaranteeRequest, Patient, GuaranteeStatus } from '../models/guarantee.model';
+import { GuaranteeFilter, GuaranteeRequest, Patient, GuaranteeStatus } from '../models/guarantee.model';
 
 @Injectable({
   providedIn: 'root'
@@ -106,8 +106,22 @@ export class GuaranteeService {
     return of(patient).pipe(delay(500)); // Simulate API delay
   }
 
-  getGuaranteeRequests(): Observable<GuaranteeRequest[]> {
-    return of(this.guaranteeRequests()).pipe(delay(400));
+  getGuaranteeRequests(filter?: GuaranteeFilter): Observable<GuaranteeRequest[]> {
+    let results = this.guaranteeRequests();
+
+    if (filter?.statuses?.length) {
+      results = results.filter(r => filter.statuses!.includes(r.status));
+    }
+
+    if (filter?.fromDate) {
+      results = results.filter(r => r.admissionDate >= filter.fromDate!);
+    }
+
+    if (filter?.toDate) {
+      results = results.filter(r => r.admissionDate <= filter.toDate!);
+    }
+
+    return of(results).pipe(delay(400));
   }
 
   getGuaranteeRequestsById(cccd: string): Observable<GuaranteeRequest | undefined> {

@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit, signal } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit, signal } from '@angular/core';
 
 import { Title } from '../../../shared/components/title/title';
 
@@ -17,8 +17,9 @@ import { Patient } from '../models/guarantee.model';
 import { Router } from '@angular/router';
 import moment from 'moment';
 import { GuaranteeService } from '../services/guarantee.service';
-import { exhaustMap, tap } from 'rxjs';
+import { exhaustMap, Subject, takeUntil, tap } from 'rxjs';
 import { ToastService } from '@app/shared/services/toast.service';
+import { LoadingService } from '@app/shared/services/loading.service';
 
 @Component({
   selector: 'app-guarantee-create-new',
@@ -27,15 +28,16 @@ import { ToastService } from '@app/shared/services/toast.service';
   styleUrl: './guarantee-create-new.scss',
   providers: [DialogService]
 })
-export class GuaranteeCreateNew implements OnInit {
+export class GuaranteeCreateNew implements OnInit, OnDestroy {
   lookupRef: DynamicDialogRef<LookupPopup> | null = null;
   menu: MenuItem[] = [];
   lookupForm!: FormGroup;
   guaranteeForm!: FormGroup;
   loading = signal<boolean>(false)
   treatmentTypes: any[] = [];
+  private destroy$ = new Subject<void>();
 
-  constructor(private fb: FormBuilder, private dialogService: DialogService, private translocoService: TranslocoService, private router: Router, private guaranteeService: GuaranteeService, private toastMessage: ToastService, private cdr: ChangeDetectorRef) { }
+  constructor(private fb: FormBuilder, private dialogService: DialogService, private translocoService: TranslocoService, private router: Router, private guaranteeService: GuaranteeService, private toastMessage: ToastService, private cdr: ChangeDetectorRef, private loadingService: LoadingService) { }
 
   ngOnInit(): void {
     this.translocoService.langChanges$.subscribe(() => {
@@ -76,6 +78,11 @@ export class GuaranteeCreateNew implements OnInit {
     });
   }
 
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
   lookup() {
     this.lookupRef = this.dialogService.open(LookupPopup, {
       header: this.translocoService.translate('guarantee.lookupPopup.lookupTitle'),
@@ -88,7 +95,7 @@ export class GuaranteeCreateNew implements OnInit {
       }
     });
 
-    this.lookupRef?.onClose.subscribe((item: Patient) => {
+    this.lookupRef?.onClose.pipe(takeUntil(this.destroy$)).subscribe((item: Patient) => {
       if (!item) return;
       this.guaranteeForm.patchValue({
         patientId: item.id,
@@ -106,18 +113,20 @@ export class GuaranteeCreateNew implements OnInit {
   }
 
   createNewGurantee() {
-    this.loading.set(true)
+    this.loadingService.show()
     try {
       const body = {
-        ...this.guaranteeForm.value,
+        ...this.guaranteeForm.getRawValue(),
         id: `GRT-${new Date().getFullYear()}-${String(Date.now()).slice(-6)}`,
         estimatedDischargeDate: moment(this.guaranteeForm.value.estimatedDischargeDate).format('YYYY-MM-DD'),
         admissionDate: moment(this.guaranteeForm.value.admissionDate).format('YYYY-MM-DD'),
+        status: 'DRAFT',
       }
       this.guaranteeService.addRequest(body).subscribe({
         next: (res) => {
           if(res) {
             this.toastMessage.showSuccess('')
+            // this.router.navigate(['/guarantee/list'])
           }
         },
         error: (err) => {
@@ -127,9 +136,8 @@ export class GuaranteeCreateNew implements OnInit {
     } catch (error) {
       this.toastMessage.showError('')
     } finally {
-      this.loading.set(false)
+      this.loadingService.hide()
       this.cdr.markForCheck()
     }
-
   }
 }

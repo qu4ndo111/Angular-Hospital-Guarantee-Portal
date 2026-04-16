@@ -153,7 +153,26 @@
         "button": "Lọc",
         "tooltip": "Mở bộ lọc nâng cao",
         "active": "Đang lọc",
-        "clearAll": "Xóa tất cả"
+        "clearAll": "Xóa tất cả",
+        "title": "Bộ lọc"
+      },
+      "filterPopup": {
+        "title": "Bộ lọc nâng cao",
+        "subtitle": "Lọc hồ sơ theo ngày nhập viện và trạng thái",
+        "dateRange": {
+          "label": "Khoảng thời gian nhập viện",
+          "from": "Từ ngày",
+          "to": "Đến ngày",
+          "placeholder": "Chọn ngày"
+        },
+        "status": {
+          "label": "Trạng thái hồ sơ",
+          "placeholder": "Chọn trạng thái..."
+        },
+        "actions": {
+          "apply": "Áp dụng",
+          "reset": "Đặt lại"
+        }
       },
       "actions": {
         "createNew": "Tạo mới",

@@ -1,1 +1,112 @@
-<p>filter works!</p>
+<div class="flex flex-col gap-6">
+
+  <!-- Header -->
+  <div class="flex items-center gap-3 pb-4 border-b border-surface-200 dark:border-surface-700">
+    <div class="w-10 h-10 rounded-xl bg-primary-100 dark:bg-primary-900/40 flex items-center justify-center text-primary-600 dark:text-primary-400">
+      <i class="pi pi-sliders-h text-lg"></i>
+    </div>
+    <div>
+      <h2 class="text-base font-semibold text-surface-900 dark:text-surface-0">
+        {{ 'guarantee.list.filterPopup.title' | transloco }}
+      </h2>
+      <p class="text-xs text-surface-500 dark:text-surface-400">
+        {{ 'guarantee.list.filterPopup.subtitle' | transloco }}
+      </p>
+    </div>
+  </div>
+
+  <form [formGroup]="filterForm" class="flex flex-col gap-5">
+
+    <!-- Date range -->
+    <div>
+      <p class="text-sm font-semibold text-surface-700 dark:text-surface-200 mb-3 flex items-center gap-2">
+        <i class="pi pi-calendar text-primary-500"></i>
+        {{ 'guarantee.list.filterPopup.dateRange.label' | transloco }}
+      </p>
+      <div class="grid grid-cols-2 gap-3">
+        <div class="flex flex-col gap-1">
+          <label class="text-xs text-surface-500 dark:text-surface-400">
+            {{ 'guarantee.list.filterPopup.dateRange.from' | transloco }}
+          </label>
+          <p-datepicker
+            id="filter-from-date"
+            formControlName="fromDate"
+            [placeholder]="'guarantee.list.filterPopup.dateRange.placeholder' | transloco"
+            appendTo="body"
+            [fluid]="true"
+            iconDisplay="input"
+            [showIcon]="true"
+            dateFormat="dd/mm/yy" />
+        </div>
+        <div class="flex flex-col gap-1">
+          <label class="text-xs text-surface-500 dark:text-surface-400">
+            {{ 'guarantee.list.filterPopup.dateRange.to' | transloco }}
+          </label>
+          <p-datepicker
+            id="filter-to-date"
+            formControlName="toDate"
+            [placeholder]="'guarantee.list.filterPopup.dateRange.placeholder' | transloco"
+            appendTo="body"
+            [fluid]="true"
+            iconDisplay="input"
+            [showIcon]="true"
+            dateFormat="dd/mm/yy" />
+        </div>
+      </div>
+    </div>
+
+    <p-divider />
+
+    <!-- Status -->
+    <div>
+      <p class="text-sm font-semibold text-surface-700 dark:text-surface-200 mb-3 flex items-center gap-2">
+        <i class="pi pi-tag text-primary-500"></i>
+        {{ 'guarantee.list.filterPopup.status.label' | transloco }}
+      </p>
+      <p-multiselect
+        id="filter-status"
+        formControlName="statuses"
+        [options]="statusOptions"
+        optionLabel="label"
+        optionValue="value"
+        [placeholder]="'guarantee.list.filterPopup.status.placeholder' | transloco"
+        appendTo="body"
+        [fluid]="true"
+        display="chip" />
+    </div>
+
+  </form>
+
+  <!-- Actions -->
+  <div class="flex items-center justify-between pt-4 border-t border-surface-200 dark:border-surface-700">
+    <button
+      pButton
+      type="button"
+      id="filter-reset-btn"
+      [label]="'guarantee.list.filterPopup.actions.reset' | transloco"
+      severity="secondary"
+      text="true"
+      icon="pi pi-refresh"
+      (click)="reset()">
+    </button>
+    <div class="flex gap-2">
+      <button
+        pButton
+        type="button"
+        id="filter-cancel-btn"
+        [label]="'common.actions.cancel' | transloco"
+        severity="secondary"
+        outlined="true"
+        (click)="cancel()">
+      </button>
+      <button
+        pButton
+        type="button"
+        id="filter-apply-btn"
+        [label]="'guarantee.list.filterPopup.actions.apply' | transloco"
+        icon="pi pi-check"
+        (click)="apply()">
+      </button>
+    </div>
+  </div>
+</div>

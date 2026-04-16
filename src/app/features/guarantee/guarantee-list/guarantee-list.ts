@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormsModule } from '@angular/forms';
-import { DecimalPipe } from '@angular/common';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AsyncPipe, DecimalPipe } from '@angular/common';
 
 import { MenuItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
@@ -13,7 +13,13 @@ import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import { Title } from '@app/shared/components/title/title';
 import { DataTable } from '@app/shared/ui/data-table/data-table';
 import { TableColumn } from '@app/shared/ui/data-table/data-table.model';
-import { GuaranteeStatus } from '../models/guarantee.model';
+import { GuaranteeFilter, GuaranteeRequest, GuaranteeStatus } from '../models/guarantee.model';
+import { BehaviorSubject, catchError, combineLatest, concat, debounceTime, distinctUntilChanged, finalize, map, merge, Observable, of, startWith, Subject, switchMap, takeUntil, tap } from 'rxjs';
+import { GuaranteeService } from '../services/guarantee.service';
+import { ToastService } from '@app/shared/services/toast.service';
+import { LoadingService } from '@app/shared/services/loading.service';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { Filter } from '../popup/filter/filter';
 
 interface FilterChip {
   key: string;
@@ -25,23 +31,27 @@ interface FilterChip {
   imports: [
     Title,
     DataTable,
-    FormsModule,
+    ReactiveFormsModule,
     DecimalPipe,
     ButtonModule,
     InputTextModule,
     TagModule,
     TooltipModule,
     TranslocoPipe,
+    AsyncPipe
   ],
   templateUrl: './guarantee-list.html',
   styleUrl: './guarantee-list.scss',
+  providers: [DialogService]
 })
-export class GuaranteeList implements OnInit {
+export class GuaranteeList implements OnInit, OnDestroy{
+  filterPopupRef: DynamicDialogRef | null = null
+
   menu: MenuItem[] = [];
   columns: TableColumn[] = [];
 
   // Search
-  searchKeyword: string = '';
+  searchKeyword = new FormControl<string>('');
 
   // Filter
   hasActiveFilters: boolean = false;
@@ -52,13 +62,24 @@ export class GuaranteeList implements OnInit {
   totalRecords: number = 0;
   loading: boolean = false;
 
+  vm$!: Observable<any>
+  page = new BehaviorSubject<number>(1)
+  pageSize = new BehaviorSubject<number>(10)
+  filter = new BehaviorSubject<GuaranteeFilter | null>(null)
+
+  destroy$ = new Subject<void>();
+
   constructor(
     private router: Router,
-    private translocoService: TranslocoService
-  ) {}
+    private translocoService: TranslocoService,
+    private guaranteeService: GuaranteeService,
+    private toastService: ToastService,
+    private loadingService: LoadingService,
+    private dialogService: DialogService
+  ) { }
 
   ngOnInit(): void {
-    this.translocoService.langChanges$.subscribe(() => {
+    this.translocoService.langChanges$.pipe(takeUntil(this.destroy$)).subscribe(() => {
       this.menu = [
         { label: this.translocoService.translate('menu.guarantee') },
         { label: this.translocoService.translate('menu.guarantee.list') },
@@ -75,6 +96,69 @@ export class GuaranteeList implements OnInit {
         { field: 'actions', header: '', width: '90px', template: 'actions' },
       ];
     });
+
+    const searchKeyword$ = concat(
+      of(''),
+      this.searchKeyword.valueChanges.pipe(
+        debounceTime(300),
+        distinctUntilChanged()
+      )
+    );
+
+    const filter$ = this.filter.asObservable()
+
+    const resetPageOnFilter$ = merge(
+      searchKeyword$.pipe(map(() => 1)),
+      filter$.pipe(map(() => 1))
+    )
+
+    const page$ = merge(
+      resetPageOnFilter$,
+      this.page.asObservable()
+    ).pipe(
+      distinctUntilChanged()
+    )
+
+    const pageSize$ = this.pageSize.asObservable().pipe(
+      distinctUntilChanged()
+    )
+
+    const query$ = combineLatest([
+      page$,
+      pageSize$,
+      searchKeyword$,
+      filter$
+    ]).pipe(
+      map(([page, pageSize, searchKeyword, filter]) => ({
+        page,
+        pageSize,
+        searchKeyword,
+        filter
+      }))
+    )
+
+    this.vm$ = query$.pipe(
+      tap(() => this.loadingService.show()),
+      switchMap(({ page, pageSize, searchKeyword, filter }) => {
+        return this.guaranteeService.getGuaranteeRequests(filter!).pipe(
+          catchError((err) => {
+            this.toastService.showError(err.message || 'Lỗi hệ thống')
+            return of([])
+          }),
+        )
+      }),
+      map((res) => {
+        return {
+          guaranteeRequests: res
+        }
+      }),
+      tap(() => this.loadingService.hide())
+    )
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next()
+    this.destroy$.complete()
   }
 
   navigateToCreate(): void {
@@ -82,7 +166,21 @@ export class GuaranteeList implements OnInit {
   }
 
   openFilter(): void {
-    // Sẽ mở filter popup — chưa xử lý
+    this.filterPopupRef = this.dialogService.open(Filter, {
+      header: this.translocoService.translate('guarantee.list.filter.title'),
+      width: '50%',
+      focusOnShow: false,
+      data: this.filter.getValue()
+    })
+
+    this.filterPopupRef!.onClose.pipe(takeUntil(this.destroy$)).subscribe({
+      next: (res) => {
+        this.filter.next(res)
+      },
+      error: (err) => {
+        console.log(err)
+      }
+    })
   }
 
   removeFilter(key: string): void {

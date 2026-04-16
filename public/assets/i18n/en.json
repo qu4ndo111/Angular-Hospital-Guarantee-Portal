@@ -153,7 +153,26 @@
         "button": "Filter",
         "tooltip": "Open advanced filters",
         "active": "Filtering by",
-        "clearAll": "Clear all"
+        "clearAll": "Clear all",
+        "title": "Filter"
+      },
+      "filterPopup": {
+        "title": "Advanced Filter",
+        "subtitle": "Filter records by admission date and status",
+        "dateRange": {
+          "label": "Admission Date Range",
+          "from": "From date",
+          "to": "To date",
+          "placeholder": "Select date"
+        },
+        "status": {
+          "label": "Record Status",
+          "placeholder": "Select status..."
+        },
+        "actions": {
+          "apply": "Apply",
+          "reset": "Reset"
+        }
       },
       "actions": {
         "createNew": "Create New",

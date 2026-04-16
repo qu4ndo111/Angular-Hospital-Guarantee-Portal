@@ -36,12 +36,14 @@ export class DataTable<T = any> {
   @Input() rowsPerPageOptions: number[] = [10, 25, 50];
   @Input() selectionMode: 'single' | 'multiple' | null = null;
 
+  @ContentChildren(PrimeTemplate)
+  set templates(value: QueryList<PrimeTemplate>) {
+    value.forEach(t => this.templateMap.set(t.name!, t.template));
+  }
+
   @Output() rowSelect = new EventEmitter<T | T[]>();
 
-
   private templateMap: Map<string, TemplateRef<any>> = new Map();
-
-
 
   getTemplate(name: string): TemplateRef<any> | null {
     return this.templateMap.get(name) || null;

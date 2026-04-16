@@ -36,6 +36,12 @@ export interface TimelineEvent {
   note?: string;
 }
 
+export interface GuaranteeFilter {
+  fromDate: string | null;
+  toDate: string | null;
+  statuses: GuaranteeStatus[] | null;
+}
+
 export interface Patient {
   id: string; // CCCD
   name: string;
