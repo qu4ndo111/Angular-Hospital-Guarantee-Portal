@@ -126,7 +126,7 @@ export class GuaranteeCreateNew implements OnInit, OnDestroy {
         next: (res) => {
           if(res) {
             this.toastMessage.showSuccess('')
-            // this.router.navigate(['/guarantee/list'])
+            this.router.navigate(['/guarantee/list'])
           }
         },
         error: (err) => {
