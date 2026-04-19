@@ -48,6 +48,10 @@ export const routes: Routes = [
       {
         path: 'guarantee/list',
         loadComponent: () => import('./features/guarantee/guarantee-list/guarantee-list').then((m) => m.GuaranteeList)
+      },
+      {
+        path: 'guarantee/detail/:id',
+        loadComponent: () => import('./features/guarantee/guarantee-detail/guarantee-detail').then((m) => m.GuaranteeDetail)
       }
     ]
   }

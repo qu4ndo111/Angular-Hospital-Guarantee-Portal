@@ -63,7 +63,10 @@
     "permissions": "Permissions",
     "guarantee": "Bảo lãnh",
     "guarantee.list": "Danh sách",
-    "guarantee.create": "Tạo mới"
+    "guarantee.create": "Tạo mới",
+    "guarantee.detail": "Chi tiết",
+    "module2": "Cơ sở 2",
+    "settings": "Cài đặt"
   },
   "common": {
     "actions": {
@@ -77,7 +80,9 @@
       "ok": "Đồng ý",
       "close": "Đóng"
     },
-    "search": "Tìm kiếm"
+    "search": "Tìm kiếm",
+    "choose": "Chọn",
+    "upload": "Tải lên"
   },
   "guarantee": {
     "lookupPopup": {
@@ -143,6 +148,11 @@
         "cancel": "Hủy yêu cầu",
         "submit": "Gửi yêu cầu bảo lãnh"
       }
+    },
+    "detail": {
+      "title": "Chi tiết yêu cầu bảo lãnh",
+      "subtitle": "Xem chi tiết yêu cầu bảo lãnh",
+      "status": "Trạng thái bảo lãnh"
     },
     "list": {
       "title": "Danh sách hồ sơ bảo lãnh",

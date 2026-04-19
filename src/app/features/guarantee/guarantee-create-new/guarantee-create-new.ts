@@ -5,7 +5,7 @@ import { Title } from '../../../shared/components/title/title';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
-import { MenuItem } from 'primeng/api';
+import { MenuItem, SelectItem } from 'primeng/api';
 import { DatePicker } from 'primeng/datepicker';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { LookupPopup } from '../popup/lookup-popup/lookup-popup';
@@ -17,13 +17,14 @@ import { Patient } from '../models/guarantee.model';
 import { Router } from '@angular/router';
 import moment from 'moment';
 import { GuaranteeService } from '../services/guarantee.service';
-import { exhaustMap, Subject, takeUntil, tap } from 'rxjs';
+import { exhaustMap, Subject, switchMap, takeUntil, tap } from 'rxjs';
 import { ToastService } from '@app/shared/services/toast.service';
 import { LoadingService } from '@app/shared/services/loading.service';
+import { GuaranteeForm } from '../components/guarantee-form/guarantee-form';
 
 @Component({
   selector: 'app-guarantee-create-new',
-  imports: [Title, ReactiveFormsModule, InputTextModule, ButtonModule, DatePicker, SelectModule, InputNumberModule, FileUploadModule, TranslocoPipe],
+  imports: [Title, ReactiveFormsModule, InputTextModule, ButtonModule, DatePicker, SelectModule, InputNumberModule, FileUploadModule, TranslocoPipe, GuaranteeForm],
   templateUrl: './guarantee-create-new.html',
   styleUrl: './guarantee-create-new.scss',
   providers: [DialogService]
@@ -34,22 +35,18 @@ export class GuaranteeCreateNew implements OnInit, OnDestroy {
   lookupForm!: FormGroup;
   guaranteeForm!: FormGroup;
   loading = signal<boolean>(false)
-  treatmentTypes: any[] = [];
+
   private destroy$ = new Subject<void>();
 
   constructor(private fb: FormBuilder, private dialogService: DialogService, private translocoService: TranslocoService, private router: Router, private guaranteeService: GuaranteeService, private toastMessage: ToastService, private cdr: ChangeDetectorRef, private loadingService: LoadingService) { }
 
   ngOnInit(): void {
-    this.translocoService.langChanges$.subscribe(() => {
+    this.translocoService.langChanges$.pipe(
+      takeUntil(this.destroy$)
+    ).subscribe(() => {
       this.menu = [
         { label: this.translocoService.translate('menu.guarantee') },
         { label: this.translocoService.translate('menu.guarantee.create') }
-      ];
-      this.treatmentTypes = [
-        { label: this.translocoService.translate('guarantee.create.treatmentSection.types.inpatient'), value: 'INPATIENT' },
-        { label: this.translocoService.translate('guarantee.create.treatmentSection.types.outpatient'), value: 'OUTPATIENT' },
-        { label: this.translocoService.translate('guarantee.create.treatmentSection.types.surgery'), value: 'SURGERY' },
-        { label: this.translocoService.translate('guarantee.create.treatmentSection.types.emergency'), value: 'EMERGENCY' }
       ];
     });
 

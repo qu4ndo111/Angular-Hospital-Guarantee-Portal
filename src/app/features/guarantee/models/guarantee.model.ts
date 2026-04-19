@@ -4,6 +4,8 @@ export interface GuaranteeRequest {
   patientId: string;             // CCCD
   dateOfBirth: string;
   gender: 'MALE' | 'FEMALE';
+  phone: string;
+  address: string;
   hospital: string;              // "Bệnh viện Bạch Mai"
   department: string;            // "Khoa Nội tiết"
   treatmentType: 'INPATIENT' | 'OUTPATIENT' | 'SURGERY' | 'EMERGENCY';
@@ -40,6 +42,7 @@ export interface GuaranteeFilter {
   fromDate: string | null;
   toDate: string | null;
   statuses: GuaranteeStatus[] | null;
+  activeFilterChips: Record<string, string>[] | null;
 }
 
 export interface Patient {

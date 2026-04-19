@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subject, switchMap, takeUntil } from 'rxjs';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 import { ButtonModule } from 'primeng/button';
@@ -23,8 +24,10 @@ import { GuaranteeFilter } from '../../models/guarantee.model';
   templateUrl: './filter.html',
   styleUrl: './filter.scss',
 })
-export class Filter implements OnInit {
+export class Filter implements OnInit, OnDestroy {
   filterForm!: FormGroup;
+
+  private destroy$ = new Subject<void>();
 
   statusOptions = [
     { label: '', value: 'DRAFT' },
@@ -58,8 +61,12 @@ export class Filter implements OnInit {
       this.filterForm.patchValue(oldFilter)
     }
 
-    this.refreshStatusLabels();
-    this.translocoService.langChanges$.subscribe(() => this.refreshStatusLabels());
+    this.translocoService.langChanges$.pipe(takeUntil(this.destroy$)).subscribe(() => this.refreshStatusLabels());
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   private refreshStatusLabels(): void {
@@ -83,8 +90,23 @@ export class Filter implements OnInit {
       fromDate: fromDate ? (fromDate as Date).toISOString().split('T')[0] : null,
       toDate: toDate ? (toDate as Date).toISOString().split('T')[0] : null,
       statuses: statuses?.length ? statuses : null,
+      activeFilterChips: this.buildActiveFilterChips(fromDate, toDate, statuses),
     };
     this.ref.close(filter);
+  }
+
+  private buildActiveFilterChips(fromDate: Date | null, toDate: Date | null, statuses: string[]): Record<string, string>[] {
+    const activeFilterChips: Record<string, string>[] = [];
+    if (fromDate) {
+      activeFilterChips.push({ label: this.translocoService.translate('guarantee.list.filterPopup.dateRange.from'), key: fromDate.toISOString().split('T')[0] });
+    }
+    if (toDate) {
+      activeFilterChips.push({ label: this.translocoService.translate('guarantee.list.filterPopup.dateRange.to'), key: toDate.toISOString().split('T')[0] });
+    }
+    if (statuses?.length) {
+      activeFilterChips.push(...statuses.map(status => ({ label: this.translocoService.translate('guarantee.list.filterPopup.status.label'), key: status })));
+    }
+    return activeFilterChips;
   }
 
   reset(): void {

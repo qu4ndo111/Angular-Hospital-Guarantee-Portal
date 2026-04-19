@@ -79,7 +79,9 @@ export class GuaranteeList implements OnInit, OnDestroy{
   ) { }
 
   ngOnInit(): void {
-    this.translocoService.langChanges$.pipe(takeUntil(this.destroy$)).subscribe(() => {
+    this.translocoService.langChanges$.pipe(
+      takeUntil(this.destroy$)
+    ).subscribe(() => {
       this.menu = [
         { label: this.translocoService.translate('menu.guarantee') },
         { label: this.translocoService.translate('menu.guarantee.list') },
@@ -168,13 +170,19 @@ export class GuaranteeList implements OnInit, OnDestroy{
   openFilter(): void {
     this.filterPopupRef = this.dialogService.open(Filter, {
       header: this.translocoService.translate('guarantee.list.filter.title'),
-      width: '50%',
+      width: '40%',
+      breakpoints: {
+        '960px': '70vw',
+        '640px': '95vw'
+      },
       focusOnShow: false,
       data: this.filter.getValue()
     })
 
     this.filterPopupRef!.onClose.pipe(takeUntil(this.destroy$)).subscribe({
       next: (res) => {
+        this.activeFilterChips = res.activeFilterChips
+        this.hasActiveFilters = this.activeFilterChips.length > 0
         this.filter.next(res)
       },
       error: (err) => {
@@ -215,5 +223,9 @@ export class GuaranteeList implements OnInit, OnDestroy{
       PAID: 'success',
     };
     return map[status] ?? 'secondary';
+  }
+
+  onRowSelect(event: any) {
+    this.router.navigate(['/guarantee/detail', event.id]);
   }
 }

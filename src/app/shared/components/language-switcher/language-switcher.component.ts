@@ -111,16 +111,18 @@ export class LanguageSwitcherComponent {
      * Change application language
      */
     changeLanguage(langCode: string) {
-        this.translocoService.setActiveLang(langCode);
-        // Optionally save to localStorage
-        localStorage.setItem('preferredLanguage', langCode);
+        this.translocoService.load(langCode).subscribe(() => {
+            this.translocoService.setActiveLang(langCode);
+            // Optionally save to localStorage
+            localStorage.setItem('preferredLanguage', langCode);
 
-        // Update menu items active state
-        this.languageItems = this.languages.map(lang => ({
-            label: `${lang.flag} ${lang.label}`,
-            command: () => this.changeLanguage(lang.code),
-            styleClass: this.isActiveLang(lang.code) ? 'active' : '',
-        }));
+            // Update menu items active state
+            this.languageItems = this.languages.map(lang => ({
+                label: `${lang.flag} ${lang.label}`,
+                command: () => this.changeLanguage(lang.code),
+                styleClass: this.isActiveLang(lang.code) ? 'active' : '',
+            }));
+        });
     }
 
     /**

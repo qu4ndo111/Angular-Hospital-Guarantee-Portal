@@ -20,6 +20,8 @@ export class GuaranteeService {
       dateOfBirth: '1990-01-01',
       gender: 'MALE',
       hospital: 'Bệnh viện Bạch Mai',
+      phone: '0901234567',
+      address: 'Hà Nội',
       department: 'Khoa Nội tiết',
       treatmentType: 'INPATIENT',
       admissionDate: '2024-04-10',
@@ -45,6 +47,8 @@ export class GuaranteeService {
       dateOfBirth: '1992-05-15',
       gender: 'FEMALE',
       hospital: 'Bệnh viện Chợ Rẫy',
+      phone: '0987654321',
+      address: 'Hồ Chí Minh',
       department: 'Khoa Ngoại',
       treatmentType: 'SURGERY',
       admissionDate: '2024-04-12',
@@ -71,6 +75,8 @@ export class GuaranteeService {
         patientId: '001090111222',
         dateOfBirth: '1985-10-20',
         gender: 'MALE',
+        phone: '0912345678',
+        address: 'Đà Nẵng',
         hospital: 'Bệnh viện Chấn thương Chỉnh hình',
         department: 'Khoa Phẫu thuật',
         treatmentType: 'SURGERY',
@@ -93,7 +99,7 @@ export class GuaranteeService {
       }
   ];
 
-  guaranteeRequests = signal<GuaranteeRequest[]>(this.fakeRequests);
+  private guaranteeRequests = signal<GuaranteeRequest[]>(this.fakeRequests);
 
   constructor() { }
 
@@ -124,8 +130,8 @@ export class GuaranteeService {
     return of(results).pipe(delay(400));
   }
 
-  getGuaranteeRequestsById(cccd: string): Observable<GuaranteeRequest | undefined> {
-    const guarantee = this.guaranteeRequests().find((rq) => rq.patientId === cccd)
+  getGuaranteeRequestsById(id: string): Observable<GuaranteeRequest | undefined> {
+    const guarantee = this.guaranteeRequests().find((rq) => rq.id === id)
     return of(guarantee)
   }
 

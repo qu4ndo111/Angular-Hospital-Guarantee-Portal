@@ -8,7 +8,7 @@ import { LanguageSwitcherComponent } from '../language-switcher/language-switche
 
 import { MenuModule } from 'primeng/menu';
 import { MenuItem } from 'primeng/api';
-import { Subscription } from 'rxjs';
+import { Subscription, switchMap } from 'rxjs';
 import { Router } from '@angular/router';
 
 @Component({
@@ -27,8 +27,6 @@ export class Header implements OnInit, OnDestroy {
     this.langChangeSubscription = this.translocoService.langChanges$.subscribe(() => {
       this.updateMenuItems();
     });
-
-    this.updateMenuItems();
   }
 
   ngOnDestroy(): void {

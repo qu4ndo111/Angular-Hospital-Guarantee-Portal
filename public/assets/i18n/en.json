@@ -63,7 +63,10 @@
     "permissions": "Permissions",
     "guarantee": "Guarantee",
     "guarantee.list": "List",
-    "guarantee.create": "Create"
+    "guarantee.create": "Create",
+    "guarantee.detail": "Detail",
+    "module2": "Module 2",
+    "settings": "Settings"
   },
   "common": {
     "actions": {
@@ -77,7 +80,9 @@
       "ok": "OK",
       "close": "Close"
     },
-    "search": "Search"
+    "search": "Search",
+    "choose": "Choose",
+    "upload": "Upload"
   },
   "guarantee": {
     "lookupPopup": {
@@ -143,6 +148,11 @@
         "cancel": "Cancel Request",
         "submit": "Submit Guarantee Request"
       }
+    },
+    "detail": {
+      "title": "Guarantee Request Detail",
+      "subtitle": "View details of the guarantee request",
+      "status": "Guarantee Status"
     },
     "list": {
       "title": "Guarantee Request List",

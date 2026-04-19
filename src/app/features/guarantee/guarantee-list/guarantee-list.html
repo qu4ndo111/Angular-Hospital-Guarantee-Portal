@@ -71,7 +71,7 @@
     <!-- Table -->
     @if(vm$ | async; as vm) {
     <div class="p-4">
-      <app-data-table [value]="vm.guaranteeRequests" [columns]="columns" [loading]="loading" [paginator]="true"
+      <app-data-table [value]="vm.guaranteeRequests" [columns]="columns" [loading]="loading" selectionMode="single" (rowSelect)="onRowSelect($event)" [paginator]="true"
         [rows]="pageSize.getValue()" [rowsPerPageOptions]="[10, 25, 50]">
         <!-- Status template -->
         <ng-template pTemplate="status" let-rowData>
