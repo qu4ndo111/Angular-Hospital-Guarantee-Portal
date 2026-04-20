@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
@@ -8,6 +8,7 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { FileUploadModule } from 'primeng/fileupload';
 import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import { SelectItem } from 'primeng/api';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-guarantee-form',
@@ -15,21 +16,41 @@ import { SelectItem } from 'primeng/api';
   templateUrl: './guarantee-form.html',
   styleUrl: './guarantee-form.scss',
 })
-export class GuaranteeForm implements OnInit {
+export class GuaranteeForm implements OnInit, OnDestroy {
 
   @Input() guaranteeForm!: FormGroup;
   @Input() isEdit: boolean = false;
 
-  treatmentTypes: SelectItem[] = [];
+  treatmentTypes: SelectItem[] = [
+    { label: '', value: 'INPATIENT' },
+    { label: '', value: 'OUTPATIENT' },
+    { label: '', value: 'SURGERY' },
+    { label: '', value: 'EMERGENCY' }
+  ];
+
+  private destroy$ = new Subject<void>();
 
   constructor(private translocoService: TranslocoService) {}
 
   ngOnInit(): void {
-    this.treatmentTypes = [
-        { label: this.translocoService.translate('guarantee.create.treatmentSection.types.inpatient'), value: 'INPATIENT' },
-        { label: this.translocoService.translate('guarantee.create.treatmentSection.types.outpatient'), value: 'OUTPATIENT' },
-        { label: this.translocoService.translate('guarantee.create.treatmentSection.types.surgery'), value: 'SURGERY' },
-        { label: this.translocoService.translate('guarantee.create.treatmentSection.types.emergency'), value: 'EMERGENCY' }
-      ];
+    this.translocoService.langChanges$.pipe(takeUntil(this.destroy$)).subscribe(() => this.refreshTreatmentTypeLabels());
+  }
+
+  private refreshTreatmentTypeLabels(): void {
+    const typeKeys: Record<string, string> = {
+      INPATIENT: 'guarantee.create.treatmentSection.types.inpatient',
+      OUTPATIENT: 'guarantee.create.treatmentSection.types.outpatient',
+      SURGERY: 'guarantee.create.treatmentSection.types.surgery',
+      EMERGENCY: 'guarantee.create.treatmentSection.types.emergency',
+    }
+    this.treatmentTypes = this.treatmentTypes.map(opt => ({
+      ...opt,
+      label: this.translocoService.translate(typeKeys[opt.value]),
+    }));
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

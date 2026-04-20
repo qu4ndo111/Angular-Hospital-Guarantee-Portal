@@ -42,6 +42,8 @@ export interface GuaranteeFilter {
   fromDate: string | null;
   toDate: string | null;
   statuses: GuaranteeStatus[] | null;
+  hospital: string | null;
+  treatmentType: 'INPATIENT' | 'OUTPATIENT' | 'SURGERY' | 'EMERGENCY' | null;
   activeFilterChips: Record<string, string>[] | null;
 }
 

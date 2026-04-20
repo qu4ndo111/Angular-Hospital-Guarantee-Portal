@@ -65,8 +65,8 @@ export class GuaranteeService {
       timeline: [
         { status: 'DRAFT', timestamp: '2024-04-12T08:00:00Z', actor: 'Bệnh viện Chợ Rẫy' },
         { status: 'SUBMITTED', timestamp: '2024-04-12T09:00:00Z', actor: 'Bệnh viện Chợ Rẫy' },
-        { status: 'REVIEWING', timestamp: '2024-04-12T14:00:00Z', actor: 'AZINSU Reviewer 1' },
-        { status: 'APPROVED', timestamp: '2024-04-13T10:00:00Z', actor: 'AZINSU Reviewer 1', note: 'Đồng ý bảo lãnh 50tr theo hợp đồng.' }
+        { status: 'REVIEWING', timestamp: '2024-04-12T14:00:00Z', actor: 'AQ Reviewer 1' },
+        { status: 'APPROVED', timestamp: '2024-04-13T10:00:00Z', actor: 'AQ Reviewer 1', note: 'Đồng ý bảo lãnh 50tr theo hợp đồng.' }
       ]
     },
     {
@@ -94,7 +94,7 @@ export class GuaranteeService {
         timeline: [
           { status: 'DRAFT', timestamp: '2024-04-20T09:00:00Z', actor: 'Bệnh viện Chấn thương Chỉnh hình' },
           { status: 'SUBMITTED', timestamp: '2024-04-20T10:00:00Z', actor: 'Bệnh viện Chấn thương Chỉnh hình' },
-          { status: 'REVIEWING', timestamp: '2024-04-20T14:00:00Z', actor: 'AZINSU Reviewer 2' }
+          { status: 'REVIEWING', timestamp: '2024-04-20T14:00:00Z', actor: 'AQ Reviewer 2' }
         ]
       }
   ];
@@ -127,6 +127,15 @@ export class GuaranteeService {
       results = results.filter(r => r.admissionDate <= filter.toDate!);
     }
 
+    if (filter?.hospital) {
+      const lowerHospital = filter.hospital.toLowerCase();
+      results = results.filter(r => r.hospital.toLowerCase().includes(lowerHospital));
+    }
+
+    if (filter?.treatmentType) {
+      results = results.filter(r => r.treatmentType === filter.treatmentType);
+    }
+
     return of(results).pipe(delay(400));
   }
 
@@ -140,5 +149,15 @@ export class GuaranteeService {
         delay(400),
         tap(() => this.guaranteeRequests.update(reqs => [request, ...reqs]))
       )
+  }
+
+  updateRequest(request: GuaranteeRequest): Observable<GuaranteeRequest> {
+    return of(request).pipe(
+      delay(400),
+      tap(() => {
+        const updated = this.guaranteeRequests().map((rq) => rq.id === request.id ? request : rq)
+        this.guaranteeRequests.set(updated)
+      })
+    )
   }
 }

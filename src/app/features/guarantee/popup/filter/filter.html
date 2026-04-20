@@ -57,6 +57,41 @@
 
     <p-divider />
 
+    <!-- Hospital & Treatment Type -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <!-- Hospital -->
+      <div>
+        <p class="text-sm font-semibold text-surface-700 dark:text-surface-200 mb-3 flex items-center gap-2">
+          <i class="pi pi-building text-primary-500"></i>
+          {{ 'guarantee.list.filterPopup.hospital.label' | transloco }}
+        </p>
+        <input
+          id="filter-hospital"
+          type="text"
+          pInputText
+          formControlName="hospital"
+          [placeholder]="'guarantee.list.filterPopup.hospital.placeholder' | transloco"
+          class="w-full" />
+      </div>
+
+      <!-- Treatment Type -->
+      <div>
+        <p class="text-sm font-semibold text-surface-700 dark:text-surface-200 mb-3 flex items-center gap-2">
+          <i class="pi pi-briefcase text-primary-500"></i>
+          {{ 'guarantee.list.filterPopup.treatmentType.label' | transloco }}
+        </p>
+        <p-select
+          id="filter-treatment-type"
+          formControlName="treatmentType"
+          [options]="treatmentTypeOptions"
+          [placeholder]="'guarantee.list.filterPopup.treatmentType.placeholder' | transloco"
+          appendTo="body"
+          [fluid]="true" />
+      </div>
+    </div>
+
+    <p-divider />
+
     <!-- Status -->
     <div>
       <p class="text-sm font-semibold text-surface-700 dark:text-surface-200 mb-3 flex items-center gap-2">

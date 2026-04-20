@@ -129,7 +129,7 @@
 
       <div class="flex flex-col gap-2 border-t border-surface-200 dark:border-surface-700 pt-6">
         <label class="font-medium text-surface-900 dark:text-surface-0 text-sm mb-2">{{ 'guarantee.create.insuranceSection.attachment' | transloco }}</label>
-        <p-fileupload mode="advanced" [chooseLabel]="'common.choose' | transloco" [uploadLabel]="'common.upload' | transloco" [cancelLabel]="'common.actions.cancel' | transloco" [multiple]="true" accept="image/*,.pdf" maxFileSize="1000000"></p-fileupload>
+        <p-fileupload [disabled]="!isEdit" mode="advanced" [chooseLabel]="'common.choose' | transloco" [uploadLabel]="'common.upload' | transloco" [cancelLabel]="'common.actions.cancel' | transloco" [multiple]="true" accept="image/*,.pdf" maxFileSize="1000000"></p-fileupload>
       </div>
     </div>
   </form>

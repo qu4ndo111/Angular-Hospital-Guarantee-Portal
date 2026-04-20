@@ -122,16 +122,16 @@ export class GuaranteeCreateNew implements OnInit, OnDestroy {
       this.guaranteeService.addRequest(body).subscribe({
         next: (res) => {
           if(res) {
-            this.toastMessage.showSuccess('')
+            this.toastMessage.showSuccess(this.translocoService.translate('message.success.create'))
             this.router.navigate(['/guarantee/list'])
           }
         },
         error: (err) => {
-          this.toastMessage.showError('')
+          this.toastMessage.showError(err?.message || this.translocoService.translate('message.error.general'))
         }
       })
     } catch (error) {
-      this.toastMessage.showError('')
+      this.toastMessage.showError(this.translocoService.translate('message.error.general'))
     } finally {
       this.loadingService.hide()
       this.cdr.markForCheck()

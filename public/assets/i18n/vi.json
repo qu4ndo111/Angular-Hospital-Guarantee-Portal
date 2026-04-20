@@ -56,6 +56,14 @@
     "profile": "Hồ sơ",
     "logout": "Đăng xuất"
   },
+  "dashboard": {
+    "stats": {
+      "total": "Tổng số hồ sơ",
+      "reviewing": "Đang xử lý",
+      "approved": "Đã duyệt",
+      "rejected": "Từ chối"
+    }
+  },
   "menu": {
     "dashboard": "Dashboard",
     "users": "Users",
@@ -83,6 +91,38 @@
     "search": "Tìm kiếm",
     "choose": "Chọn",
     "upload": "Tải lên"
+  },
+  "message": {
+    "success": {
+      "title": "Thành công",
+      "general": "Thao tác đã được thực hiện thành công.",
+      "save": "Các thay đổi của bạn đã được lưu lại.",
+      "create": "Hồ sơ mới đã được tạo thành công.",
+      "update": "Thông tin đã được cập nhật thành công.",
+      "delete": "Mục đã được xóa khỏi hệ thống.",
+      "submit": "Yêu cầu của bạn đã được gửi và đang được xử lý."
+    },
+    "error": {
+      "title": "Lỗi",
+      "general": "Rất tiếc! Đã có lỗi xảy ra. Vui lòng thử lại sau.",
+      "forbidden": "Bạn không có quyền thực hiện hành động này.",
+      "unauthorized": "Phiên làm việc đã hết hạn. Vui lòng đăng nhập lại.",
+      "notFound": "Chúng tôi không tìm thấy dữ liệu mà bạn đang tìm kiếm.",
+      "validation": "Vui lòng kiểm tra lại các trường thông tin và sửa lỗi.",
+      "connection": "Lỗi kết nối mạng. Vui lòng kiểm tra lại internet."
+    },
+    "warning": {
+      "title": "Cảnh báo",
+      "unsavedChanges": "Bạn có thay đổi chưa lưu. Bạn có muốn lưu trước khi rời đi?",
+      "irreversible": "Hành động này không thể hoàn tác. Bạn có chắc chắn không?",
+      "limitReached": "Bạn đã đạt đến giới hạn tối đa cho hành động này."
+    },
+    "info": {
+      "title": "Thông báo",
+      "loading": "Mọi thứ đang được chuẩn bị, vui lòng đợi trong giây lát...",
+      "noResult": "Không tìm thấy kết quả phù hợp với tiêu chí của bạn.",
+      "maintenance": "Hệ thống sẽ được bảo trì trong thời gian tới."
+    }
   },
   "guarantee": {
     "lookupPopup": {
@@ -152,7 +192,14 @@
     "detail": {
       "title": "Chi tiết yêu cầu bảo lãnh",
       "subtitle": "Xem chi tiết yêu cầu bảo lãnh",
-      "status": "Trạng thái bảo lãnh"
+      "status": "Trạng thái hồ sơ",
+      "timeline": {
+        "title": "Lịch sử duyệt hồ sơ"
+      },
+      "actions": {
+        "submit": "Cập nhật",
+        "cancel": "Hủy"
+      }
     },
     "list": {
       "title": "Danh sách hồ sơ bảo lãnh",
@@ -174,6 +221,14 @@
           "from": "Từ ngày",
           "to": "Đến ngày",
           "placeholder": "Chọn ngày"
+        },
+        "hospital": {
+          "label": "Bệnh viện",
+          "placeholder": "Tìm tên bệnh viện..."
+        },
+        "treatmentType": {
+          "label": "Hình thức điều trị",
+          "placeholder": "Chọn hình thức..."
         },
         "status": {
           "label": "Trạng thái hồ sơ",

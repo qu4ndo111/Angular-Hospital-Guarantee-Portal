@@ -54,6 +54,6 @@
   <!-- Nút hành động -->
       <div class="mt-8 flex justify-end gap-3 border-t border-surface-200 dark:border-surface-700 pt-6">
         <button pButton type="button" [label]="'guarantee.create.actions.cancel' | transloco" icon="pi pi-times" (click)="close()"severity="secondary" outlined="true"></button>
-        <button pButton type="submit" [label]="'guarantee.create.actions.submit' | transloco" icon="pi pi-check" iconPos="right" [disabled]="guaranteeForm.invalid"></button>
+        <button pButton type="button" (click)="createNewGurantee()" [label]="'guarantee.create.actions.submit' | transloco" icon="pi pi-check" iconPos="right" [disabled]="guaranteeForm.invalid"></button>
       </div>
 </div>

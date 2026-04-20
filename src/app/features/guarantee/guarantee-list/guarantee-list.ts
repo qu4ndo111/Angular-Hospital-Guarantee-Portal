@@ -199,6 +199,7 @@ export class GuaranteeList implements OnInit, OnDestroy{
   clearAllFilters(): void {
     this.activeFilterChips = [];
     this.hasActiveFilters = false;
+    this.filter.next(null);
   }
 
   getStatusLabel(status: GuaranteeStatus): string {

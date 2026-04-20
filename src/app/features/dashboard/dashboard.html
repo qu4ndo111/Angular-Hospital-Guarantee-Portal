@@ -1,6 +1,10 @@
-<div class="dashboard-grid">
-  <app-card icon="pi pi-users" value="2,847" label="Total Users" />
-  <app-card icon="pi pi-dollar" value="$45,230" label="Revenue" iconBg="#10b981" />
-  <app-card icon="pi pi-shopping-cart" value="156" label="New Orders" iconBg="#f59e0b" />
-  <app-card icon="pi pi-chart-line" value="98.2%" label="Uptime" iconBg="#8b5cf6" />
-</div>
+<app-title [title]="'menu.dashboard' | transloco" [menu]="[{label: 'Dashboard'}]"></app-title>
+
+@if(stats$ | async; as stats) {
+  <div class="dashboard-grid lg:px-6">
+    <app-card icon="pi pi-file" [value]="stats.total.toString()" [label]="'dashboard.stats.total' | transloco" iconBg="#3b82f6" />
+    <app-card icon="pi pi-sync" [value]="stats.reviewing.toString()" [label]="'dashboard.stats.reviewing' | transloco" iconBg="#f59e0b" />
+    <app-card icon="pi pi-check-circle" [value]="stats.approved.toString()" [label]="'dashboard.stats.approved' | transloco" iconBg="#10b981" />
+    <app-card icon="pi pi-times-circle" [value]="stats.rejected.toString()" [label]="'dashboard.stats.rejected' | transloco" iconBg="#ef4444" />
+  </div>
+}

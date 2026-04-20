@@ -56,6 +56,14 @@
     "profile": "Profile",
     "logout": "Logout"
   },
+  "dashboard": {
+    "stats": {
+      "total": "Total Claims",
+      "reviewing": "Pending Review",
+      "approved": "Approved",
+      "rejected": "Rejected"
+    }
+  },
   "menu": {
     "dashboard": "Dashboard",
     "users": "Users",
@@ -83,6 +91,38 @@
     "search": "Search",
     "choose": "Choose",
     "upload": "Upload"
+  },
+  "message": {
+    "success": {
+      "title": "Success",
+      "general": "The operation was completed successfully.",
+      "save": "Your changes have been saved successfully.",
+      "create": "New record has been created successfully.",
+      "update": "Information has been updated successfully.",
+      "delete": "The item has been removed from the system.",
+      "submit": "Your request has been submitted and is being processed."
+    },
+    "error": {
+      "title": "Error",
+      "general": "Oops! Something went wrong. Please try again later.",
+      "forbidden": "You don't have permission to perform this action.",
+      "unauthorized": "Session expired. Please log in again to continue.",
+      "notFound": "We couldn't find the data you were looking for.",
+      "validation": "Please check the highlighted fields and correct the errors.",
+      "connection": "Network connection error. Please check your internet."
+    },
+    "warning": {
+      "title": "Warning",
+      "unsavedChanges": "You have unsaved changes. Do you want to save before leaving?",
+      "irreversible": "This action cannot be undone. Are you sure?",
+      "limitReached": "You have reached the maximum limit for this action."
+    },
+    "info": {
+      "title": "Notification",
+      "loading": "Everything is being prepared for you...",
+      "noResult": "No results found matching your criteria.",
+      "maintenance": "The system will undergo maintenance soon."
+    }
   },
   "guarantee": {
     "lookupPopup": {
@@ -152,7 +192,14 @@
     "detail": {
       "title": "Guarantee Request Detail",
       "subtitle": "View details of the guarantee request",
-      "status": "Guarantee Status"
+      "status": "Record Status",
+      "timeline": {
+        "title": "Approval Timeline"
+      },
+      "actions": {
+        "submit": "Update",
+        "cancel": "Cancel"
+      }
     },
     "list": {
       "title": "Guarantee Request List",
@@ -174,6 +221,14 @@
           "from": "From date",
           "to": "To date",
           "placeholder": "Select date"
+        },
+        "hospital": {
+          "label": "Hospital",
+          "placeholder": "Search hospital name..."
+        },
+        "treatmentType": {
+          "label": "Treatment Type",
+          "placeholder": "Select treatment type..."
         },
         "status": {
           "label": "Record Status",
