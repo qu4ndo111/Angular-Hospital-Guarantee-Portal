@@ -23,6 +23,7 @@ import { MenuItem } from 'primeng/api';
       #menu
       [model]="languageItems"
       [popup]="true"
+      appendTo="body"
       styleClass="lang-menu">
     </p-menu>
   `,

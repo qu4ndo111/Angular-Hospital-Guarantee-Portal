@@ -1,303 +1,192 @@
-# 🚀 Angular Business Base - Freelance Starter Kit
+# Hospital Guarantee Management Portal
 
-> Lean Angular 20 starter kit for freelance projects. Pull, customize, ship fast.
+A web application for managing hospital insurance guarantee requests, built with Angular 20 and PrimeNG.
 
-[![Angular](https://img.shields.io/badge/Angular-20.3-red.svg)](https://angular.io/)
-[![PrimeNG](https://img.shields.io/badge/PrimeNG-20.4-blue.svg)](https://primeng.org/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.9-blue.svg)](https://www.typescriptlang.org/)
+Live demo: [your-vercel-url]
 
 ---
 
-## 🎯 Overview
+## What this project demonstrates
 
-Minimal yet complete starter kit for freelance developers. **Philosophy: "Just Enough, Not Too Much"**
-
-### What's Included ✅
-
-- 🔐 **Auth Flow** - Login, Register, Forgot Password + Guards
-- 🎨 **UI/UX** - Responsive layouts, Dark/Light theme, PrimeNG + TailwindCSS
-- 🌍 **i18n** - EN/VI with Transloco + Language switcher
-- 🏗️ **Layouts** - Main layout (header, sidebar, footer) + Auth layout
-- 🧩 **Components** - Button, DataTable wrappers + Toast, ConfirmDialog services
-
-### Tech Stack
-
-Angular 20.3 • PrimeNG 20.4 • Transloco 8.2 • TailwindCSS 4.1 • TypeScript 5.9
+- Multi-step form for submitting guarantee requests
+- List view with search, filter by status/hospital/treatment type
+- Detail page showing approval timeline and workflow stages
+- Six-stage status workflow: Draft → Submitted → Reviewing → Approved / Rejected → Paid
+- Role-based actions: Applicant, Reviewer, Admin (switched via UI)
+- Responsive layout with dark and light theme
+- Bilingual interface: English and Vietnamese
 
 ---
 
-## 📁 Key Project Structure
+## Tech stack
+
+- Angular 20 (standalone components)
+- PrimeNG 20
+- RxJS
+- Transloco (i18n)
+- TypeScript
+- TailwindCSS
+
+---
+
+## Getting started
+
+```bash
+npm install
+npm start
+```
+
+Open http://localhost:4200
+
+Login credentials:
+
+```
+Email:    admin@admin.com
+Password: Admin@123
+```
+
+---
+
+## Project structure
 
 ```
 src/app/
-├── core/                    # Guards, services, app-wide config
-│   ├── config/menu.ts       # Sidebar menu
-│   ├── guard/               # Auth & guest guards
-│   └── services/            # Theme service
-│
-├── features/                # Feature modules
-│   ├── auth/               # Login, Register, Forgot Password
-│   └── dashboard/          # Main dashboard
-│
-├── layouts/                 # Layout components
-│   ├── main-layout/        # Header + Sidebar + Content
-│   └── auth-layout/        # Centered layout for auth
-│
-└── shared/                  # Shared resources
-    ├── components/         # Header, Footer, Sidebar, etc.
-    ├── ui/                 # Button, DataTable, ConfirmDialog wrappers
-    └── services/           # Toast, ConfirmDialog services
+├── core/               Guards, global services, menu config
+├── features/
+│   ├── auth/           Login, register, forgot password
+│   ├── dashboard/      Stats overview
+│   └── guarantee/      Main feature: list, form, detail
+├── layouts/            Main layout and auth layout
+└── shared/
+    ├── components/     Header, sidebar, footer
+    ├── ui/             Reusable UI wrappers (button, table, card)
+    └── services/       Toast, confirm dialog, loading
 ```
 
 ---
 
-## 🚀 Quick Start
+## Key commands
 
 ```bash
-# Install
-npm install
+npm start           Start dev server
+npm run build       Production build
+ng g c <name>       Generate component
+ng g s <name>       Generate service
+```
 
-# Start dev server
+---
+
+## Business context
+
+This project is a simplified version of a hospital guarantee management system used in insurance operations. Hospital partners submit guarantee requests digitally, and insurance reviewers approve or reject them based on contract terms. The goal is to reduce manual processing time by automating the approval workflow.
+
+---
+
+## Notes
+
+- Authentication is mocked. Replace `auth.service.ts` with your real API when integrating a backend.
+- All data is stored in memory using Angular signals. Replace with HTTP calls as needed.
+- Menu items are configured in `core/config/menu.ts`.
+- Theme colors are in `src/styles.scss` under `:root`.
+
+---
+
+*Built as a portfolio project. Simplified version of a real insurance platform.*
+
+---
+
+---
+
+# Cổng thông tin bảo lãnh viện phí
+
+Ứng dụng web quản lý yêu cầu bảo lãnh viện phí cho các bệnh viện đối tác, xây dựng bằng Angular 20 và PrimeNG.
+
+Demo trực tuyến: [your-vercel-url]
+
+---
+
+## Tính năng
+
+- Form nhiều bước để gửi yêu cầu bảo lãnh
+- Danh sách hồ sơ với tìm kiếm và lọc theo trạng thái, bệnh viện, loại điều trị
+- Trang chi tiết hiển thị lịch sử duyệt và các bước xử lý
+- Quy trình 6 trạng thái: Nháp → Đã gửi → Đang xét duyệt → Duyệt / Từ chối → Đã thanh toán
+- Phân quyền theo vai trò: Người nộp hồ sơ, Người duyệt, Quản trị viên
+- Giao diện sáng / tối, hỗ trợ tiếng Anh và tiếng Việt
+
+---
+
+## Công nghệ
+
+- Angular 20 (standalone components)
+- PrimeNG 20
+- RxJS
+- Transloco (đa ngôn ngữ)
+- TypeScript
+- TailwindCSS
+
+---
+
+## Chạy dự án
+
+```bash
+npm install
 npm start
+```
 
-# Navigate to http://localhost:4200/
-# Login: admin@admin.com / any password
+Truy cập http://localhost:4200
+
+Thông tin đăng nhập:
+
+```
+Email:    admin@admin.com
+Password: Admin@123
 ```
 
 ---
 
-## 📚 Common Tasks
+## Cấu trúc thư mục
 
-### Add New Page
+```
+src/app/
+├── core/               Guards, service toàn cục, cấu hình menu
+├── features/
+│   ├── auth/           Đăng nhập, đăng ký, quên mật khẩu
+│   ├── dashboard/      Tổng quan thống kê
+│   └── guarantee/      Tính năng chính: danh sách, form, chi tiết
+├── layouts/            Layout chính và layout xác thực
+└── shared/
+    ├── components/     Header, sidebar, footer
+    ├── ui/             Component tái sử dụng (button, table, card)
+    └── services/       Toast, hộp thoại xác nhận, loading
+```
+
+---
+
+## Lệnh thường dùng
 
 ```bash
-ng generate component features/your-feature --standalone
-```
-
-Add route in `app.routes.ts`:
-```typescript
-{ path: 'your-feature', component: YourFeatureComponent, canActivate: [authGuard] }
-```
-
-### Add Menu Item
-
-Edit `core/config/menu.ts`:
-```typescript
-{
-  label: 'Your Feature',
-  icon: 'pi pi-star',
-  routerLink: '/your-feature'
-}
-```
-
-### Add Translation
-
-**`public/assets/i18n/en.json`:**
-```json
-{ "yourFeature": { "title": "Your Feature" } }
-```
-
-**Usage:**
-```html
-<div *transloco="let t">{{ t('yourFeature.title') }}</div>
-```
-
-### Customize Theme
-
-**`src/styles.scss`:**
-```scss
-:root { --color-primary: #your-color; }
-```
-
-### Show Notifications
-
-```typescript
-// Toast
-constructor(private toast: ToastService) {}
-this.toast.showSuccess('Success!');
-
-// Confirm Dialog
-constructor(private confirmDialog: ConfirmDialogService) {}
-this.confirmDialog.showConfirmDialog(
-  'Are you sure?',
-  'Confirm',
-  () => { /* accept */ },
-  () => { /* reject */ }
-);
-```
-
-### Use DataTable
-
-```typescript
-columns = [
-  { field: 'id', header: 'ID', sortable: true },
-  { field: 'name', header: 'Name', sortable: true }
-];
-data = [{ id: 1, name: 'John' }];
-```
-
-```html
-<app-data-table [value]="data" [columns]="columns"></app-data-table>
-```
-
-### Build Production
-
-```bash
-ng build --configuration production
+npm start           Chạy môi trường phát triển
+npm run build       Build production
+ng g c <name>       Tạo component
+ng g s <name>       Tạo service
 ```
 
 ---
 
-## 💼 Freelance Workflow
+## Bối cảnh nghiệp vụ
 
-### Recommended Process
-
-**1. Clone per project:**
-```bash
-git clone <this-repo> client-project-name
-cd client-project-name
-rm -rf .git
-git init
-npm install
-```
-
-**2. Customize:**
-- Update branding (colors, logo)
-- Remove unused features
-- Add project-specific components
-- Configure API endpoints
-
-**3. Develop & Deploy:**
-- Use existing components where possible
-- Add new components only when needed
-- Build and deploy
-
-**4. After completion:**
-- Extract reusable components back to starter kit
-- Document lessons learned
-
-### What to Add Per Project
-
-Add based on **actual requirements**, not speculation:
-
-- **Form-heavy:** FormField wrapper
-- **E-commerce:** Product cards, cart
-- **Dashboard:** Chart wrappers, stat cards
-- **Content:** Rich text editor
-- **File uploads:** Upload component
+Dự án này là phiên bản đơn giản hóa của hệ thống bảo lãnh viện phí thực tế trong lĩnh vực bảo hiểm. Các bệnh viện đối tác gửi yêu cầu bảo lãnh trực tuyến, nhân viên bảo hiểm xét duyệt và phê duyệt hoặc từ chối dựa trên điều khoản hợp đồng. Mục tiêu là giảm thời gian xử lý thủ công bằng cách tự động hóa quy trình phê duyệt.
 
 ---
 
-## 🏗️ Architecture
+## Lưu ý
 
-### Folder Philosophy
-
-- **`core/`** - Singleton services, guards, app config
-- **`features/`** - Business features, lazy-loadable
-- **`shared/`** - Reusable across features
-
-### Why Minimal Wrappers?
-
-Only wrap when you need:
-- Consistent customization across app
-- Enforce certain props
-- Additional functionality
-
-**Don't wrap just to wrap.**
-
-### Mocked Auth
-
-Every project has different auth (JWT, OAuth, session). Mocked flow shows the pattern - easy to replace with real implementation.
+- Xác thực đang dùng dữ liệu giả. Thay `auth.service.ts` bằng API thực khi tích hợp backend.
+- Toàn bộ dữ liệu lưu trong bộ nhớ bằng Angular signals. Thay bằng HTTP call khi cần.
+- Menu được cấu hình trong `core/config/menu.ts`.
+- Màu sắc theme trong `src/styles.scss` phần `:root`.
 
 ---
 
-## ❌ Intentionally NOT Included
-
-To keep starter kit lean:
-
-- ❌ State Management (NgRx) - add if project is complex
-- ❌ Form wrappers (Input, Checkbox) - requirements vary
-- ❌ API integration - every backend is different
-- ❌ File upload - strategies vary
-- ❌ Charts/graphs - add when needed
-- ❌ Testing setup - add based on requirements
-- ❌ CI/CD - varies per client
-
-**Better to add what you need, when you need it.**
-
----
-
-## 🎨 Quick Customization
-
-### Colors
-```scss
-// src/styles.scss
-:root {
-  --color-primary: #your-brand;
-  --color-secondary: #your-secondary;
-}
-```
-
-### Logo
-Replace logo in `shared/components/header/header.html` and `public/favicon.ico`
-
-### Menu
-Edit `core/config/menu.ts`
-
-### Remove Auth
-```bash
-rm -rf src/app/features/auth
-# Remove auth routes and guards
-```
-
-### Remove i18n
-```bash
-# Remove transloco from app.config.ts
-# Remove language-switcher from header
-# Use hardcoded strings
-```
-
----
-
-## � Commands
-
-```bash
-npm start                              # Dev server
-npm run build                          # Production build
-ng generate component <name> --standalone   # New component
-ng generate service <name>             # New service
-```
-
----
-
-## 🤝 Improve Your Starter Kit
-
-After each project:
-
-1. **Extract reusable components** → Add to `shared/ui`
-2. **Document patterns** → Update README
-3. **Refactor improvements** → Commit back
-4. **Keep project-specific code** → Don't add to starter kit
-
----
-
-## 🎯 Success Metrics
-
-- ⏱️ Start new project in **< 30 minutes**
-- 🧠 Understand codebase in **< 1 hour**
-- ⚡ Ship MVP in **< 1 week**
-- 🔧 Customize without fighting the framework
-
----
-
-## 📖 Resources
-
-- [Angular Docs](https://angular.dev)
-- [PrimeNG Docs](https://primeng.org/)
-- [Transloco Docs](https://jsverse.github.io/transloco/)
-
----
-
-**Philosophy:** This is a **starting point**, not a complete framework. Add features based on **real requirements**, not speculation. Keep it **simple and maintainable**. Learn from each project and improve iteratively.
-
-**Happy coding! 🚀**
+*Dự án portfolio. Phiên bản đơn giản hóa từ hệ thống bảo hiểm thực tế.*

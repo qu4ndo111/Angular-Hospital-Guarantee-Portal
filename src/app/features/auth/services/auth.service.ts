@@ -6,7 +6,6 @@ import { TranslocoService } from '@jsverse/transloco';
 import { catchError, delay, map, of, switchMap, tap, throwError } from 'rxjs';
 
 import { LoginModel, RegisterModel } from '../model/auth-model';
-import { RegisterAccount } from '../register-account/register-account';
 
 @Injectable({
   providedIn: 'root',
@@ -19,7 +18,7 @@ export class AuthService {
     return of(payload).pipe(
       delay(800),
       switchMap(({ email, password }) => {
-        if (email === 'admin_test' && password === '123456aA@') {
+        if (email === 'admin@admin.com' && password === '123456aA@') {
           return of({
             accessToken: 'fake-jwt-token',
             user: { id: 1, name: 'Admin' }
