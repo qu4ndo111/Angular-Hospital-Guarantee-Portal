@@ -215,9 +215,15 @@ export class GuaranteeService {
     return of(this.patients().find(p => p.id === cccd)).pipe(delay(500));
   }
 
-  getGuaranteeRequests(filter?: GuaranteeFilter): Observable<GuaranteeRequest[]> {
+  getGuaranteeRequests(filter?: GuaranteeFilter, searchKeyword?: string, page?: number, pageSize?: number): Observable<GuaranteeRequest[]> {
     let results = this.guaranteeRequests();
 
+    if (searchKeyword) {
+      results = results.filter(r => r.id.toLowerCase().includes(searchKeyword.toLowerCase()) ||
+        r.patientName.toLowerCase().includes(searchKeyword.toLowerCase()) ||
+        r.patientId.toLowerCase().includes(searchKeyword.toLowerCase()) ||
+        r.hospital.toLowerCase().includes(searchKeyword.toLowerCase()));
+    }
     if (filter?.statuses?.length) {
       results = results.filter(r => filter.statuses!.includes(r.status));
     }
@@ -232,6 +238,11 @@ export class GuaranteeService {
     }
     if (filter?.treatmentType) {
       results = results.filter(r => r.treatmentType === filter.treatmentType);
+    }
+
+    if (page !== undefined && pageSize !== undefined) {
+      const startIndex = (page - 1) * pageSize;
+      results = results.slice(startIndex, startIndex + pageSize);
     }
 
     return of(results).pipe(delay(400));

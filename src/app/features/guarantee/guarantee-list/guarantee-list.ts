@@ -88,14 +88,14 @@ export class GuaranteeList implements OnInit, OnDestroy{
       ];
 
       this.columns = [
-        { field: 'id', header: this.translocoService.translate('guarantee.list.table.cols.id'), width: '160px', sortable: true },
+        { field: 'id', header: this.translocoService.translate('guarantee.list.table.cols.id'), width: '260px', sortable: true },
         { field: 'patientName', header: this.translocoService.translate('guarantee.list.table.cols.patientName'), sortable: true },
-        { field: 'patientId', header: this.translocoService.translate('guarantee.list.table.cols.patientId'), width: '140px' },
+        { field: 'patientId', header: this.translocoService.translate('guarantee.list.table.cols.patientId'), width: '240px' },
         { field: 'treatmentType', header: this.translocoService.translate('guarantee.list.table.cols.treatmentType'), width: '140px' },
         { field: 'admissionDate', header: this.translocoService.translate('guarantee.list.table.cols.admissionDate'), width: '130px', sortable: true },
-        { field: 'estimatedAmount', header: this.translocoService.translate('guarantee.list.table.cols.estimatedAmount'), width: '150px', template: 'estimatedAmount' },
-        { field: 'status', header: this.translocoService.translate('guarantee.list.table.cols.status'), width: '130px', template: 'status' },
-        { field: 'actions', header: '', width: '90px', template: 'actions' },
+        { field: 'estimatedAmount', header: this.translocoService.translate('guarantee.list.table.cols.estimatedAmount'), width: '200px', template: 'estimatedAmount' },
+        { field: 'status', header: this.translocoService.translate('guarantee.list.table.cols.status'), width: '180px', template: 'status' },
+        { field: 'actions', header: '', width: '70px', template: 'actions' },
       ];
     });
 
@@ -142,7 +142,7 @@ export class GuaranteeList implements OnInit, OnDestroy{
     this.vm$ = query$.pipe(
       tap(() => this.loadingService.show()),
       switchMap(({ page, pageSize, searchKeyword, filter }) => {
-        return this.guaranteeService.getGuaranteeRequests(filter!).pipe(
+        return this.guaranteeService.getGuaranteeRequests(filter!, searchKeyword!, page, pageSize).pipe(
           catchError((err) => {
             this.toastService.showError(err.message || 'Lỗi hệ thống')
             return of([])
