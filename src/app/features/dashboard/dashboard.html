@@ -20,30 +20,6 @@
     </div>
 
     <div class="recent-table">
-      <!-- <table>
-        <thead>
-          <tr>
-            <th>{{ 'guarantee.list.table.cols.id' | transloco }}</th>
-            <th>{{ 'guarantee.list.table.cols.patientName' | transloco }}</th>
-            <th>{{ 'guarantee.list.table.cols.hospital' | transloco }}</th>
-            <th>{{ 'guarantee.list.table.cols.admissionDate' | transloco }}</th>
-            <th>{{ 'guarantee.list.table.cols.status' | transloco }}</th>
-          </tr>
-        </thead>
-        <tbody>
-          @for(req of stats.recent; track req.id) {
-            <tr (click)="goToDetail(req.id)" class="recent-row">
-              <td class="recent-id">{{ req.id }}</td>
-              <td>{{ req.patientName }}</td>
-              <td class="recent-hospital">{{ req.hospital }}</td>
-              <td>{{ req.admissionDate }}</td>
-              <td>
-                <p-tag [severity]="getStatusSeverity(req.status)" [value]="req.status" />
-              </td>
-            </tr>
-          }
-        </tbody>
-      </table> -->
       <app-data-table [columns]="columns" [value]="stats.recent" selectionMode="single" (rowSelect)="goToDetail($event)">
         <ng-template pTemplate="status" let-rowData>
           <p-tag [severity]="getStatusSeverity(rowData.status)" [value]="rowData.status" />
