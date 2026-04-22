@@ -62,6 +62,10 @@
       "reviewing": "Pending Review",
       "approved": "Approved",
       "rejected": "Rejected"
+    },
+    "recent": {
+      "title": "Recent Requests",
+      "viewAll": "View all"
     }
   },
   "menu": {
@@ -252,6 +256,7 @@
           "id": "Record No.",
           "patientName": "Full Name",
           "patientId": "ID Card No.",
+          "hospital": "Hospital",
           "treatmentType": "Type",
           "admissionDate": "Admission Date",
           "estimatedAmount": "Est. Amount (VND)",

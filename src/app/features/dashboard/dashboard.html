@@ -1,10 +1,54 @@
 <app-title [title]="'menu.dashboard' | transloco" [menu]="[{label: 'Dashboard'}]"></app-title>
 
 @if(stats$ | async; as stats) {
+  <!-- Stat Cards -->
   <div class="dashboard-grid lg:px-6">
-    <app-card icon="pi pi-file" [value]="stats.total.toString()" [label]="'dashboard.stats.total' | transloco" iconBg="#3b82f6" />
-    <app-card icon="pi pi-sync" [value]="stats.reviewing.toString()" [label]="'dashboard.stats.reviewing' | transloco" iconBg="#f59e0b" />
-    <app-card icon="pi pi-check-circle" [value]="stats.approved.toString()" [label]="'dashboard.stats.approved' | transloco" iconBg="#10b981" />
-    <app-card icon="pi pi-times-circle" [value]="stats.rejected.toString()" [label]="'dashboard.stats.rejected' | transloco" iconBg="#ef4444" />
+    <app-card icon="pi pi-file"        [value]="stats.total.toString()"    [label]="'dashboard.stats.total'     | transloco" iconBg="#3b82f6" />
+    <app-card icon="pi pi-sync"        [value]="stats.reviewing.toString()" [label]="'dashboard.stats.reviewing' | transloco" iconBg="#f59e0b" />
+    <app-card icon="pi pi-check-circle" [value]="stats.approved.toString()" [label]="'dashboard.stats.approved'  | transloco" iconBg="#10b981" />
+    <app-card icon="pi pi-times-circle" [value]="stats.rejected.toString()" [label]="'dashboard.stats.rejected'  | transloco" iconBg="#ef4444" />
+  </div>
+
+  <!-- Recent Requests -->
+  <div class="recent-section lg:px-6">
+    <div class="recent-header">
+      <h3 class="recent-title">{{ 'dashboard.recent.title' | transloco }}</h3>
+      <button class="recent-link" (click)="goToList()">
+        {{ 'dashboard.recent.viewAll' | transloco }}
+        <i class="pi pi-arrow-right"></i>
+      </button>
+    </div>
+
+    <div class="recent-table">
+      <!-- <table>
+        <thead>
+          <tr>
+            <th>{{ 'guarantee.list.table.cols.id' | transloco }}</th>
+            <th>{{ 'guarantee.list.table.cols.patientName' | transloco }}</th>
+            <th>{{ 'guarantee.list.table.cols.hospital' | transloco }}</th>
+            <th>{{ 'guarantee.list.table.cols.admissionDate' | transloco }}</th>
+            <th>{{ 'guarantee.list.table.cols.status' | transloco }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for(req of stats.recent; track req.id) {
+            <tr (click)="goToDetail(req.id)" class="recent-row">
+              <td class="recent-id">{{ req.id }}</td>
+              <td>{{ req.patientName }}</td>
+              <td class="recent-hospital">{{ req.hospital }}</td>
+              <td>{{ req.admissionDate }}</td>
+              <td>
+                <p-tag [severity]="getStatusSeverity(req.status)" [value]="req.status" />
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table> -->
+      <app-data-table [columns]="columns" [value]="stats.recent" selectionMode="single" (rowSelect)="goToDetail($event)">
+        <ng-template pTemplate="status" let-rowData>
+          <p-tag [severity]="getStatusSeverity(rowData.status)" [value]="rowData.status" />
+        </ng-template>
+      </app-data-table>
+    </div>
   </div>
 }

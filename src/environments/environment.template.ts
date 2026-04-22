@@ -66,7 +66,7 @@ export const environment = {
     // Application Settings
     // ============================================
     app: {
-        name: 'Business Application', // Client's app name
+        name: 'Guarantee Management Portallication', // Client's app name
         version: '1.0.0',
         defaultLanguage: 'vi',
         supportedLanguages: ['vi', 'en'],

@@ -62,6 +62,10 @@
       "reviewing": "Đang xử lý",
       "approved": "Đã duyệt",
       "rejected": "Từ chối"
+    },
+    "recent": {
+      "title": "Hồ sơ gần đây",
+      "viewAll": "Xem tất cả"
     }
   },
   "menu": {
@@ -252,6 +256,7 @@
           "id": "Số hồ sơ",
           "patientName": "Họ và tên",
           "patientId": "Số CCCD",
+          "hospital": "Bệnh viện",
           "treatmentType": "Hình thức",
           "admissionDate": "Ngày nhập viện",
           "estimatedAmount": "Dự kiến (VND)",

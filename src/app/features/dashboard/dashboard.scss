@@ -1,14 +1,99 @@
 .dashboard-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1rem;
-    padding: 1rem;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  padding: 1rem 0;
 
-    @media (max-width: 1024px) {
-        grid-template-columns: repeat(2, 1fr);
-    }
+  @media (max-width: 1024px) { grid-template-columns: repeat(2, 1fr); }
+  @media (max-width: 640px)  { grid-template-columns: 1fr; }
+}
 
-    @media (max-width: 640px) {
-        grid-template-columns: 1fr;
-    }
+.recent-section {
+  margin-top: 1.5rem;
+  padding-bottom: 2rem;
+}
+
+.recent-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.recent-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.recent-link {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-size: 0.875rem;
+  color: var(--color-primary);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+
+  &:hover { text-decoration: underline; }
+
+  i { font-size: 0.75rem; }
+}
+
+.recent-table {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  thead tr {
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  th {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+  }
+
+  td {
+    padding: 0.875rem 1rem;
+    font-size: 0.875rem;
+    color: var(--text-primary);
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  tbody tr:last-child td {
+    border-bottom: none;
+  }
+}
+
+.recent-row {
+  cursor: pointer;
+  transition: background 0.15s;
+
+  &:hover td { background: var(--bg-hover); }
+}
+
+.recent-id {
+  font-family: monospace;
+  font-size: 0.8rem;
+  color: var(--color-primary);
+}
+
+.recent-hospital {
+  color: var(--text-muted);
+  font-size: 0.8rem;
 }
