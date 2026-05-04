@@ -30,9 +30,6 @@
         "build": {
           "builder": "@angular/build:application",
           "options": {
-            "allowedCommonJsDependencies": [
-              "moment"
-            ],
             "browser": "src/main.ts",
             "polyfills": [
               "zone.js"
