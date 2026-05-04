@@ -1,5 +1,4 @@
 .sidebar {
-    display: flex;
     flex-direction: column;
     width: 280px;
     height: 100%;
@@ -8,13 +7,30 @@
     overflow-y: auto;
     overflow-x: hidden;
 
-    .sidebar-content {
+    &::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: var(--surface-ground);
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: var(--surface-border);
+        border-radius: 3px;
+
+        &:hover {
+            background: var(--surface-300);
+        }
+    }
+}
+
+.sidebar-content {
         display: flex;
         flex-direction: column;
         height: 100%;
     }
 
-    // Menu navigation (no logo - moved to header)
     .sidebar-menu {
         flex: 1;
         padding: 1rem 0.5rem;
@@ -23,7 +39,6 @@
         gap: 0.25rem;
     }
 
-    // Simple menu item (no children)
     .menu-item {
         display: flex;
         align-items: center;
@@ -70,7 +85,6 @@
         }
     }
 
-    // Accordion menu (PrimeNG 20)
     .menu-accordion {
         margin: 0;
 
@@ -80,7 +94,6 @@
                 flex-direction: column;
                 gap: 0.25rem;
 
-                // For p-accordion-panel
                 .p-accordion-panel {
                     .p-accordion-header {
                         .p-accordion-header-link {
@@ -127,7 +140,6 @@
                     }
                 }
 
-                // Legacy support for p-accordionTab (if needed)
                 .p-accordion-header {
                     .p-accordion-header-link {
                         padding: 0.75rem 1rem;
@@ -200,7 +212,6 @@
         }
     }
 
-    // Submenu items
     .submenu-items {
         display: flex;
         flex-direction: column;
@@ -252,7 +263,6 @@
         }
     }
 
-    // Badge styles
     .p-badge {
         margin-left: auto;
         font-size: 0.75rem;
@@ -268,26 +278,7 @@
         }
     }
 
-    // Scrollbar styling
-    &::-webkit-scrollbar {
-        width: 6px;
-    }
-
-    &::-webkit-scrollbar-track {
-        background: var(--surface-ground);
-    }
-
-    &::-webkit-scrollbar-thumb {
-        background: var(--surface-border);
-        border-radius: 3px;
-
-        &:hover {
-            background: var(--surface-300);
-        }
-    }
-}
-
-::ng-deep app-sidebar {
+::ng-deep .sidebar-content {
     .p-accordionheader {
         background: transparent !important;
     }
@@ -297,15 +288,12 @@
     }
 }
 
-// Dark mode adjustments
 :host-context(.dark) {
-    .sidebar {
-        .menu-item.active {
-            background: var(--primary-600);
-        }
+    .menu-item.active {
+        background: var(--primary-600);
+    }
 
-        .submenu-item.active {
-            background: var(--primary-900);
-        }
+    .submenu-item.active {
+        background: var(--primary-900);
     }
 }

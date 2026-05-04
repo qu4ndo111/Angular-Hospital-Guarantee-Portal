@@ -190,7 +190,12 @@
   }
 }
 
-// Responsive
+@media (min-width: 1024px) {
+  .menu-toggle-btn {
+    display: none !important;
+  }
+}
+
 @media (max-width: 768px) {
   .app-header {
     padding: 0 1rem;

@@ -1,13 +1,21 @@
 <div *transloco="let t">
-  <div class="sidebar">
+  <div class="sidebar hidden lg:flex">
+    <ng-container *ngTemplateOutlet="sidebarContent"></ng-container>
+  </div>
+
+  <p-drawer [visible]="layoutService.isMobileSidebarVisible()"
+    (visibleChange)="layoutService.isMobileSidebarVisible.set($event)" [baseZIndex]="10000">
+    <ng-container *ngTemplateOutlet="sidebarContent"></ng-container>
+  </p-drawer>
+
+  <ng-template #sidebarContent>
     <div class="sidebar-content">
-      <!-- Menu navigation -->
       <nav class="sidebar-menu">
         @for(item of menuItems; track $index) {
         <ng-container>
-          <!-- Simple menu item (no children) -->
           @if(!hasChildren(item)) {
-          <a [routerLink]="item.routerLink" routerLinkActive="active" class="menu-item" pRipple>
+          <a [routerLink]="item.routerLink" routerLinkActive="active" class="menu-item" pRipple
+            (click)="layoutService.closeMobileSidebar()">
             <i [class]="item.icon" class="menu-icon"></i>
             <span class="menu-label">{{ t(item.label) }}</span>
             @if(item.badge) {
@@ -18,12 +26,10 @@
           </a>
           }
 
-          <!-- Accordion menu item (with children) -->
           @if(hasChildren(item)) {
           <div class="menu-accordion">
             <p-accordion [value]="[item.label]" [multiple]="true">
               <p-accordion-panel [value]="item.label">
-                <!-- Header -->
                 <p-accordion-header>
                   <div class="accordion-header">
                     <i [class]="item.icon" class="menu-icon"></i>
@@ -36,12 +42,11 @@
                   </div>
                 </p-accordion-header>
 
-                <!-- Content (Children) -->
-
                 <p-accordion-content>
                   <div class="submenu-items">
                     @for(child of item.children; track $index) {
-                    <a [routerLink]="child.routerLink" routerLinkActive="active" class="submenu-item" pRipple>
+                    <a [routerLink]="child.routerLink" routerLinkActive="active" class="submenu-item" pRipple
+                      (click)="layoutService.closeMobileSidebar()">
                       <i [class]="child.icon" class="submenu-icon"></i>
                       <span class="submenu-label">{{ t(child.label) }}</span>
                       @if(child.badge) {
@@ -61,5 +66,5 @@
         }
       </nav>
     </div>
-  </div>
+  </ng-template>
 </div>

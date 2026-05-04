@@ -1,19 +1,3 @@
-/**
- * Menu Configuration - Starter Kit Version
- *
- * This is a minimal, generic menu structure for starter projects.
- * Customize this file for each client/freelance project.
- *
- * Instructions:
- * 1. Replace generic labels with client's actual modules
- * 2. Update icons to match features (see: https://primeng.org/icons)
- * 3. Set routerLink paths according to your routes
- * 4. Add/remove items based on client requirements
- */
-
-/**
- * Menu item interface
- */
 export interface MenuItem {
     label: string;
     icon: string;
@@ -24,20 +8,13 @@ export interface MenuItem {
     visible?: boolean;
 }
 
-/**
- * ========================================
- * STARTER MENU - Generic Placeholders
- * ========================================
- */
 export const MENU_ITEMS: MenuItem[] = [
-    // Dashboard - Most apps need this
     {
         label: 'menu.dashboard',
         icon: 'pi pi-home',
         routerLink: '/dashboard',
     },
 
-    // Example nested menu (Module 1)
     {
         label: 'menu.guarantee',
         icon: 'pi pi-box',
@@ -55,14 +32,12 @@ export const MENU_ITEMS: MenuItem[] = [
         ],
     },
 
-    // Example simple menu (Module 2)
     {
         label: 'menu.module2',
         icon: 'pi pi-users',
         routerLink: '/module2',
     },
 
-    // Settings - Most apps need this
     {
         label: 'menu.settings',
         icon: 'pi pi-cog',

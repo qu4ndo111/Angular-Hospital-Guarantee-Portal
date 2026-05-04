@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { TranslocoService, TranslocoModule } from '@jsverse/transloco';
@@ -10,6 +10,7 @@ import { MenuModule } from 'primeng/menu';
 import { MenuItem } from 'primeng/api';
 import { Subscription, switchMap } from 'rxjs';
 import { Router } from '@angular/router';
+import { LayoutService } from '@app/shared/services/layout.service';
 
 @Component({
   selector: 'app-header',
@@ -21,7 +22,7 @@ export class Header implements OnInit, OnDestroy {
   items: MenuItem[] | undefined;
   private langChangeSubscription?: Subscription;
 
-  constructor(private translocoService: TranslocoService, private router: Router) { }
+  constructor(private translocoService: TranslocoService, private router: Router, public layoutService: LayoutService) { }
 
   ngOnInit(): void {
     this.langChangeSubscription = this.translocoService.langChanges$.subscribe(() => {
