@@ -2,7 +2,7 @@
 
 A web application for managing hospital insurance guarantee requests, built with Angular 20 and PrimeNG.
 
-Live demo: [angular-business-base](https://angular-business-base.vercel.app)
+Live demo: [angular-hospital-guarantee-portal](https://angular-hospital-guarantee-portal.vercel.app/)
 
 Login credentials:
 
@@ -107,7 +107,7 @@ This project is a simplified version of a hospital guarantee management system u
 
 Ứng dụng web quản lý yêu cầu bảo lãnh viện phí cho các bệnh viện đối tác, xây dựng bằng Angular 20 và PrimeNG.
 
-Demo trực tuyến: [angular-business-base](https://angular-business-base.vercel.app)
+Demo trực tuyến: [angular-hospital-guarantee-portal](https://angular-hospital-guarantee-portal.vercel.app/)
 
 Thông tin đăng nhập:
 
