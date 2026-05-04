@@ -18,7 +18,6 @@ Password: Admin@123
 - List view with search, filter by status/hospital/treatment type
 - Detail page showing approval timeline and workflow stages
 - Six-stage status workflow: Draft → Submitted → Reviewing → Approved / Rejected → Paid
-- Role-based actions: Applicant, Reviewer, Admin (switched via UI)
 - Responsive layout with dark and light theme
 - Bilingual interface: English and Vietnamese
 
@@ -123,7 +122,6 @@ Password: Admin@123
 - Danh sách hồ sơ với tìm kiếm và lọc theo trạng thái, bệnh viện, loại điều trị
 - Trang chi tiết hiển thị lịch sử duyệt và các bước xử lý
 - Quy trình 6 trạng thái: Nháp → Đã gửi → Đang xét duyệt → Duyệt / Từ chối → Đã thanh toán
-- Phân quyền theo vai trò: Người nộp hồ sơ, Người duyệt, Quản trị viên
 - Giao diện sáng / tối, hỗ trợ tiếng Anh và tiếng Việt
 
 ---
