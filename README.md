@@ -4,7 +4,12 @@ A web application for managing hospital insurance guarantee requests, built with
 
 Live demo: [angular-business-base](https://angular-business-base.vercel.app)
 
-Account: admin@admin.com / 123456aA@
+Login credentials:
+
+```
+Email:    admin@admin.com
+Password: Admin@123
+```
 ---
 
 ## What this project demonstrates
@@ -103,7 +108,13 @@ This project is a simplified version of a hospital guarantee management system u
 Ứng dụng web quản lý yêu cầu bảo lãnh viện phí cho các bệnh viện đối tác, xây dựng bằng Angular 20 và PrimeNG.
 
 Demo trực tuyến: [angular-business-base](https://angular-business-base.vercel.app)
-tài khoản: admin@admin.com / 123456aA@
+
+Thông tin đăng nhập:
+
+```
+Email:    admin@admin.com
+Password: Admin@123
+```
 ---
 
 ## Tính năng
