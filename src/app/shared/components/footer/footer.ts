@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import moment from 'moment';
+import dayjs from 'dayjs';
 
 import { environment } from '../../../../environments/environments';
 
@@ -11,7 +11,7 @@ import { environment } from '../../../../environments/environments';
   styleUrl: './footer.scss',
 })
 export class Footer {
-  currentYear = moment().year();
+  currentYear = dayjs().year();
   appVersion = environment.app.version;
 }
 

@@ -15,7 +15,7 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import { Patient } from '../models/guarantee.model';
 import { Router } from '@angular/router';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import { GuaranteeService } from '../services/guarantee.service';
 import { exhaustMap, Subject, switchMap, takeUntil, tap } from 'rxjs';
 import { ToastService } from '@app/shared/services/toast.service';
@@ -97,7 +97,7 @@ export class GuaranteeCreateNew implements OnInit, OnDestroy {
       this.guaranteeForm.patchValue({
         patientId: item.id,
         patientName: item.name,
-        dateOfBirth: moment(item.dateOfBirth).format('YYYY-MM-DD'),
+        dateOfBirth: dayjs(item.dateOfBirth).format('YYYY-MM-DD'),
         gender: item.gender,
         phone: item.phone,
         address: item.address,
@@ -115,8 +115,8 @@ export class GuaranteeCreateNew implements OnInit, OnDestroy {
       const body = {
         ...this.guaranteeForm.getRawValue(),
         id: `GRT-${new Date().getFullYear()}-${String(Date.now()).slice(-6)}`,
-        estimatedDischargeDate: moment(this.guaranteeForm.value.estimatedDischargeDate).format('YYYY-MM-DD'),
-        admissionDate: moment(this.guaranteeForm.value.admissionDate).format('YYYY-MM-DD'),
+        estimatedDischargeDate: dayjs(this.guaranteeForm.value.estimatedDischargeDate).format('YYYY-MM-DD'),
+        admissionDate: dayjs(this.guaranteeForm.value.admissionDate).format('YYYY-MM-DD'),
         status: 'DRAFT',
       }
       this.guaranteeService.addRequest(body).subscribe({

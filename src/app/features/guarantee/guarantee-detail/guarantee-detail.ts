@@ -11,7 +11,7 @@ import { GuaranteeForm } from '../components/guarantee-form/guarantee-form';
 import { GuaranteeStatus, TimelineEvent } from '../models/guarantee.model';
 import { TagModule } from 'primeng/tag';
 import { ButtonModule } from 'primeng/button';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import { ToastService } from '@app/shared/services/toast.service';
 import { Timeline } from 'primeng/timeline';
 import { DatePipe, NgClass } from '@angular/common';
@@ -152,8 +152,8 @@ export class GuaranteeDetail implements OnInit, OnDestroy {
     this.loadingService.show()
     const body = {
       ...this.guaranteeForm.getRawValue(),
-      estimatedDischargeDate: moment(this.guaranteeForm.value.estimatedDischargeDate).format('YYYY-MM-DD'),
-      admissionDate: moment(this.guaranteeForm.value.admissionDate).format('YYYY-MM-DD'),
+      estimatedDischargeDate: dayjs(this.guaranteeForm.value.estimatedDischargeDate).format('YYYY-MM-DD'),
+      admissionDate: dayjs(this.guaranteeForm.value.admissionDate).format('YYYY-MM-DD'),
       status: 'DRAFT',
     }
 
