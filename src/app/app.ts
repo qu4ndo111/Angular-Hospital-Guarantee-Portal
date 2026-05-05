@@ -1,5 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 
 import { ToastModule } from 'primeng/toast';
 import { ConfirmationService, MessageService } from 'primeng/api';
@@ -24,10 +25,15 @@ export class App {
 
   constructor(
     private themeService: ThemeService,
-    private translocoService: TranslocoService
+    private translocoService: TranslocoService,
+    private titleService: Title
   ) {
     this.themeService.initTheme();
 
     this.translocoService.load(this.translocoService.getActiveLang()).subscribe();
+
+    this.translocoService.selectTranslate('common.appTitle').subscribe(title => {
+      this.titleService.setTitle(title);
+    });
   }
 }

@@ -81,6 +81,7 @@
     "settings": "Cài đặt"
   },
   "common": {
+    "appTitle": "Hệ thống quản lý Bảo lãnh",
     "actions": {
       "save": "Lưu",
       "cancel": "Hủy",
