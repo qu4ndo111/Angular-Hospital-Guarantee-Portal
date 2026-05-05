@@ -81,6 +81,7 @@
     "settings": "Settings"
   },
   "common": {
+    "appTitle": "Guarantee Management Portal",
     "actions": {
       "save": "Save",
       "cancel": "Cancel",
