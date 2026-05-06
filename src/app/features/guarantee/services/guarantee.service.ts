@@ -248,6 +248,34 @@ export class GuaranteeService {
     return of(results).pipe(delay(400));
   }
 
+  exportGuaranteeRequests(filter?: GuaranteeFilter, searchKeyword?: string): Observable<GuaranteeRequest[]> {
+    let results = this.guaranteeRequests();
+
+    if (searchKeyword) {
+      results = results.filter(r => r.id.toLowerCase().includes(searchKeyword.toLowerCase()) ||
+        r.patientName.toLowerCase().includes(searchKeyword.toLowerCase()) ||
+        r.patientId.toLowerCase().includes(searchKeyword.toLowerCase()) ||
+        r.hospital.toLowerCase().includes(searchKeyword.toLowerCase()));
+    }
+    if (filter?.statuses?.length) {
+      results = results.filter(r => filter.statuses!.includes(r.status));
+    }
+    if (filter?.fromDate) {
+      results = results.filter(r => r.admissionDate >= filter.fromDate!);
+    }
+    if (filter?.toDate) {
+      results = results.filter(r => r.admissionDate <= filter.toDate!);
+    }
+    if (filter?.hospital) {
+      results = results.filter(r => r.hospital.toLowerCase().includes(filter.hospital!.toLowerCase()));
+    }
+    if (filter?.treatmentType) {
+      results = results.filter(r => r.treatmentType === filter.treatmentType);
+
+    }
+    return of(results).pipe(delay(400));
+  }
+
   getGuaranteeRequestsById(id: string): Observable<GuaranteeRequest | undefined> {
     return of(this.guaranteeRequests().find(r => r.id === id));
   }
