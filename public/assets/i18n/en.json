@@ -263,7 +263,8 @@
           "admissionDate": "Admission Date",
           "estimatedAmount": "Est. Amount (VND)",
           "status": "Status"
-        }
+        },
+        "noData": "No records found"
       },
       "status": {
         "draft": "Draft",

@@ -263,7 +263,8 @@
           "admissionDate": "Ngày nhập viện",
           "estimatedAmount": "Dự kiến (VND)",
           "status": "Trạng thái"
-        }
+        },
+        "noData": "Không có dữ liệu"
       },
       "status": {
         "draft": "Nháp",
