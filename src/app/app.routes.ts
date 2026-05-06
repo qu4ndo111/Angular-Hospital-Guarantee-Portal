@@ -54,5 +54,10 @@ export const routes: Routes = [
         loadComponent: () => import('./features/guarantee/guarantee-detail/guarantee-detail').then((m) => m.GuaranteeDetail)
       }
     ]
+  },
+  {
+    path: '**',
+    redirectTo: 'auth',
+    pathMatch: 'full'
   }
 ];

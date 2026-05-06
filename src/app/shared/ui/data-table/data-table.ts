@@ -3,6 +3,7 @@ import { Component, ContentChildren, EventEmitter, Input, Output, QueryList, Tem
 import { PrimeTemplate, SharedModule } from 'primeng/api';
 import { TableLazyLoadEvent, TableModule } from 'primeng/table';
 import { TableColumn } from './data-table.model';
+import { TranslocoPipe } from '@jsverse/transloco';
 
 /**
  * Simple DataTable wrapper component
@@ -22,7 +23,8 @@ import { TableColumn } from './data-table.model';
   imports: [
     CommonModule,
     TableModule,
-    SharedModule
+    SharedModule,
+    TranslocoPipe
   ],
   templateUrl: './data-table.html',
   styleUrl: './data-table.scss',
