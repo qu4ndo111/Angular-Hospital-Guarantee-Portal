@@ -229,4 +229,53 @@ export class GuaranteeList implements OnInit, OnDestroy{
   onRowSelect(event: any) {
     this.router.navigate(['/guarantee/detail', event.id]);
   }
+
+  exportCsv() {
+    this.loading = true;
+
+    this.guaranteeService.exportGuaranteeRequests(this.filter.getValue()!, this.searchKeyword.value ?? '')
+      .subscribe({
+        next: (response) => {
+          const headers = [
+            this.translocoService.translate('guarantee.list.table.cols.id'),
+            this.translocoService.translate('guarantee.list.table.cols.patientName'),
+            this.translocoService.translate('guarantee.list.table.cols.patientId'),
+            this.translocoService.translate('guarantee.list.table.cols.treatmentType'),
+            this.translocoService.translate('guarantee.list.table.cols.admissionDate'),
+            this.translocoService.translate('guarantee.list.table.cols.estimatedAmount'),
+            this.translocoService.translate('guarantee.list.table.cols.status'),
+          ]
+
+          const escapeCsv = (str: any) => `"${String(str ?? '').replace(/"/g, '""')}"`;
+
+          const csvContent = [
+            headers.map(escapeCsv).join(','),
+            ...response.map((item: GuaranteeRequest) => [
+              escapeCsv(item.id),
+              escapeCsv(item.patientName),
+              escapeCsv(item.patientId),
+              escapeCsv(this.translocoService.translate(`guarantee.create.treatmentSection.types.${item.treatmentType.toLowerCase()}`)),
+              escapeCsv(item.admissionDate),
+              escapeCsv(item.estimatedAmount),
+              escapeCsv(this.getStatusLabel(item.status)),
+            ].join(','))
+          ].join("\n");
+
+          const blob = new Blob(['\uFEFF' + csvContent], { type: 'text/csv;charset=utf-8;' });
+          const url = URL.createObjectURL(blob);
+          const link = document.createElement('a');
+          link.setAttribute('href', url);
+          link.setAttribute('download', `AQ-Portal-Report-${new Date().toISOString().split('T')[0]}.csv`);
+          link.style.visibility = 'hidden';
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          this.loading = false;
+        },
+        error: (err) => {
+          this.toastService.showError('Export failed');
+          this.loading = false;
+        }
+      });
+  }
 }

@@ -247,7 +247,8 @@
       "actions": {
         "createNew": "Tạo mới",
         "view": "Xem chi tiết",
-        "edit": "Chỉnh sửa"
+        "edit": "Chỉnh sửa",
+        "export": "Xuất CSV"
       },
       "table": {
         "title": "Danh sách hồ sơ",

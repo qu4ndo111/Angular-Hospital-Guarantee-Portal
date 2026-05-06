@@ -247,7 +247,8 @@
       "actions": {
         "createNew": "Create New",
         "view": "View Details",
-        "edit": "Edit"
+        "edit": "Edit",
+        "export": "Export CSV"
       },
       "table": {
         "title": "Record List",
