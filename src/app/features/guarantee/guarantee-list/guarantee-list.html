@@ -66,6 +66,10 @@
     <div class="p-4">
       <app-data-table [value]="vm.guaranteeRequests" [columns]="columns" [loading]="loading" selectionMode="single" (rowSelect)="onRowSelect($event)" [paginator]="true"
         [rows]="pageSize.getValue()" [rowsPerPageOptions]="[10, 25, 50]">
+        <ng-template pTemplate="treatmentType" let-rowData>
+          {{ getTreatmentTypeLabel(rowData.treatmentType) }}
+        </ng-template>
+
         <ng-template pTemplate="status" let-rowData>
           <p-tag [value]="getStatusLabel(rowData.status)" [severity]="getStatusSeverity(rowData.status)"></p-tag>
         </ng-template>

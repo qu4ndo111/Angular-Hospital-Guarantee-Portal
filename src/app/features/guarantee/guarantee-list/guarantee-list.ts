@@ -91,7 +91,7 @@ export class GuaranteeList implements OnInit, OnDestroy{
         { field: 'id', header: this.translocoService.translate('guarantee.list.table.cols.id'), width: '260px', sortable: true },
         { field: 'patientName', header: this.translocoService.translate('guarantee.list.table.cols.patientName'), sortable: true },
         { field: 'patientId', header: this.translocoService.translate('guarantee.list.table.cols.patientId'), width: '240px' },
-        { field: 'treatmentType', header: this.translocoService.translate('guarantee.list.table.cols.treatmentType'), width: '140px' },
+        { field: 'treatmentType', header: this.translocoService.translate('guarantee.list.table.cols.treatmentType'), width: '140px', template: 'treatmentType' },
         { field: 'admissionDate', header: this.translocoService.translate('guarantee.list.table.cols.admissionDate'), width: '130px', sortable: true },
         { field: 'estimatedAmount', header: this.translocoService.translate('guarantee.list.table.cols.estimatedAmount'), width: '200px', template: 'estimatedAmount' },
         { field: 'status', header: this.translocoService.translate('guarantee.list.table.cols.status'), width: '180px', template: 'status' },
@@ -224,6 +224,11 @@ export class GuaranteeList implements OnInit, OnDestroy{
       PAID: 'success',
     };
     return map[status] ?? 'secondary';
+  }
+
+  getTreatmentTypeLabel(type: string): string {
+    if (!type) return '';
+    return this.translocoService.translate(`guarantee.create.treatmentSection.types.${type.toLowerCase()}`);
   }
 
   onRowSelect(event: any) {
