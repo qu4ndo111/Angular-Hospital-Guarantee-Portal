@@ -54,7 +54,8 @@
   },
   "header": {
     "profile": "Hồ sơ",
-    "logout": "Đăng xuất"
+    "logout": "Đăng xuất",
+    "errorSimulator": "Công cụ giả lập lỗi"
   },
   "dashboard": {
     "stats": {
@@ -66,6 +67,16 @@
     "recent": {
       "title": "Hồ sơ gần đây",
       "viewAll": "Xem tất cả"
+    },
+    "empty": {
+      "title": "Chưa có hồ sơ nào",
+      "desc": "Hiện chưa có yêu cầu bảo lãnh nào. Hãy tạo yêu cầu đầu tiên để bắt đầu.",
+      "action": "Tạo yêu cầu mới"
+    },
+    "error": {
+      "title": "Không thể tải dữ liệu",
+      "desc": "Đã xảy ra lỗi khi tải dữ liệu trang chủ. Vui lòng thử lại.",
+      "retry": "Thử lại"
     }
   },
   "menu": {

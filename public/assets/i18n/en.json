@@ -54,7 +54,8 @@
   },
   "header": {
     "profile": "Profile",
-    "logout": "Logout"
+    "logout": "Logout",
+    "errorSimulator": "Error Simulator"
   },
   "dashboard": {
     "stats": {
@@ -66,6 +67,16 @@
     "recent": {
       "title": "Recent Requests",
       "viewAll": "View all"
+    },
+    "empty": {
+      "title": "No requests yet",
+      "desc": "There are no guarantee requests to display. Start by creating a new request.",
+      "action": "Create new request"
+    },
+    "error": {
+      "title": "Failed to load data",
+      "desc": "Something went wrong while fetching dashboard data. Please try again.",
+      "retry": "Retry"
     }
   },
   "menu": {
