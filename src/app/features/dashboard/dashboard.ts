@@ -1,9 +1,9 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, signal } from '@angular/core';
 import { Card } from '@app/shared/ui/card/card';
 import { Title } from '@app/shared/components/title/title';
 import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import { AsyncPipe } from '@angular/common';
-import { Observable, Subject, map, takeUntil } from 'rxjs';
+import { Observable, Subject, catchError, map, of, takeUntil } from 'rxjs';
 import { GuaranteeService } from '../guarantee/services/guarantee.service';
 import { GuaranteeRequest, GuaranteeStatus } from '../guarantee/models/guarantee.model';
 import { Router } from '@angular/router';
@@ -25,8 +25,9 @@ export class Dashboard implements OnInit, OnDestroy {
     approved: number;
     rejected: number;
     recent: GuaranteeRequest[];
-  }>;
+  } | null>;
 
+  loadError = signal<string | null>(null);
   columns: TableColumn[] = []
 
   private destroy$ = new Subject<void>();
@@ -64,6 +65,7 @@ export class Dashboard implements OnInit, OnDestroy {
         },
       ]
     })
+    this.loadError.set(null);
     this.stats$ = this.guaranteeService.getGuaranteeRequests().pipe(
       map(requests => ({
         total: requests.length,
@@ -73,7 +75,11 @@ export class Dashboard implements OnInit, OnDestroy {
         recent: [...requests]
           .sort((a, b) => b.submittedAt.localeCompare(a.submittedAt))
           .slice(0, 5)
-      }))
+      })),
+      catchError(err => {
+        this.loadError.set(err?.message ?? 'Unknown error');
+        return of(null);
+      })
     );
   }
 

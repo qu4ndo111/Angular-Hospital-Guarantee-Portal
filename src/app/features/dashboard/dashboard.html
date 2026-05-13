@@ -1,30 +1,60 @@
 <app-title [title]="'menu.dashboard' | transloco" [menu]="[{label: 'Dashboard'}]"></app-title>
 
 @if(stats$ | async; as stats) {
-  <!-- Stat Cards -->
-  <div class="dashboard-grid lg:px-6">
-    <app-card icon="pi pi-file"        [value]="stats.total.toString()"    [label]="'dashboard.stats.total'     | transloco" iconBg="#3b82f6" />
-    <app-card icon="pi pi-sync"        [value]="stats.reviewing.toString()" [label]="'dashboard.stats.reviewing' | transloco" iconBg="#f59e0b" />
-    <app-card icon="pi pi-check-circle" [value]="stats.approved.toString()" [label]="'dashboard.stats.approved'  | transloco" iconBg="#10b981" />
-    <app-card icon="pi pi-times-circle" [value]="stats.rejected.toString()" [label]="'dashboard.stats.rejected'  | transloco" iconBg="#ef4444" />
-  </div>
-
-  <!-- Recent Requests -->
-  <div class="recent-section lg:px-6">
-    <div class="recent-header">
-      <h3 class="recent-title">{{ 'dashboard.recent.title' | transloco }}</h3>
-      <button class="recent-link" (click)="goToList()">
-        {{ 'dashboard.recent.viewAll' | transloco }}
-        <i class="pi pi-arrow-right"></i>
-      </button>
+  @if(stats) {
+    <div class="dashboard-grid lg:px-6">
+      <app-card icon="pi pi-file"         [value]="stats.total.toString()"     [label]="'dashboard.stats.total'     | transloco" iconBg="#3b82f6" />
+      <app-card icon="pi pi-sync"         [value]="stats.reviewing.toString()" [label]="'dashboard.stats.reviewing' | transloco" iconBg="#f59e0b" />
+      <app-card icon="pi pi-check-circle" [value]="stats.approved.toString()"  [label]="'dashboard.stats.approved'  | transloco" iconBg="#10b981" />
+      <app-card icon="pi pi-times-circle" [value]="stats.rejected.toString()"  [label]="'dashboard.stats.rejected'  | transloco" iconBg="#ef4444" />
     </div>
 
-    <div class="recent-table">
-      <app-data-table [columns]="columns" [value]="stats.recent" selectionMode="single" (rowSelect)="goToDetail($event)">
-        <ng-template pTemplate="status" let-rowData>
-          <p-tag [severity]="getStatusSeverity(rowData.status)" [value]="rowData.status" />
-        </ng-template>
-      </app-data-table>
+    <div class="recent-section lg:px-6">
+      <div class="recent-header">
+        <h3 class="recent-title">{{ 'dashboard.recent.title' | transloco }}</h3>
+        <button class="recent-link" (click)="goToList()">
+          {{ 'dashboard.recent.viewAll' | transloco }}
+          <i class="pi pi-arrow-right"></i>
+        </button>
+      </div>
+
+      @if(stats.recent.length > 0) {
+        <div class="recent-table">
+          <app-data-table [columns]="columns" [value]="stats.recent" selectionMode="single" (rowSelect)="goToDetail($event)">
+            <ng-template pTemplate="status" let-rowData>
+              <p-tag [severity]="getStatusSeverity(rowData.status)" [value]="rowData.status" />
+            </ng-template>
+          </app-data-table>
+        </div>
+      } @else {
+        <div class="empty-state">
+          <div class="empty-state__icon">
+            <i class="pi pi-inbox"></i>
+          </div>
+          <h4 class="empty-state__title">{{ 'dashboard.empty.title' | transloco }}</h4>
+          <p class="empty-state__desc">{{ 'dashboard.empty.desc' | transloco }}</p>
+          <button class="empty-state__action" (click)="goToList()">
+            <i class="pi pi-plus-circle"></i>
+            {{ 'dashboard.empty.action' | transloco }}
+          </button>
+        </div>
+      }
     </div>
-  </div>
+  }
+} @else {
+  @if(loadError()) {
+    <div class="error-state lg:px-6">
+      <div class="error-state__card">
+        <div class="error-state__icon">
+          <i class="pi pi-exclamation-circle"></i>
+        </div>
+        <h4 class="error-state__title">{{ 'dashboard.error.title' | transloco }}</h4>
+        <p class="error-state__desc">{{ 'dashboard.error.desc' | transloco }}</p>
+        <button class="error-state__retry" (click)="ngOnInit()">
+          <i class="pi pi-refresh"></i>
+          {{ 'dashboard.error.retry' | transloco }}
+        </button>
+      </div>
+    </div>
+  }
 }

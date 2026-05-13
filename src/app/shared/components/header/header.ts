@@ -8,13 +8,14 @@ import { LanguageSwitcherComponent } from '../language-switcher/language-switche
 
 import { MenuModule } from 'primeng/menu';
 import { MenuItem } from 'primeng/api';
-import { Subscription, switchMap } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { LayoutService } from '@app/shared/services/layout.service';
+import { ErrorComponent } from '../error/error.component';
 
 @Component({
   selector: 'app-header',
-  imports: [CommonModule, ThemeToggleComponent, LanguageSwitcherComponent, MenuModule, TranslocoModule],
+  imports: [CommonModule, ThemeToggleComponent, LanguageSwitcherComponent, MenuModule, TranslocoModule, ErrorComponent],
   templateUrl: './header.html',
   styleUrl: './header.scss',
 })
