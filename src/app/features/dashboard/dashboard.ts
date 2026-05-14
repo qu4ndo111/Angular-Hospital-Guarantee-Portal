@@ -164,6 +164,10 @@ export class Dashboard implements OnInit, OnDestroy {
     this.monthlyChartOptions = {
       maintainAspectRatio: false,
       aspectRatio: 0.8,
+      animation: {
+        duration: 1000,
+        easing: 'easeOutQuart'
+      },
       plugins: {
         legend: {
           display: false
@@ -195,6 +199,10 @@ export class Dashboard implements OnInit, OnDestroy {
     this.statusChartOptions = {
       maintainAspectRatio: false,
       aspectRatio: 1,
+      animation: {
+        duration: 1000,
+        easing: 'easeOutQuart'
+      },
       plugins: {
         legend: {
           position: 'bottom',
