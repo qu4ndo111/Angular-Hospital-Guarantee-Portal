@@ -3,10 +3,25 @@
 @if(stats$ | async; as stats) {
   @if(stats) {
     <div class="dashboard-grid lg:px-6">
-      <app-card icon="pi pi-file"         [value]="stats.total.toString()"     [label]="'dashboard.stats.total'     | transloco" iconBg="#3b82f6" />
-      <app-card icon="pi pi-sync"         [value]="stats.reviewing.toString()" [label]="'dashboard.stats.reviewing' | transloco" iconBg="#f59e0b" />
-      <app-card icon="pi pi-check-circle" [value]="stats.approved.toString()"  [label]="'dashboard.stats.approved'  | transloco" iconBg="#10b981" />
-      <app-card icon="pi pi-times-circle" [value]="stats.rejected.toString()"  [label]="'dashboard.stats.rejected'  | transloco" iconBg="#ef4444" />
+      <app-card icon="pi pi-file" [value]="stats.total.toString()" [label]="'dashboard.stats.total' | transloco" iconBg="#3b82f6" />
+      <app-card icon="pi pi-sync" [value]="stats.reviewing.toString()" [label]="'dashboard.stats.reviewing' | transloco" iconBg="#f59e0b" />
+      <app-card icon="pi pi-check-circle" [value]="stats.approved.toString()" [label]="'dashboard.stats.approved' | transloco" iconBg="#10b981" />
+      <app-card icon="pi pi-times-circle" [value]="stats.rejected.toString()" [label]="'dashboard.stats.rejected' | transloco" iconBg="#ef4444" />
+    </div>
+
+    <div class="dashboard-charts lg:px-6">
+      <div class="chart-card">
+        <h3 class="chart-title">{{ 'dashboard.charts.monthly' | transloco }}</h3>
+        @if(monthlyChartData$ | async; as monthlyChartData) {
+          <p-chart type="bar" [data]="monthlyChartData" [options]="monthlyChartOptions" height="300px" />
+        }
+      </div>
+      <div class="chart-card">
+        <h3 class="chart-title">{{ 'dashboard.charts.status' | transloco }}</h3>
+        @if(statusChartData$ | async; as statusChartData) {
+          <p-chart type="doughnut" [data]="statusChartData" [options]="statusChartOptions" height="300px" />
+        }
+      </div>
     </div>
 
     <div class="recent-section lg:px-6">

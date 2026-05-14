@@ -64,6 +64,10 @@
       "approved": "Approved",
       "rejected": "Rejected"
     },
+    "charts": {
+      "monthly": "Guarantee Requests Overview",
+      "status": "Requests by Status"
+    },
     "recent": {
       "title": "Recent Requests",
       "viewAll": "View all"

@@ -8,6 +8,31 @@
   @media (max-width: 640px)  { grid-template-columns: 1fr; }
 }
 
+.dashboard-charts {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  padding: 1rem 0;
+
+  @media (max-width: 1024px) { grid-template-columns: 1fr; }
+}
+
+.chart-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  padding: 1.5rem;
+  animation: fadeInUp 0.35s ease both;
+  height: 100%;
+}
+
+.chart-title {
+  margin: 0 0 1.5rem 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
 .recent-section {
   margin-top: 1.5rem;
   padding-bottom: 2rem;

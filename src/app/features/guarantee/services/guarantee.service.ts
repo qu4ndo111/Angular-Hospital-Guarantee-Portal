@@ -545,4 +545,44 @@ export class GuaranteeService {
       rejected: reqs.filter(r => r.status === 'REJECTED').length,
     }).pipe(delay(300));
   }
+
+  getMonthlyChartData(): Observable<{ month: string; count: number }[]> {
+    if (this.shouldError) return throwError(() => new Error('Simulated error: getMonthlyChartData'));
+    const reqs = this.guaranteeRequests();
+
+    const months = ['2026-01', '2026-02', '2026-03', '2026-04', '2026-05'];
+    const data: Record<string, number> = {};
+    months.forEach(m => data[m] = 0);
+
+    reqs.forEach(r => {
+      const month = r.admissionDate.substring(0, 7);
+      if (data[month] !== undefined) {
+        data[month]++;
+      }
+    });
+
+    const result = Object.entries(data).map(([month, count]) => ({
+      month,
+      count
+    }));
+
+    return of(result).pipe(delay(300));
+  }
+
+  getStatusChartData(): Observable<{ status: string; count: number }[]> {
+    if (this.shouldError) return throwError(() => new Error('Simulated error: getStatusChartData'));
+    const reqs = this.guaranteeRequests();
+    const data: Record<string, number> = {};
+
+    reqs.forEach(r => {
+      data[r.status] = (data[r.status] || 0) + 1;
+    });
+
+    const result = Object.entries(data).map(([status, count]) => ({
+      status,
+      count
+    }));
+
+    return of(result).pipe(delay(300));
+  }
 }

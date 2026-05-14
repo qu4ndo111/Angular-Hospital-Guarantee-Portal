@@ -64,6 +64,10 @@
       "approved": "Đã duyệt",
       "rejected": "Từ chối"
     },
+    "charts": {
+      "monthly": "Tổng quan hồ sơ bảo lãnh",
+      "status": "Tỷ lệ trạng thái hồ sơ"
+    },
     "recent": {
       "title": "Hồ sơ gần đây",
       "viewAll": "Xem tất cả"
