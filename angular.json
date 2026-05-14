@@ -30,6 +30,9 @@
         "build": {
           "builder": "@angular/build:application",
           "options": {
+            "allowedCommonJsDependencies": [
+              "dayjs"
+            ],
             "browser": "src/main.ts",
             "polyfills": [
               "zone.js"
