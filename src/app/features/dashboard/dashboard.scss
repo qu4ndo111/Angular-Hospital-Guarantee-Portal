@@ -9,12 +9,11 @@
 }
 
 .dashboard-charts {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  display: flex;
+  flex-wrap: wrap;
   gap: 1rem;
   padding: 1rem 0;
-
-  @media (max-width: 1024px) { grid-template-columns: 1fr; }
+  width: 100%;
 }
 
 .chart-card {
@@ -24,6 +23,8 @@
   padding: 1.5rem;
   animation: fadeInUp 0.35s ease both;
   height: 100%;
+  width: 100%;
+  flex: 1;
 }
 
 .chart-title {
