@@ -80,6 +80,7 @@ export class Dashboard implements OnInit, OnDestroy {
         {
           field: 'status',
           header: this.translocoService.translate('guarantee.list.table.cols.status'),
+          template: 'status'
         },
       ]
     })
@@ -219,6 +220,18 @@ export class Dashboard implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.destroy$.next()
     this.destroy$.complete()
+  }
+
+  getStatusLabel(status: GuaranteeStatus): string {
+    const map: Record<GuaranteeStatus, string> = {
+      DRAFT: this.translocoService.translate('guarantee.list.status.draft'),
+      SUBMITTED: this.translocoService.translate('guarantee.list.status.submitted'),
+      REVIEWING: this.translocoService.translate('guarantee.list.status.reviewing'),
+      APPROVED: this.translocoService.translate('guarantee.list.status.approved'),
+      REJECTED: this.translocoService.translate('guarantee.list.status.rejected'),
+      PAID: this.translocoService.translate('guarantee.list.status.paid'),
+    };
+    return map[status] ?? status;
   }
 
   getStatusSeverity(status: GuaranteeStatus): 'success' | 'info' | 'warn' | 'danger' | 'secondary' {
