@@ -7,13 +7,16 @@ import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeuix/themes/aura';
 import { translocoConfig } from './core/i18n/transloco.config';
 import { provideAnimations } from '@angular/platform-browser/animations';
+import { requestInterceptor } from './core/interceptor/request-interceptor';
+import { responseInterceptor } from './core/interceptor/response-interceptor';
+import { withInterceptors } from '@angular/common/http';
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    provideHttpClient(withInterceptors([requestInterceptor, responseInterceptor])),
     provideBrowserGlobalErrorListeners(),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes, withPreloading(PreloadAllModules)),
-    provideHttpClient(),
     translocoConfig,
     provideAnimations(),
     providePrimeNG({
