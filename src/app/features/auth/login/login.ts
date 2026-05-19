@@ -1,7 +1,7 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
@@ -23,14 +23,18 @@ import { ToastService } from '@app/shared/services/toast.service';
 export class Login implements OnInit {
   loginForm: FormGroup = new FormGroup({});
   loading = signal(false);
+  returnUrl: string = '';
 
-  constructor(private fb: FormBuilder, private authService: AuthService, private toastService: ToastService, private translocoService: TranslocoService, private router: Router) { }
+  constructor(private fb: FormBuilder, private authService: AuthService, private toastService: ToastService, private translocoService: TranslocoService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
       email: ['admin@admin.com', [Validators.required]],
       password: ['123456aA@', [Validators.required]],
     });
+
+    const rawReturnUrl = this.route.snapshot.queryParams['returnUrl'];
+    this.returnUrl = this.validateReturnUrl(rawReturnUrl);
   }
 
   onSubmit() {
@@ -43,11 +47,18 @@ export class Login implements OnInit {
       next: (res) => {
         this.toastService.showSuccess(this.translocoService.translate('auth.login.success'));
         this.loginForm.reset();
-        this.router.navigate(['/']);
+        this.router.navigateByUrl(this.returnUrl);
       },
       error: (err) => {
         this.toastService.showError(this.translocoService.translate('auth.validation.passwordIncorrect'))
       }
     })
+  }
+
+  private validateReturnUrl(url: string | undefined): string {
+    const DEFAULT = '/main/dashboard';
+    if (!url) return DEFAULT;
+    if (url.startsWith('/') && !url.startsWith('//')) return url;
+    return DEFAULT;
   }
 }
