@@ -35,7 +35,6 @@ export class Login implements OnInit {
 
     const rawReturnUrl = this.route.snapshot.queryParams['returnUrl'];
     this.returnUrl = this.validateReturnUrl(rawReturnUrl);
-    console.log(this.returnUrl)
   }
 
   onSubmit() {
