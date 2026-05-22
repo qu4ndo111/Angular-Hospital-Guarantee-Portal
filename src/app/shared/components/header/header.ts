@@ -26,25 +26,22 @@ export class Header implements OnInit, OnDestroy {
   constructor(private translocoService: TranslocoService, private router: Router, public layoutService: LayoutService) { }
 
   ngOnInit(): void {
-    this.langChangeSubscription = this.translocoService.langChanges$.subscribe(() => {
-      this.updateMenuItems();
-    });
+    this.langChangeSubscription = this.translocoService.selectTranslate('header.logout')
+      .subscribe((translatedLabel) => {
+        this.items = [
+          {
+            label: translatedLabel,
+            icon: 'pi pi-sign-out',
+            command: () => {
+              this.logout();
+            }
+          }
+        ];
+      });
   }
 
   ngOnDestroy(): void {
     this.langChangeSubscription?.unsubscribe();
-  }
-
-  private updateMenuItems(): void {
-    this.items = [
-      {
-        label: this.translocoService.translate('header.logout'),
-        icon: 'pi pi-sign-out',
-        command: () => {
-          this.logout();
-        }
-      }
-    ]
   }
 
   logout() {
