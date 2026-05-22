@@ -35,6 +35,7 @@ export class Login implements OnInit {
 
     const rawReturnUrl = this.route.snapshot.queryParams['returnUrl'];
     this.returnUrl = this.validateReturnUrl(rawReturnUrl);
+    console.log(this.returnUrl)
   }
 
   onSubmit() {
@@ -56,7 +57,7 @@ export class Login implements OnInit {
   }
 
   private validateReturnUrl(url: string | undefined): string {
-    const DEFAULT = '/main/dashboard';
+    const DEFAULT = '/dashboard';
     if (!url) return DEFAULT;
     if (url.startsWith('/') && !url.startsWith('//')) return url;
     return DEFAULT;
