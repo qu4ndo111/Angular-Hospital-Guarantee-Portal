@@ -56,7 +56,7 @@ export class Login implements OnInit {
   }
 
   private validateReturnUrl(url: string | undefined): string {
-    const DEFAULT = '/main/dashboard';
+    const DEFAULT = '/dashboard';
     if (!url) return DEFAULT;
     if (url.startsWith('/') && !url.startsWith('//')) return url;
     return DEFAULT;
