@@ -1,6 +1,5 @@
 <div class="flex flex-col gap-6">
 
-  <!-- Header -->
   <div class="flex items-center gap-3 pb-4 border-b border-surface-200 dark:border-surface-700">
     <div class="w-10 h-10 rounded-xl bg-primary-100 dark:bg-primary-900/40 flex items-center justify-center text-primary-600 dark:text-primary-400">
       <i class="pi pi-sliders-h text-lg"></i>
@@ -17,7 +16,6 @@
 
   <form [formGroup]="filterForm" class="flex flex-col gap-5">
 
-    <!-- Date range -->
     <div>
       <p class="text-sm font-semibold text-surface-700 dark:text-surface-200 mb-3 flex items-center gap-2">
         <i class="pi pi-calendar text-primary-500"></i>
@@ -57,9 +55,7 @@
 
     <p-divider />
 
-    <!-- Hospital & Treatment Type -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-      <!-- Hospital -->
       <div>
         <p class="text-sm font-semibold text-surface-700 dark:text-surface-200 mb-3 flex items-center gap-2">
           <i class="pi pi-building text-primary-500"></i>
@@ -74,7 +70,6 @@
           class="w-full" />
       </div>
 
-      <!-- Treatment Type -->
       <div>
         <p class="text-sm font-semibold text-surface-700 dark:text-surface-200 mb-3 flex items-center gap-2">
           <i class="pi pi-briefcase text-primary-500"></i>
@@ -92,7 +87,6 @@
 
     <p-divider />
 
-    <!-- Status -->
     <div>
       <p class="text-sm font-semibold text-surface-700 dark:text-surface-200 mb-3 flex items-center gap-2">
         <i class="pi pi-tag text-primary-500"></i>
@@ -112,7 +106,6 @@
 
   </form>
 
-  <!-- Actions -->
   <div class="flex items-center justify-between pt-4 border-t border-surface-200 dark:border-surface-700">
     <button
       pButton

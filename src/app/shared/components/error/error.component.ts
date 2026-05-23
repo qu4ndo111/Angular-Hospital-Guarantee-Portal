@@ -10,7 +10,7 @@ import { TranslocoPipe } from "@jsverse/transloco";
     imports: [ToggleSwitchModule, FormsModule, TranslocoPipe],
     template: `
         <div>
-            <p>{{ 'header.errorSimulator' | transloco }}</p>
+            <p class="error-text">{{ 'header.errorSimulator' | transloco }}</p>
             <p-toggleSwitch [ngModel]="errorSimulator.simulateError()" (ngModelChange)="errorSimulator.simulateError.set($event)" />
         </div>
     `,
@@ -20,6 +20,12 @@ import { TranslocoPipe } from "@jsverse/transloco";
             justify-content: center;
             align-items: center;
             gap: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .error-text {
+                display: none;
+            }
         }
     `]
 })
