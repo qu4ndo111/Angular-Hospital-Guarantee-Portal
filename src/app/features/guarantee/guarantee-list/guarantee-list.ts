@@ -154,7 +154,10 @@ export class GuaranteeList implements OnInit, OnDestroy{
           guaranteeRequests: res
         }
       }),
-      tap(() => this.loadingService.hide())
+      tap((res) => {
+        this.totalRecords = res.guaranteeRequests.length || 0
+        this.loadingService.hide()
+      })
     )
   }
 
@@ -181,7 +184,7 @@ export class GuaranteeList implements OnInit, OnDestroy{
 
     this.filterPopupRef!.onClose.pipe(takeUntil(this.destroy$)).subscribe({
       next: (res) => {
-        this.activeFilterChips = res.activeFilterChips
+        this.activeFilterChips = res?.activeFilterChips ?? []
         this.hasActiveFilters = this.activeFilterChips.length > 0
         this.filter.next(res)
       },
