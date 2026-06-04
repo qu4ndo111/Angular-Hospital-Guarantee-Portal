@@ -87,11 +87,11 @@ export class Dashboard implements OnInit, OnDestroy {
     this.loadError.set(null);
     this.stats$ = this.guaranteeService.getGuaranteeRequests().pipe(
       map(requests => ({
-        total: requests.length,
-        reviewing: requests.filter(r => r.status === 'SUBMITTED' || r.status === 'REVIEWING').length,
-        approved: requests.filter(r => r.status === 'APPROVED' || r.status === 'PAID').length,
-        rejected: requests.filter(r => r.status === 'REJECTED').length,
-        recent: [...requests]
+        total: requests.guaranteeRequests.length,
+        reviewing: requests.guaranteeRequests.filter(r => r.status === 'SUBMITTED' || r.status === 'REVIEWING').length,
+        approved: requests.guaranteeRequests.filter(r => r.status === 'APPROVED' || r.status === 'PAID').length,
+        rejected: requests.guaranteeRequests.filter(r => r.status === 'REJECTED').length,
+        recent: [...requests.guaranteeRequests]
           .sort((a, b) => b.submittedAt.localeCompare(a.submittedAt))
           .slice(0, 5)
       })),

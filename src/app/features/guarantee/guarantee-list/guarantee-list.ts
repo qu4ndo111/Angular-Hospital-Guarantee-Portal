@@ -44,20 +44,17 @@ interface FilterChip {
   styleUrl: './guarantee-list.scss',
   providers: [DialogService]
 })
-export class GuaranteeList implements OnInit, OnDestroy{
+export class GuaranteeList implements OnInit, OnDestroy {
   filterPopupRef: DynamicDialogRef | null = null
 
   menu: MenuItem[] = [];
   columns: TableColumn[] = [];
 
-  // Search
   searchKeyword = new FormControl<string>('');
 
-  // Filter
   hasActiveFilters: boolean = false;
   activeFilterChips: FilterChip[] = [];
 
-  // Table data (placeholder — no data handling)
   guaranteeList: any[] = [];
   totalRecords: number = 0;
   loading: boolean = false;
@@ -103,9 +100,10 @@ export class GuaranteeList implements OnInit, OnDestroy{
       of(''),
       this.searchKeyword.valueChanges.pipe(
         debounceTime(300),
-        distinctUntilChanged()
+        distinctUntilChanged(),
+        map((keyword) => keyword?.trim() || '')
       )
-    );
+    )
 
     const filter$ = this.filter.asObservable()
 
@@ -145,17 +143,18 @@ export class GuaranteeList implements OnInit, OnDestroy{
         return this.guaranteeService.getGuaranteeRequests(filter!, searchKeyword!, page, pageSize).pipe(
           catchError((err) => {
             this.toastService.showError(err.message || 'Lỗi hệ thống')
-            return of([])
+            return of({ total: 0, guaranteeRequests: [] })
           }),
         )
       }),
-      map((res) => {
-        return {
-          guaranteeRequests: res
+      map((res) => (
+        {
+          total: res?.total || 0,
+          guaranteeRequests: res?.guaranteeRequests || []
         }
-      }),
+      )),
       tap((res) => {
-        this.totalRecords = res.guaranteeRequests.length || 0
+        this.totalRecords = res?.total || 0
         this.loadingService.hide()
       })
     )
@@ -285,5 +284,11 @@ export class GuaranteeList implements OnInit, OnDestroy{
           this.loading = false;
         }
       });
+  }
+
+  onPageChange(event: any) {
+    const page = (event.first ?? 0) / (event.rows ?? 10) + 1;
+    this.page.next(page);
+    this.pageSize.next(event.rows ?? 10);
   }
 }

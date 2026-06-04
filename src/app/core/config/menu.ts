@@ -33,9 +33,9 @@ export const MENU_ITEMS: MenuItem[] = [
     },
 
     {
-        label: 'menu.module2',
-        icon: 'pi pi-users',
-        routerLink: '/module2',
+        label: 'menu.report.list',
+        icon: 'pi pi-chart-bar',
+        routerLink: '/report/list',
     },
 
     {

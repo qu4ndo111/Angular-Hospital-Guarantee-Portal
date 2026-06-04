@@ -106,7 +106,8 @@
       "submit": "Gửi",
       "back": "Quay lại",
       "ok": "Đồng ý",
-      "close": "Đóng"
+      "close": "Đóng",
+      "export": "Xuất báo cáo"
     },
     "search": "Tìm kiếm",
     "choose": "Chọn",
@@ -288,6 +289,41 @@
         "approved": "Đã duyệt",
         "rejected": "Từ chối",
         "paid": "Đã thanh toán"
+      }
+    }
+  },
+  "menu.report": "Báo cáo",
+  "menu.report.list": "Báo cáo",
+  "report": {
+    "list": {
+      "title": "Báo cáo thống kê",
+      "tabs": {
+        "monthly": "Tổng quan theo tháng",
+        "hospital": "Hiệu suất bệnh viện"
+      },
+      "filter": {
+        "selectDateRange": "Chọn khoảng thời gian",
+        "treatmentType": "Chọn hình thức...",
+        "all": "Tất cả"
+      },
+      "monthlyTable": {
+        "month": "Tháng",
+        "total": "Tổng hồ sơ",
+        "approved": "Đã duyệt",
+        "rejected": "Từ chối",
+        "inProgress": "Đang xử lý",
+        "avgDays": "Số ngày TB",
+        "claimedAmount": "Số tiền yêu cầu",
+        "assessedAmount": "Số tiền duyệt"
+      },
+      "hospitalTable": {
+        "hospital": "Bệnh viện",
+        "total": "Hồ sơ nhận",
+        "approved": "Đã duyệt",
+        "rejected": "Từ chối",
+        "inProgress": "Đang xử lý",
+        "avgDays": "Số ngày TB",
+        "sla": "Tỷ lệ SLA"
       }
     }
   }

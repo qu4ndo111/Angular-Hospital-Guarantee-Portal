@@ -1,0 +1,73 @@
+<app-title [title]="'report.list.title' | transloco" [menu]="menu"></app-title>
+
+<div class="flex flex-col gap-6 lg:py-6">
+  <div class="flex gap-4 w-full">
+    <p-datepicker [formControl]="dateRange" selectionMode="range" appendTo="body"
+      [placeholder]="'report.list.filter.selectDateRange' | transloco" iconDisplay="input" [showIcon]="true"
+      dateFormat="dd/mm/yy"></p-datepicker>
+    <p-select showClear="true" [formControl]="treatmentType" [options]="treatmentTypeOptions" optionLabel="label"
+      optionValue="value" [placeholder]="'report.list.filter.treatmentType' | transloco" class="w-[300px]"
+      appendTo="body"></p-select>
+    @if((dateRange.value && dateRange.value.length > 0) || (treatmentType.value && treatmentType.value.length > 0)) {
+    <p-button type="button" icon="pi pi-times" [label]="'common.actions.delete' | transloco" (onClick)="clearFilter()"
+      severity="secondary" text="true"></p-button>
+    }
+  </div>
+  <p-tabs [value]="activeTab.value" (valueChange)="onTabChange($event)">
+    <p-tablist>
+      <p-tab [value]="0">
+        <div class="flex items-center gap-2">
+          <i class="pi pi-calendar text-sm"></i>
+          <span>{{ 'report.list.tabs.monthly' | transloco }}</span>
+        </div>
+      </p-tab>
+      <p-tab [value]="1">
+        <div class="flex items-center gap-2">
+          <i class="pi pi-building text-sm"></i>
+          <span>{{ 'report.list.tabs.hospital' | transloco }}</span>
+        </div>
+      </p-tab>
+    </p-tablist>
+    <p-tabpanels>
+      <p-tabpanel [value]="0">
+        <div class="flex flex-col gap-4">
+          <div class="flex justify-end">
+            <button pButton type="button" icon="pi pi-file-export"
+              [label]="'common.actions.export' | transloco"></button>
+          </div>
+          @if(monthlyVm$ | async; as monthly) {
+          <app-data-table [loading]="monthlyLoading" [columns]="monthlyReportColumn" [value]="monthly.data"
+            [paginator]="true" [rows]="monthlyPageSize.value" [lazy]="true" [totalRecords]="monthly.total"
+            (lazyLoad)="onMonthlyPage($event)">
+            <ng-template pTemplate="claimedAmount" let-rowData>
+              <span class="font-medium tabular-nums">
+                {{ rowData.claimedAmount | number}} ₫
+              </span>
+            </ng-template>
+            <ng-template pTemplate="assessedAmount" let-rowData>
+              <span class="font-medium tabular-nums">
+                {{ rowData.assessedAmount | number}} ₫
+              </span>
+            </ng-template>
+          </app-data-table>
+          }
+        </div>
+      </p-tabpanel>
+      <p-tabpanel [value]="1">
+        <div class="flex flex-col gap-4">
+          <div class="flex justify-end">
+            <button pButton type="button" icon="pi pi-file-export"
+              [label]="'common.actions.export' | transloco"></button>
+          </div>
+          @if(hospitalVm$ | async; as hospital) {
+          <app-data-table [loading]="hospitalLoading" [columns]="hospitalPerformanceColumn" [value]="hospital.data"
+            [paginator]="true" [rows]="hospitalPageSize.value" [lazy]="true" [totalRecords]="hospital.total"
+            (lazyLoad)="onHospitalPage($event)">
+
+          </app-data-table>
+          }
+        </div>
+      </p-tabpanel>
+    </p-tabpanels>
+  </p-tabs>
+</div>

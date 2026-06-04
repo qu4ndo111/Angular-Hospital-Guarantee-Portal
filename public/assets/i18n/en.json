@@ -106,7 +106,8 @@
       "submit": "Submit",
       "back": "Back",
       "ok": "OK",
-      "close": "Close"
+      "close": "Close",
+      "export": "Export Report"
     },
     "search": "Search",
     "choose": "Choose",
@@ -288,6 +289,41 @@
         "approved": "Approved",
         "rejected": "Rejected",
         "paid": "Paid"
+      }
+    }
+  },
+  "menu.report": "Reports",
+  "menu.report.list": "Reports",
+  "report": {
+    "list": {
+      "title": "Statistical Reports",
+      "tabs": {
+        "monthly": "Monthly Overview",
+        "hospital": "Hospital Performance"
+      },
+      "filter": {
+        "selectDateRange": "Select date range",
+        "treatmentType": "Select type...",
+        "all": "All"
+      },
+      "monthlyTable": {
+        "month": "Month",
+        "total": "Total Claims",
+        "approved": "Approved",
+        "rejected": "Rejected",
+        "inProgress": "In Progress",
+        "avgDays": "Avg Days",
+        "claimedAmount": "Claimed Amount",
+        "assessedAmount": "Assessed Amount"
+      },
+      "hospitalTable": {
+        "hospital": "Hospital",
+        "total": "Total Claims",
+        "approved": "Approved",
+        "rejected": "Rejected",
+        "inProgress": "In Progress",
+        "avgDays": "Avg Days",
+        "sla": "SLA %"
       }
     }
   }
