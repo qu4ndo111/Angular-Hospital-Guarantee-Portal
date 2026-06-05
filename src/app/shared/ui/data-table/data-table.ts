@@ -37,6 +37,8 @@ export class DataTable<T = any> {
   @Input() rows: number = 10;
   @Input() rowsPerPageOptions: number[] = [10, 25, 50];
   @Input() selectionMode: 'single' | 'multiple' | null = null;
+  @Input() lazy: boolean = false;
+  @Input() totalRecords: number = 0;
 
   @ContentChildren(PrimeTemplate)
   set templates(value: QueryList<PrimeTemplate>) {
@@ -44,6 +46,7 @@ export class DataTable<T = any> {
   }
 
   @Output() rowSelect = new EventEmitter<T | T[]>();
+  @Output() lazyLoad = new EventEmitter<TableLazyLoadEvent>();
 
   private templateMap: Map<string, TemplateRef<any>> = new Map();
 

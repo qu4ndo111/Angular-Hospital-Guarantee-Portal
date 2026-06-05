@@ -1,0 +1,69 @@
+
+::ng-deep {
+  app-report-list {
+    .p-tabs {
+      background: transparent;
+      border: none;
+      box-shadow: none;
+    }
+
+    .p-tablist {
+      background: transparent;
+      border-bottom: 1px solid var(--border-color);
+      padding: 0;
+      margin-bottom: 1.5rem;
+    }
+
+    .p-tablist-content {
+      background: transparent;
+      border: none;
+    }
+
+    .p-tablist-tab-list {
+      background: transparent;
+      border: none;
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .p-tab {
+      background: transparent;
+      border: none;
+      border-bottom: 2px solid transparent;
+      color: var(--text-secondary);
+      font-weight: 500;
+      font-size: 0.875rem;
+      padding: 0.75rem 0.25rem;
+      transition: all 0.2s ease-in-out;
+      cursor: pointer;
+      outline: none;
+      box-shadow: none;
+      position: relative;
+      border-radius: 0;
+
+      &:hover {
+        color: var(--color-primary);
+        background: transparent;
+        border-bottom-color: transparent;
+      }
+
+      &.p-tab-active,
+      &.p-active,
+      &[aria-selected="true"] {
+        color: var(--color-primary);
+        font-weight: 600;
+        border-bottom-color: var(--color-primary);
+        background: transparent;
+      }
+    }
+
+    .p-tablist-active-bar,
+    .p-tab-active-bar {
+      display: none;
+    }
+
+    .p-tabpanels {
+      background-color: transparent;
+    }
+  }
+}

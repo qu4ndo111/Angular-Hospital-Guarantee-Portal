@@ -1,6 +1,7 @@
 <p-table [value]="value" [columns]="columns" paginatorDropdownAppendTo="body" [showGridlines]="true" [loading]="loading" [paginator]="paginator" [rows]="rows"
   [rowsPerPageOptions]="rowsPerPageOptions" [rowHover]="true" class="simple-table"
-  [selectionMode]="selectionMode" (onRowSelect)="rowSelect.emit($event.data)">
+  [selectionMode]="selectionMode" [lazy]="lazy" [totalRecords]="totalRecords"
+  (onLazyLoad)="lazyLoad.emit($event)" (onRowSelect)="rowSelect.emit($event.data)">
   <ng-template pTemplate="header" let-columns>
     <tr>
       @for(col of columns; track col.field) {
