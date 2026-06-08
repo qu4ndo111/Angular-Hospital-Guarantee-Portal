@@ -33,7 +33,7 @@
         <div class="flex flex-col gap-4">
           <div class="flex justify-end">
             <button pButton type="button" icon="pi pi-file-export"
-              [label]="'common.actions.export' | transloco"></button>
+              [label]="'common.actions.export' | transloco" (click)="exportMonthly()"></button>
           </div>
           @if(monthlyVm$ | async; as monthly) {
           <app-data-table [loading]="monthlyLoading" [columns]="monthlyReportColumn" [value]="monthly.data"
@@ -57,7 +57,7 @@
         <div class="flex flex-col gap-4">
           <div class="flex justify-end">
             <button pButton type="button" icon="pi pi-file-export"
-              [label]="'common.actions.export' | transloco"></button>
+              [label]="'common.actions.export' | transloco" (click)="exportHospital()"></button>
           </div>
           @if(hospitalVm$ | async; as hospital) {
           <app-data-table [loading]="hospitalLoading" [columns]="hospitalPerformanceColumn" [value]="hospital.data"

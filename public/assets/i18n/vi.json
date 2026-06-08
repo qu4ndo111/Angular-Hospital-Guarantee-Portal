@@ -121,7 +121,9 @@
       "create": "Hồ sơ mới đã được tạo thành công.",
       "update": "Thông tin đã được cập nhật thành công.",
       "delete": "Mục đã được xóa khỏi hệ thống.",
-      "submit": "Yêu cầu của bạn đã được gửi và đang được xử lý."
+      "submit": "Yêu cầu của bạn đã được gửi và đang được xử lý.",
+      "exportMonthly": "Xuất báo cáo theo tháng thành công!",
+      "exportHospital": "Xuất báo cáo hiệu suất bệnh viện thành công!"
     },
     "error": {
       "title": "Lỗi",
