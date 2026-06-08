@@ -121,7 +121,9 @@
       "create": "New record has been created successfully.",
       "update": "Information has been updated successfully.",
       "delete": "The item has been removed from the system.",
-      "submit": "Your request has been submitted and is being processed."
+      "submit": "Your request has been submitted and is being processed.",
+      "exportMonthly": "Exported monthly report successfully!",
+      "exportHospital": "Exported hospital report successfully!"
     },
     "error": {
       "title": "Error",

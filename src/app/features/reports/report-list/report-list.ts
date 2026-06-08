@@ -17,6 +17,8 @@ import { FormControl, ReactiveFormsModule, ɵInternalFormsSharedModule } from '@
 import { HospitalPerformanceModel, MonthlyReportModel } from '../models/report.model';
 import { ReportsService } from '../services/reports.service';
 import { AsyncPipe, CommonModule } from '@angular/common';
+import { LoadingService } from '@app/shared/services/loading.service';
+import { ToastService } from '@app/shared/services/toast.service';
 
 @Component({
   selector: 'app-report-list',
@@ -61,7 +63,7 @@ export class ReportList implements OnInit, OnDestroy {
   hospitalVm$!: Observable<{ data: HospitalPerformanceModel[]; total: number }>;
   hospitalLoading: boolean = false;
 
-  constructor(private translocoService: TranslocoService, private reportsService: ReportsService) { }
+  constructor(private translocoService: TranslocoService, private reportsService: ReportsService, private loadingService: LoadingService, private toastService: ToastService) { }
 
   ngOnInit(): void {
     this.translocoService.langChanges$
@@ -262,6 +264,126 @@ export class ReportList implements OnInit, OnDestroy {
     const page = (event.first ?? 0) / (event.rows ?? 10) + 1;
     this.hospitalPage.next(page);
     this.hospitalPageSize.next(event.rows ?? 10);
+  }
+
+  exportMonthly() {
+    this.loadingService.show()
+
+    const filter = {
+      fromDate: this.dateRange.value?.[0],
+      toDate: this.dateRange.value?.[1],
+      treatmentType: this.treatmentType.value!
+    }
+
+    this.reportsService.getMonthlyReportData(filter).subscribe({
+      next: (res) => {
+        const headers = [
+          this.translocoService.translate('report.list.monthlyTable.month'),
+          this.translocoService.translate('report.list.monthlyTable.total'),
+          this.translocoService.translate('report.list.monthlyTable.approved'),
+          this.translocoService.translate('report.list.monthlyTable.rejected'),
+          this.translocoService.translate('report.list.monthlyTable.inProgress'),
+          this.translocoService.translate('report.list.monthlyTable.avgDays'),
+          this.translocoService.translate('report.list.monthlyTable.claimedAmount'),
+          this.translocoService.translate('report.list.monthlyTable.assessedAmount')
+        ]
+
+        const escapeCsv = (str: any) => `"${String(str ?? '').replace(/"/g, '""')}"`;
+
+        const rows = [
+          headers.map(escapeCsv).join(','),
+          ...res.data.map(item => [
+            escapeCsv(item.month),
+            escapeCsv(item.total),
+            escapeCsv(item.approved),
+            escapeCsv(item.rejected),
+            escapeCsv(item.inProgress),
+            escapeCsv(item.avgDays),
+            escapeCsv(item.claimedAmount),
+            escapeCsv(item.assessedAmount)
+          ].join(','))
+        ].join('\n')
+
+        const blob = new Blob([rows], { type: 'text/csv;charset=utf-8;' })
+        const link = document.createElement('a')
+
+        if (link.download !== undefined) {
+          const url = URL.createObjectURL(blob)
+          link.setAttribute('href', url)
+          link.setAttribute('download', `monthly-report-${new Date().toISOString().split('T')[0]}.csv`)
+          link.style.visibility = 'hidden'
+          document.body.appendChild(link)
+          link.click()
+          document.body.removeChild(link)
+        }
+
+        this.loadingService.hide()
+        this.toastService.showSuccess(this.translocoService.translate('message.success.exportMonthly'))
+      },
+      error: () => {
+        this.loadingService.hide()
+        this.toastService.showError(this.translocoService.translate('message.error.general'))
+      }
+    })
+  }
+
+  exportHospital() {
+    this.loadingService.show()
+
+    const filter = {
+      fromDate: this.dateRange.value?.[0],
+      toDate: this.dateRange.value?.[1],
+      treatmentType: this.treatmentType.value!
+    }
+
+    this.reportsService.getHospitalPerformanceReportData(filter).subscribe({
+      next: (res) => {
+        const headers = [
+          this.translocoService.translate('report.list.hospitalTable.hospital'),
+          this.translocoService.translate('report.list.hospitalTable.total'),
+          this.translocoService.translate('report.list.hospitalTable.approved'),
+          this.translocoService.translate('report.list.hospitalTable.rejected'),
+          this.translocoService.translate('report.list.hospitalTable.inProgress'),
+          this.translocoService.translate('report.list.hospitalTable.avgDays'),
+          this.translocoService.translate('report.list.hospitalTable.sla')
+        ]
+
+        const escapeCsv = (str: any) => `"${String(str ?? '').replace(/"/g, '""')}"`;
+
+        const rows = [
+          headers.map(escapeCsv).join(','),
+          ...res.data.map(item => [
+            escapeCsv(item.hospital),
+            escapeCsv(item.total),
+            escapeCsv(item.approved),
+            escapeCsv(item.rejected),
+            escapeCsv(item.inProgress),
+            escapeCsv(item.avgDays),
+            escapeCsv(item.sla)
+          ].join(','))
+        ].join('\n')
+
+        const blob = new Blob([rows], { type: 'text/csv;charset=utf-8;' })
+        const link = document.createElement('a')
+
+        if (link.download !== undefined) {
+          const url = URL.createObjectURL(blob)
+          link.setAttribute('href', url)
+          link.setAttribute('download', `hospital-report-${new Date().toISOString().split('T')[0]}.csv`)
+          link.style.visibility = 'hidden'
+          document.body.appendChild(link)
+          link.click()
+          document.body.removeChild(link)
+        }
+
+        this.loadingService.hide()
+        this.toastService.showSuccess(this.translocoService.translate('message.success.exportHospital'))
+      },
+      error: () => {
+        this.loadingService.hide()
+        this.toastService.showError(this.translocoService.translate('message.error.general'))
+      }
+    })
   }
 
 }
