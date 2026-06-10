@@ -5,6 +5,7 @@ import { TranslocoService, TranslocoModule } from '@jsverse/transloco';
 
 import { ThemeToggleComponent } from '../theme-toggle/theme-toggle.component';
 import { LanguageSwitcherComponent } from '../language-switcher/language-switcher.component';
+import { Notification } from '../notification/notification';
 
 import { MenuModule } from 'primeng/menu';
 import { MenuItem } from 'primeng/api';
@@ -15,7 +16,7 @@ import { ErrorComponent } from '../error/error.component';
 
 @Component({
   selector: 'app-header',
-  imports: [CommonModule, ThemeToggleComponent, LanguageSwitcherComponent, MenuModule, TranslocoModule, ErrorComponent],
+  imports: [CommonModule, ThemeToggleComponent, LanguageSwitcherComponent, Notification, MenuModule, TranslocoModule, ErrorComponent],
   templateUrl: './header.html',
   styleUrl: './header.scss',
 })
