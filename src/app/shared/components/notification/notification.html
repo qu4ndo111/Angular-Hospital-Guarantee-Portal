@@ -1,0 +1,68 @@
+<div class="notification-container">
+  <button type="button" class="bell-btn" (click)="op.toggle($event)" aria-label="Notifications">
+    <i class="pi pi-bell bell-icon"></i>
+    @if(unreadCount > 0) {
+    <p-badge [value]="unreadCount" severity="danger" class="badge-custom"></p-badge>
+    }
+  </button>
+
+  <p-popover #op styleClass="notification-popover">
+    <div class="popover-content">
+      <div class="popover-header">
+        <div class="header-title">
+          <h3 class="text-primary">{{ 'header.notifications.title' | transloco }}</h3>
+          @if (unreadCount > 0) {
+          <span class="unread-tag">{{ unreadCount }} {{ 'header.notifications.new' | transloco }}</span>
+          }
+        </div>
+        <div class="header-actions">
+          @if (unreadCount > 0) {
+          <button type="button" class="action-btn text-primary" (click)="markAllAsRead()">
+            {{ 'header.notifications.markAllRead' | transloco }}
+          </button>
+          }
+          @if (notifications.length > 0) {
+          <button type="button" class="action-btn text-danger" (click)="clearAll($event)">
+            {{ 'header.notifications.clearAll' | transloco }}
+          </button>
+          }
+        </div>
+      </div>
+
+      <div class="popover-divider"></div>
+      @if(notifications.length > 0) {
+      <div class="notifications-list">
+        @for(item of notifications; track $index) {
+        <div class="notification-item" [class.unread]="!item.read" (click)="markAsRead(item)">
+          <div class="item-icon-wrapper" [ngClass]="item.type">
+            <i [class]="item.icon"></i>
+          </div>
+          <div class="item-details">
+            <h4 class="item-title">{{ item.title }}</h4>
+            <p class="item-desc">{{ item.description }}</p>
+            <span class="item-time">{{ item.time }}</span>
+          </div>
+          <div class="unread-dot-wrapper">
+            @if(!item.read) {
+            <span class="unread-dot"></span>
+            }
+          </div>
+        </div>
+        }
+      </div>
+      }
+      @else {
+      <div class="empty-state">
+        <i class="pi pi-bell-slash empty-icon"></i>
+        <p class="empty-text">{{ 'header.notifications.empty' | transloco }}</p>
+      </div>
+      }
+
+      @if(notifications.length > 0) {
+      <div class="popover-footer">
+        <a href="javascript:void(0)" class="view-all-link">{{ 'header.notifications.viewAll' | transloco }}</a>
+      </div>
+      }
+    </div>
+  </p-popover>
+</div>

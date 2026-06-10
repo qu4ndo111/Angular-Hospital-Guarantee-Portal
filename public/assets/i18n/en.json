@@ -55,7 +55,15 @@
   "header": {
     "profile": "Profile",
     "logout": "Logout",
-    "errorSimulator": "Error Simulator"
+    "errorSimulator": "Error Simulator",
+    "notifications": {
+      "title": "Notifications",
+      "new": "new",
+      "markAllRead": "Read all",
+      "clearAll": "Clear all",
+      "empty": "You have no notifications",
+      "viewAll": "View all notifications"
+    }
   },
   "dashboard": {
     "stats": {

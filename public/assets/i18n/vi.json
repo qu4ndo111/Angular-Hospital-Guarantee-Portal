@@ -55,7 +55,15 @@
   "header": {
     "profile": "Hồ sơ",
     "logout": "Đăng xuất",
-    "errorSimulator": "Công cụ giả lập lỗi"
+    "errorSimulator": "Công cụ giả lập lỗi",
+    "notifications": {
+      "title": "Thông báo",
+      "new": "mới",
+      "markAllRead": "Đọc tất cả",
+      "clearAll": "Xóa hết",
+      "empty": "Bạn không có thông báo nào",
+      "viewAll": "Xem tất cả thông báo"
+    }
   },
   "dashboard": {
     "stats": {
