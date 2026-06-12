@@ -27,6 +27,8 @@ body {
   --bg-secondary: #f3f4f6;
   --bg-card: #f8fafc;
   --highlight-bg: rgba(0, 0, 0, 0.04);
+  --bg-unread: rgba(59, 130, 246, 0.05);
+  --bg-unread-hover: rgba(59, 130, 246, 0.1);
 
 
   /* Text Colors */
@@ -63,6 +65,8 @@ body {
   --bg-card: rgba(15, 23, 42, 0.65);
 
   --highlight-bg: rgba(255, 255, 255, 0.06);
+  --bg-unread: rgba(59, 130, 246, 0.15);
+  --bg-unread-hover: rgba(59, 130, 246, 0.25);
 
   /* Text Colors */
   --text-primary: #f9fafb;
@@ -85,6 +89,8 @@ body {
   --bg-card: rgba(15, 23, 42, 0.65);
 
   --highlight-bg: rgba(255, 255, 255, 0.06);
+  --bg-unread: rgba(59, 130, 246, 0.15);
+  --bg-unread-hover: rgba(59, 130, 246, 0.25);
 
   --text-primary: #f9fafb;
   --text-secondary: #d1d5db;
