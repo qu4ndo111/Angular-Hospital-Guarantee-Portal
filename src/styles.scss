@@ -1,13 +1,8 @@
-/* You can add global styles to this file, and also import other style files */
 @use "primeicons/primeicons.css";
 @use "@fontsource/inter/400.css" as inter400;
 @use "@fontsource/inter/500.css" as inter500;
 @use "@fontsource/inter/600.css" as inter600;
 @use "@fontsource/inter/700.css" as inter700;
-
-/* ===== TAILWIND V4 DARK MODE CONFIG ===== */
-
-
 
 body {
   font-family: 'Inter', sans-serif;
