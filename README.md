@@ -20,6 +20,9 @@ Password: Admin@123
 - Six-stage status workflow: Draft → Submitted → Reviewing → Approved / Rejected → Paid
 - Responsive layout with dark and light theme
 - Bilingual interface: English and Vietnamese
+- **Reports & Analytics Dashboard**: Monthly reports and hospital performance metrics (SLA, average processing time, claimed/assessed amounts)
+- **Advanced Filtering**: Filter reports by date range and treatment type (Inpatient, Outpatient, Surgery, Emergency)
+- **CSV Data Export**: Download report datasets as CSV files for further offline analysis
 
 ---
 
@@ -60,7 +63,8 @@ src/app/
 ├── features/
 │   ├── auth/           Login, register, forgot password
 │   ├── dashboard/      Stats overview
-│   └── guarantee/      Main feature: list, form, detail
+│   ├── guarantee/      Main feature: list, form, detail
+│   └── reports/        Reporting & performance analytics (monthly reports, hospital performance)
 ├── layouts/            Main layout and auth layout
 └── shared/
     ├── components/     Header, sidebar, footer
@@ -123,6 +127,9 @@ Password: Admin@123
 - Trang chi tiết hiển thị lịch sử duyệt và các bước xử lý
 - Quy trình 6 trạng thái: Nháp → Đã gửi → Đang xét duyệt → Duyệt / Từ chối → Đã thanh toán
 - Giao diện sáng / tối, hỗ trợ tiếng Anh và tiếng Việt
+- **Báo cáo & Thống kê số liệu**: Báo cáo theo tháng và đo lường hiệu suất bệnh viện (chỉ số SLA, thời gian xử lý trung bình, số tiền yêu cầu/duyệt chi)
+- **Bộ lọc nâng cao**: Lọc báo cáo linh hoạt theo khoảng thời gian và loại điều trị (Nội trú, Ngoại trú, Phẫu thuật, Cấp cứu)
+- **Xuất file dữ liệu CSV**: Hỗ trợ tải xuống báo cáo dưới định dạng CSV để lưu trữ và phân tích thêm
 
 ---
 
@@ -163,7 +170,8 @@ src/app/
 ├── features/
 │   ├── auth/           Đăng nhập, đăng ký, quên mật khẩu
 │   ├── dashboard/      Tổng quan thống kê
-│   └── guarantee/      Tính năng chính: danh sách, form, chi tiết
+│   ├── guarantee/      Tính năng chính: danh sách, form, chi tiết
+│   └── reports/        Báo cáo & thống kê hiệu suất (theo tháng và theo bệnh viện)
 ├── layouts/            Layout chính và layout xác thực
 └── shared/
     ├── components/     Header, sidebar, footer
