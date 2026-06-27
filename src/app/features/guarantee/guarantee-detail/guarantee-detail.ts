@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Title } from '@app/shared/components/title/title';
 import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
@@ -41,13 +41,13 @@ export class GuaranteeDetail implements OnInit, OnDestroy {
       phone: [{ value: '', disabled: true }],
       address: [{ value: '', disabled: true }],
       // --- Guarantee info (user fills) ---
-      department: [{ value: '', disabled: !this.isEdit }, Validators.required],
-      treatmentType: [{ value: '', disabled: !this.isEdit }, Validators.required],
-      admissionDate: [{ value: '', disabled: !this.isEdit }, Validators.required],
-      estimatedDischargeDate: [{ value: '', disabled: !this.isEdit }, Validators.required],
-      contractNo: [{ value: '', disabled: !this.isEdit }, Validators.required],
-      insuranceCardNo: [{ value: '', disabled: !this.isEdit }, Validators.required],
-      estimatedAmount: [{ value: null, disabled: !this.isEdit }, Validators.required],
+      department: [{ value: '' }, Validators.required],
+      treatmentType: [{ value: '' }, Validators.required],
+      admissionDate: [{ value: '' }, Validators.required],
+      estimatedDischargeDate: [{ value: '' }, [Validators.required, this.estimatedDischargeDateValidator()]],
+      contractNo: [{ value: '' }, Validators.required],
+      insuranceCardNo: [{ value: '' }, Validators.required],
+      estimatedAmount: [{ value: null }, Validators.required],
       status: [''],
       id: [''],
     });
@@ -85,10 +85,46 @@ export class GuaranteeDetail implements OnInit, OnDestroy {
           status: data?.status,
         })
         this.isEdit = data?.status === 'DRAFT';
+
+        const editableFields = [
+          'department',
+          'treatmentType',
+          'admissionDate',
+          'estimatedDischargeDate',
+          'contractNo',
+          'insuranceCardNo',
+          'estimatedAmount'
+        ];
+
+        editableFields.forEach(field => {
+          const control = this.guaranteeForm.get(field);
+          if (control) {
+            if (this.isEdit) {
+              control.enable();
+            } else {
+              control.disable();
+            }
+          }
+        });
+
         this.timelineEvents = data?.timeline || [];
         this.loadingService.hide()
       })
     ).subscribe();
+  }
+
+  estimatedDischargeDateValidator() {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const admissionDate = control.parent?.get('admissionDate')?.value;
+      const estimatedDischargeDate = control.value;
+      if (typeof estimatedDischargeDate === 'string' || typeof admissionDate === 'string') {
+        return null;
+      }
+      if (dayjs(estimatedDischargeDate).isBefore(dayjs(admissionDate))) {
+        return { invalidDate: true };
+      }
+      return null;
+    }
   }
 
   getStatusLabel(status: GuaranteeStatus): string {

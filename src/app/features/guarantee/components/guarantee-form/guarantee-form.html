@@ -32,7 +32,7 @@
             <label class="font-medium text-surface-500 dark:text-surface-400 text-sm">{{ 'guarantee.lookupPopup.dateOfBirth' | transloco }}</label>
             <i class="pi pi-calendar"></i>
           </div>
-          <p-datepicker [fluid]="true" formControlName="dateOfBirth" [placeholder]="'guarantee.create.personalSection.empty' | transloco" iconDisplay="input"></p-datepicker>
+          <p-datepicker [fluid]="true" formControlName="dateOfBirth" [placeholder]="'guarantee.create.personalSection.empty' | transloco" iconDisplay="input" [dateFormat]="'common.dateFormat' | transloco"></p-datepicker>
         </div>
         <div class="flex flex-col gap-2">
           <div class="flex items-center gap-2">
@@ -83,11 +83,14 @@
         </div>
         <div class="flex flex-col gap-2 ">
           <label class="font-medium text-surface-900 dark:text-surface-0 text-sm required">{{ 'guarantee.create.treatmentSection.admissionDate' | transloco }}</label>
-          <p-datepicker [fluid]="true" [placeholder]="'guarantee.lookupPopup.placeholderDate' | transloco" formControlName="admissionDate" iconDisplay="input" [showIcon]="true"></p-datepicker>
+          <p-datepicker [fluid]="true" [placeholder]="'guarantee.lookupPopup.placeholderDate' | transloco" formControlName="admissionDate" iconDisplay="input" [showIcon]="true" [dateFormat]="'common.dateFormat' | transloco"></p-datepicker>
         </div>
         <div class="flex flex-col gap-2">
           <label class="font-medium text-surface-900 dark:text-surface-0 text-sm required">{{ 'guarantee.create.treatmentSection.estimatedDischargeDate' | transloco }}</label>
-          <p-datepicker [fluid]="true" [placeholder]="'guarantee.lookupPopup.placeholderDate' | transloco" formControlName="estimatedDischargeDate" iconDisplay="input" [showIcon]="true"></p-datepicker>
+          <p-datepicker [fluid]="true" [placeholder]="'guarantee.lookupPopup.placeholderDate' | transloco" formControlName="estimatedDischargeDate" iconDisplay="input" [showIcon]="true" [dateFormat]="'common.dateFormat' | transloco"></p-datepicker>
+          @if(guaranteeForm.get('estimatedDischargeDate')?.hasError('invalidDate')) {
+            <p class="text-red-500 text-sm">{{ 'guarantee.create.treatmentSection.invalidDate' | transloco }}</p>
+          }
         </div>
       </div>
     </div>

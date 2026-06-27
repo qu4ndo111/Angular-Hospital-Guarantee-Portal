@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component, OnDestroy, OnInit, signal } from '@angula
 
 import { Title } from '../../../shared/components/title/title';
 
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { MenuItem, SelectItem } from 'primeng/api';
@@ -68,11 +68,24 @@ export class GuaranteeCreateNew implements OnInit, OnDestroy {
       department: [''],
       treatmentType: ['', Validators.required],
       admissionDate: ['', Validators.required],
-      estimatedDischargeDate: ['', Validators.required],
+      estimatedDischargeDate: ['', [Validators.required, this.estimatedDischargeDateValidator()]],
       contractNo: ['', Validators.required],
       insuranceCardNo: ['', Validators.required],
       estimatedAmount: [null],
     });
+  }
+
+  estimatedDischargeDateValidator() {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const admissionDate = control.parent?.get('admissionDate')?.value;
+      const estimatedDischargeDate = control.value;
+      if (estimatedDischargeDate && admissionDate) {
+        if (dayjs(estimatedDischargeDate).isBefore(dayjs(admissionDate))) {
+          return { invalidDate: true };
+        }
+      }
+      return null;
+    }
   }
 
   ngOnDestroy(): void {

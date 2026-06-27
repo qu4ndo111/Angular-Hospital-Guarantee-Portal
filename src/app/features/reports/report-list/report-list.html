@@ -4,7 +4,7 @@
   <div class="flex gap-4 w-full">
     <p-datepicker [formControl]="dateRange" selectionMode="range" appendTo="body"
       [placeholder]="'report.list.filter.selectDateRange' | transloco" iconDisplay="input" [showIcon]="true"
-      dateFormat="dd/mm/yy"></p-datepicker>
+      [dateFormat]="'common.dateFormat' | transloco"></p-datepicker>
     <p-select showClear="true" [formControl]="treatmentType" [options]="treatmentTypeOptions" optionLabel="label"
       optionValue="value" [placeholder]="'report.list.filter.treatmentType' | transloco" class="w-[300px]"
       appendTo="body"></p-select>

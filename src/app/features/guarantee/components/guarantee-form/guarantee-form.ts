@@ -30,10 +30,13 @@ export class GuaranteeForm implements OnInit, OnDestroy {
 
   private destroy$ = new Subject<void>();
 
-  constructor(private translocoService: TranslocoService) {}
+  constructor(private translocoService: TranslocoService) { }
 
   ngOnInit(): void {
     this.translocoService.langChanges$.pipe(takeUntil(this.destroy$)).subscribe(() => this.refreshTreatmentTypeLabels());
+    this.guaranteeForm.get('admissionDate')?.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => {
+      this.guaranteeForm.get('estimatedDischargeDate')?.updateValueAndValidity({ emitEvent: false });
+    });
   }
 
   private refreshTreatmentTypeLabels(): void {

@@ -119,7 +119,8 @@
     },
     "search": "Tìm kiếm",
     "choose": "Chọn",
-    "upload": "Tải lên"
+    "upload": "Tải lên",
+    "dateFormat": "dd/mm/yy"
   },
   "message": {
     "success": {
@@ -198,6 +199,7 @@
         "treatmentTypePlaceholder": "Chọn hình thức",
         "admissionDate": "Ngày nhập viện",
         "estimatedDischargeDate": "Ngày xuất viện (dự kiến)",
+        "invalidDate": "Ngày xuất viện dự kiến phải lớn hơn hoặc bằng ngày nhập viện",
         "types": {
           "inpatient": "Nội trú",
           "outpatient": "Ngoại trú",

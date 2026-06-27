@@ -25,7 +25,7 @@
       <i class="pi pi-calendar"></i>
     </div>
     <p-datepicker [fluid]="true" appendTo="body" [placeholder]="'guarantee.lookupPopup.placeholderDate' | transloco" formControlName="dateOfBirth"
-      iconDisplay="input"></p-datepicker>
+      iconDisplay="input" [dateFormat]="'common.dateFormat' | transloco"></p-datepicker>
   </div>
   <div class="md:col-span-2 flex items-end">
     <button pButton [disabled]="lookupForm.invalid" type="submit" [label]="'guarantee.lookupPopup.button' | transloco" icon="pi pi-search"
