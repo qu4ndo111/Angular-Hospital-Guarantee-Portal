@@ -119,7 +119,8 @@
     },
     "search": "Search",
     "choose": "Choose",
-    "upload": "Upload"
+    "upload": "Upload",
+    "dateFormat": "mm/dd/yy"
   },
   "message": {
     "success": {
@@ -198,6 +199,7 @@
         "treatmentTypePlaceholder": "Select type",
         "admissionDate": "Admission Date",
         "estimatedDischargeDate": "Estimated Discharge Date",
+        "invalidDate": "Estimated discharge date must be greater than or equal to admission date",
         "types": {
           "inpatient": "Inpatient",
           "outpatient": "Outpatient",
