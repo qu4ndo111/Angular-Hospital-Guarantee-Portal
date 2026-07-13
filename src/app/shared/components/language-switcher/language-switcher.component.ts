@@ -95,9 +95,6 @@ export class LanguageSwitcherComponent {
   languages = [
     { code: 'en', label: 'English', flag: '🇬🇧' },
     { code: 'vi', label: 'Tiếng Việt', flag: '🇻🇳' },
-    // Add more languages as needed:
-    // { code: 'fr', label: 'Français', flag: '🇫🇷' },
-    // { code: 'de', label: 'Deutsch', flag: '🇩🇪' },
   ];
 
   /**
@@ -122,10 +119,8 @@ export class LanguageSwitcherComponent {
   changeLanguage(langCode: string) {
     this.translocoService.load(langCode).subscribe(() => {
       this.translocoService.setActiveLang(langCode);
-      // Optionally save to localStorage
       localStorage.setItem('preferredLanguage', langCode);
 
-      // Update menu items active state
       this.languageItems = this.languages.map(lang => ({
         label: `${lang.flag} ${lang.label}`,
         command: () => this.changeLanguage(lang.code),
