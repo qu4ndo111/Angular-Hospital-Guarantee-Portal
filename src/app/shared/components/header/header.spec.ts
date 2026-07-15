@@ -1,4 +1,4 @@
-import { TranslocoService, TranslocoTestingModule } from '@jsverse/transloco';
+import { TranslocoTestingModule } from '@jsverse/transloco';
 import userEvent from '@testing-library/user-event';
 import { render, screen } from '@testing-library/angular';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
