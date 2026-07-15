@@ -10,8 +10,8 @@ import { TranslocoPipe } from "@jsverse/transloco";
     imports: [ToggleSwitchModule, FormsModule, TranslocoPipe],
     template: `
         <div>
-            <p class="error-text">{{ 'header.errorSimulator' | transloco }}</p>
-            <p-toggleSwitch [ngModel]="errorSimulator.simulateError()" (ngModelChange)="errorSimulator.simulateError.set($event)" />
+            <label class="error-text" for="errorToggle">{{ 'header.errorSimulator' | transloco }}</label>
+            <p-toggleSwitch name="errorToggle" inputId="errorToggle" [ngModel]="errorSimulator.simulateError()" (ngModelChange)="errorSimulator.simulateError.set($event)" />
         </div>
     `,
     styles: [`
