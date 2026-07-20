@@ -26,6 +26,18 @@
         <span class="p-input-icon-left w-full relative">
           <input type="text" class="w-full" pInputText
             [placeholder]="'guarantee.lookupPopup.placeholderCccd' | transloco" formControlName="cccd" />
+          @if ((suggestions$ | async); as list) {
+          @if (showSuggestions() && list.length > 0) {
+          <ul class="absolute z-10 left-0 right-0 mt-1 max-h-68 overflow-y-auto suggestions-list">
+            @for (patient of list; track patient.id) {
+            <li (click)="selectPatient(patient)" class="p-3 cursor-pointer last:border-none">
+              <div class="font-semibold">{{ patient.name }}</div>
+              <div class="text-xs text-muted mt-0.5">CCCD: {{ patient.id }}</div>
+            </li>
+            }
+          </ul>
+          }
+          }
         </span>
       </div>
       <div class="md:col-span-4 flex flex-col gap-2 justify-end">
@@ -46,7 +58,8 @@
           <i class="pi pi-calendar"></i>
         </div>
         <p-datepicker [fluid]="true" [placeholder]="'guarantee.lookupPopup.placeholderDate' | transloco"
-          formControlName="dateOfBirth" iconDisplay="input" [dateFormat]="'common.dateFormat' | transloco"></p-datepicker>
+          formControlName="dateOfBirth" iconDisplay="input"
+          [dateFormat]="'common.dateFormat' | transloco"></p-datepicker>
       </div>
       <div class="md:col-span-2 flex items-end">
         <button pButton [disabled]="lookupForm.invalid" type="submit"

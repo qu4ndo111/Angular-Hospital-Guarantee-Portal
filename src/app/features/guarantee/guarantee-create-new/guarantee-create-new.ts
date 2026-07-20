@@ -17,14 +17,15 @@ import { Patient } from '../models/guarantee.model';
 import { Router } from '@angular/router';
 import dayjs from 'dayjs';
 import { GuaranteeService } from '../services/guarantee.service';
-import { exhaustMap, Subject, switchMap, takeUntil, tap } from 'rxjs';
+import { catchError, debounceTime, distinctUntilChanged, exhaustMap, map, Observable, of, Subject, switchMap, takeUntil, tap } from 'rxjs';
 import { ToastService } from '@app/shared/services/toast.service';
 import { LoadingService } from '@app/shared/services/loading.service';
 import { GuaranteeForm } from '../components/guarantee-form/guarantee-form';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-guarantee-create-new',
-  imports: [Title, ReactiveFormsModule, InputTextModule, ButtonModule, DatePicker, SelectModule, InputNumberModule, FileUploadModule, TranslocoPipe, GuaranteeForm],
+  imports: [Title, ReactiveFormsModule, InputTextModule, ButtonModule, DatePicker, SelectModule, InputNumberModule, FileUploadModule, TranslocoPipe, GuaranteeForm, AsyncPipe],
   templateUrl: './guarantee-create-new.html',
   styleUrl: './guarantee-create-new.scss',
   providers: [DialogService]
@@ -36,6 +37,8 @@ export class GuaranteeCreateNew implements OnInit, OnDestroy {
   guaranteeForm!: FormGroup;
   loading = signal<boolean>(false)
 
+  suggestions$!: Observable<Patient[]>;
+  showSuggestions = signal<boolean>(false);
   private destroy$ = new Subject<void>();
 
   constructor(private fb: FormBuilder, private dialogService: DialogService, private translocoService: TranslocoService, private router: Router, private guaranteeService: GuaranteeService, private toastMessage: ToastService, private cdr: ChangeDetectorRef, private loadingService: LoadingService) { }
@@ -73,6 +76,7 @@ export class GuaranteeCreateNew implements OnInit, OnDestroy {
       insuranceCardNo: ['', Validators.required],
       estimatedAmount: [null],
     });
+    this.patientSuggestions()
   }
 
   estimatedDischargeDateValidator() {
@@ -93,6 +97,41 @@ export class GuaranteeCreateNew implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
+  patientSuggestions() {
+    this.suggestions$ = this.lookupForm.get('cccd')!.valueChanges.pipe(
+      takeUntil(this.destroy$),
+      debounceTime(300),
+      distinctUntilChanged(),
+      tap(() => this.showSuggestions.set(true)),
+      switchMap((value) => {
+        const keyword = value.trim();
+        if (!keyword || keyword.length < 3) return of([])
+        return this.guaranteeService.searchPatients(keyword).pipe(
+          catchError((error) => {
+            this.toastMessage.showError(error?.message || this.translocoService.translate('message.error.general'))
+            return of([])
+          }));
+      }),
+    )
+  }
+
+  selectPatient(patient: Patient) {
+    this.lookupForm.patchValue({
+      cccd: patient.id,
+      name: patient.name,
+      dateOfBirth: dayjs(patient.dateOfBirth, "YYYY-MM-DD").toDate(),
+    })
+    this.guaranteeForm.patchValue({
+      patientId: patient.id,
+      patientName: patient.name,
+      dateOfBirth: dayjs(patient.dateOfBirth, "YYYY-MM-DD").toDate(),
+      gender: patient.gender,
+      phone: patient.phone,
+      address: patient.address,
+    });
+    this.showSuggestions.set(false);
+  }
+
   lookup() {
     this.lookupRef = this.dialogService.open(LookupPopup, {
       header: this.translocoService.translate('guarantee.lookupPopup.lookupTitle'),
@@ -110,7 +149,7 @@ export class GuaranteeCreateNew implements OnInit, OnDestroy {
       this.guaranteeForm.patchValue({
         patientId: item.id,
         patientName: item.name,
-        dateOfBirth: dayjs(item.dateOfBirth).format('YYYY-MM-DD'),
+        dateOfBirth: dayjs(item.dateOfBirth, "YYYY-MM-DD").toDate(),
         gender: item.gender,
         phone: item.phone,
         address: item.address,
@@ -130,11 +169,12 @@ export class GuaranteeCreateNew implements OnInit, OnDestroy {
         id: `GRT-${new Date().getFullYear()}-${String(Date.now()).slice(-6)}`,
         estimatedDischargeDate: dayjs(this.guaranteeForm.value.estimatedDischargeDate).format('YYYY-MM-DD'),
         admissionDate: dayjs(this.guaranteeForm.value.admissionDate).format('YYYY-MM-DD'),
+        dateOfBirth: dayjs(this.guaranteeForm.value.dateOfBirth).format('YYYY-MM-DD'),
         status: 'DRAFT',
       }
       this.guaranteeService.addRequest(body).subscribe({
         next: (res) => {
-          if(res) {
+          if (res) {
             this.toastMessage.showSuccess(this.translocoService.translate('message.success.create'))
             this.router.navigate(['/guarantee/list'])
           }

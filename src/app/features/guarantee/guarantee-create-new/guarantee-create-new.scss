@@ -6,3 +6,20 @@
   margin: 24px;
 }
 
+.suggestions-list {
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-md);
+  border-radius: var(--border-radius);
+
+  li {
+    color: var(--text-primary);
+    border-bottom: 1px solid var(--border-color);
+    transition: background-color 0.2s ease;
+    
+    &:hover {
+      background-color: var(--highlight-bg);
+    }
+  }
+}
+
