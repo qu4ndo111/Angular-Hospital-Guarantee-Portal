@@ -448,6 +448,11 @@ export class GuaranteeService {
     return of(this.patients().find(p => p.id === cccd)).pipe(delay(500));
   }
 
+  searchPatients(searchKeyword?: string): Observable<Patient[]> {
+    if (this.shouldError) return throwError(() => new Error('Simulated error: searchPatients'));
+    return of(this.patients().filter(p => p.id.toLowerCase().includes(searchKeyword?.toLowerCase() || ''))).pipe(delay(500));
+  }
+
   getGuaranteeRequests(filter?: GuaranteeFilter, searchKeyword?: string, page?: number, pageSize?: number): Observable<{ total: number, guaranteeRequests: GuaranteeRequest[] }> {
     if (this.shouldError) return throwError(() => new Error('Simulated error: getGuaranteeRequests'));
     let results = this.guaranteeRequests();
