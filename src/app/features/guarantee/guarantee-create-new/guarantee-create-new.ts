@@ -22,6 +22,7 @@ import { ToastService } from '@app/shared/services/toast.service';
 import { LoadingService } from '@app/shared/services/loading.service';
 import { GuaranteeForm } from '../components/guarantee-form/guarantee-form';
 import { AsyncPipe } from '@angular/common';
+import { ConfirmDialogService } from '@app/shared/services/confirm-dialog.service';
 
 @Component({
   selector: 'app-guarantee-create-new',
@@ -41,7 +42,7 @@ export class GuaranteeCreateNew implements OnInit, OnDestroy {
   showSuggestions = signal<boolean>(false);
   private destroy$ = new Subject<void>();
 
-  constructor(private fb: FormBuilder, private dialogService: DialogService, private translocoService: TranslocoService, private router: Router, private guaranteeService: GuaranteeService, private toastMessage: ToastService, private cdr: ChangeDetectorRef, private loadingService: LoadingService) { }
+  constructor(private fb: FormBuilder, private dialogService: DialogService, private translocoService: TranslocoService, private router: Router, private guaranteeService: GuaranteeService, private toastMessage: ToastService, private cdr: ChangeDetectorRef, private loadingService: LoadingService, private confirmDialogService: ConfirmDialogService) { }
 
   ngOnInit(): void {
     this.translocoService.langChanges$.pipe(
@@ -76,7 +77,9 @@ export class GuaranteeCreateNew implements OnInit, OnDestroy {
       insuranceCardNo: ['', Validators.required],
       estimatedAmount: [null],
     });
-    this.patientSuggestions()
+    this.patientSuggestions();
+    this.setupAutosave();
+    this.checkAndRestoreDraft();
   }
 
   estimatedDischargeDateValidator() {
@@ -102,7 +105,11 @@ export class GuaranteeCreateNew implements OnInit, OnDestroy {
       takeUntil(this.destroy$),
       debounceTime(300),
       distinctUntilChanged(),
-      tap(() => this.showSuggestions.set(true)),
+      tap(() => {
+        const patientId = this.guaranteeForm.get('patientId')?.value;
+        const canShow = !patientId;
+        this.showSuggestions.set(canShow);
+      }),
       switchMap((value) => {
         const keyword = value.trim();
         if (!keyword || keyword.length < 3) return of([])
@@ -157,6 +164,49 @@ export class GuaranteeCreateNew implements OnInit, OnDestroy {
     })
   }
 
+  setupAutosave() {
+    this.guaranteeForm.valueChanges.pipe(
+      debounceTime(1500),
+      takeUntil(this.destroy$)
+    ).subscribe(() => {
+      const value = this.guaranteeForm.getRawValue();
+      const hasData = Object.values(value).some(
+        value => value !== null && value !== undefined && String(value).trim() !== ''
+      );
+      if (hasData) {
+        localStorage.setItem('guarantee_draft', JSON.stringify(value))
+      }
+    })
+  }
+
+  checkAndRestoreDraft() {
+    const draft = localStorage.getItem('guarantee_draft');
+    if (!draft) return;
+
+    const message = this.translocoService.translate('guarantee.create.draft.message');
+    const header = this.translocoService.translate('guarantee.create.draft.title');
+    
+    const restoreDraft = () => {
+      const draftData = JSON.parse(draft);
+      if (draftData.dateOfBirth) {
+        draftData.dateOfBirth = dayjs(draftData.dateOfBirth).toDate();
+      }
+      if (draftData.admissionDate) {
+        draftData.admissionDate = dayjs(draftData.admissionDate).toDate();
+      }
+      if (draftData.estimatedDischargeDate) {
+        draftData.estimatedDischargeDate = dayjs(draftData.estimatedDischargeDate).toDate();
+      }
+      this.guaranteeForm.patchValue(draftData);
+    };
+
+    const clearDraft = () => {
+      localStorage.removeItem('guarantee_draft');
+    };
+
+    this.confirmDialogService.showConfirmDialog(message, header, () => restoreDraft(), () => clearDraft());
+  }
+
   close() {
     this.router.navigate(['/guarantee/list'])
   }
@@ -176,6 +226,7 @@ export class GuaranteeCreateNew implements OnInit, OnDestroy {
         next: (res) => {
           if (res) {
             this.toastMessage.showSuccess(this.translocoService.translate('message.success.create'))
+            localStorage.removeItem('guarantee_draft');
             this.router.navigate(['/guarantee/list'])
           }
         },
