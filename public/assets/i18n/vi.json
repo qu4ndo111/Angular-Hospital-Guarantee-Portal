@@ -176,6 +176,10 @@
     },
     "create": {
       "title": "Tạo mới yêu cầu bảo lãnh",
+      "draft": {
+        "title": "Khôi phục bản nháp",
+        "message": "Phát hiện có bản nháp chưa gửi của yêu cầu bảo lãnh này. Bạn có muốn khôi phục dữ liệu đã nhập không?"
+      },
       "lookupSection": {
         "title": "Tra cứu thông tin",
         "subtitle": "Nhập thông tin để tìm kiếm hồ sơ bệnh nhân",

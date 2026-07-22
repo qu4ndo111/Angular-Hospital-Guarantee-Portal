@@ -176,6 +176,10 @@
     },
     "create": {
       "title": "Create Guarantee Request",
+      "draft": {
+        "title": "Restore Draft",
+        "message": "An unsent draft of this guarantee request was detected. Do you want to restore your entered data?"
+      },
       "lookupSection": {
         "title": "Information Lookup",
         "subtitle": "Enter information to search for patient records",
