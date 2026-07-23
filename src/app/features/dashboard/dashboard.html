@@ -1,75 +1,137 @@
 <app-title [title]="'menu.dashboard' | transloco" [menu]="[{label: 'Dashboard'}]"></app-title>
 
-@if(stats$ | async; as stats) {
-  @if(stats) {
+<div class="flex flex-wrap items-center justify-between gap-4 mb-6 lg:px-6">
+  <div></div>
+  <div class="flex items-center gap-4 bg-surface-0 dark:bg-surface-900 border border-surface-200 dark:border-surface-700 rounded-xl px-4 py-2 shadow-xs">
+    @if (countdown$ | async; as seconds) {
+      <div class="flex items-center gap-2 text-sm text-surface-500 dark:text-surface-400">
+        <i class="pi pi-spin pi-spinner text-primary-500"></i>
+        <span>{{ 'dashboard.refreshingIn' | transloco }}: <strong class="text-primary-600 dark:text-primary-400">{{ seconds }}s</strong></span>
+      </div>
+    }
+
+    <label class="inline-flex items-center cursor-pointer select-none gap-2">
+      <span class="text-sm font-medium text-surface-700 dark:text-surface-300">{{ 'dashboard.autoRefresh' | transloco }}</span>
+      <p-toggleSwitch [ngModel]="autoRefresh$ | async" (ngModelChange)="autoRefresh$.next($event)" />
+    </label>
+    <div class="w-px h-4 bg-surface-200 dark:bg-surface-700"></div>
+    <button (click)="manualRefresh()" pButton icon="pi pi-refresh" [text]="true" [rounded]="true" severity="secondary" [pTooltip]="'common.refresh' | transloco" tooltipPosition="bottom"></button>
+  </div>
+</div>
+
+@if ({ stats: stats$ | async, loading: loading() }; as vm) {
+  @if (vm.loading) {
     <div class="dashboard-grid lg:px-6">
-      <app-card icon="pi pi-file" [value]="stats.total.toString()" [label]="'dashboard.stats.total' | transloco" iconBg="#3b82f6" />
-      <app-card icon="pi pi-sync" [value]="stats.reviewing.toString()" [label]="'dashboard.stats.reviewing' | transloco" iconBg="#f59e0b" />
-      <app-card icon="pi pi-check-circle" [value]="stats.approved.toString()" [label]="'dashboard.stats.approved' | transloco" iconBg="#10b981" />
-      <app-card icon="pi pi-times-circle" [value]="stats.rejected.toString()" [label]="'dashboard.stats.rejected' | transloco" iconBg="#ef4444" />
-    </div>
-
-    <div class="dashboard-charts lg:px-6">
-      <div class="chart-card">
-        <h3 class="chart-title">{{ 'dashboard.charts.monthly' | transloco }}</h3>
-        @if(monthlyChartData$ | async; as monthlyChartData) {
-          <p-chart type="bar" [data]="monthlyChartData" [options]="monthlyChartOptions" height="300px" />
-        }
-      </div>
-      <div class="chart-card">
-        <h3 class="chart-title">{{ 'dashboard.charts.status' | transloco }}</h3>
-        @if(statusChartData$ | async; as statusChartData) {
-          <p-chart type="doughnut" [data]="statusChartData" [options]="statusChartOptions" height="300px" />
-        }
-      </div>
-    </div>
-
-    <div class="recent-section">
-      <div class="recent-header">
-        <h3 class="recent-title">{{ 'dashboard.recent.title' | transloco }}</h3>
-        <button class="recent-link" (click)="goToList()">
-          {{ 'dashboard.recent.viewAll' | transloco }}
-          <i class="pi pi-arrow-right"></i>
-        </button>
-      </div>
-
-      @if(stats.recent.length > 0) {
-        <div class="recent-table">
-          <app-data-table [columns]="columns" [value]="stats.recent" selectionMode="single" (rowSelect)="goToDetail($event)">
-            <ng-template pTemplate="status" let-rowData>
-              <p-tag [value]="getStatusLabel(rowData.status)" [severity]="getStatusSeverity(rowData.status)"></p-tag>
-            </ng-template>
-          </app-data-table>
-        </div>
-      } @else {
-        <div class="empty-state">
-          <div class="empty-state__icon">
-            <i class="pi pi-inbox"></i>
+      @for (i of [1, 2, 3, 4]; track i) {
+        <div class="bg-surface-0 dark:bg-surface-900 border border-surface-200 dark:border-surface-700 rounded-2xl p-6 flex items-center justify-between shadow-xs">
+          <div class="flex flex-col gap-3 flex-1">
+            <p-skeleton width="40%" height="1rem"></p-skeleton>
+            <p-skeleton width="60%" height="2rem"></p-skeleton>
           </div>
-          <h4 class="empty-state__title">{{ 'dashboard.empty.title' | transloco }}</h4>
-          <p class="empty-state__desc">{{ 'dashboard.empty.desc' | transloco }}</p>
-          <button class="empty-state__action" (click)="goToList()">
-            <i class="pi pi-plus-circle"></i>
-            {{ 'dashboard.empty.action' | transloco }}
-          </button>
+          <p-skeleton shape="circle" size="3rem"></p-skeleton>
         </div>
       }
     </div>
-  }
-} @else {
-  @if(loadError()) {
-    <div class="error-state lg:px-6">
-      <div class="error-state__card">
-        <div class="error-state__icon">
-          <i class="pi pi-exclamation-circle"></i>
+
+    <div class="dashboard-charts lg:px-6 mt-6">
+      @for (i of [1, 2]; track i) {
+        <div class="bg-surface-0 dark:bg-surface-900 border border-surface-200 dark:border-surface-700 rounded-2xl p-6 shadow-xs flex flex-1">
+          <p-skeleton width="30%" height="1.5rem" class="mb-4"></p-skeleton>
+          <p-skeleton width="100%" height="280px"></p-skeleton>
         </div>
-        <h4 class="error-state__title">{{ 'dashboard.error.title' | transloco }}</h4>
-        <p class="error-state__desc">{{ 'dashboard.error.desc' | transloco }}</p>
-        <button class="error-state__retry" (click)="ngOnInit()">
-          <i class="pi pi-refresh"></i>
-          {{ 'dashboard.error.retry' | transloco }}
-        </button>
+      }
+    </div>
+
+    <div class="recent-section mt-6">
+      <div class="bg-surface-0 dark:bg-surface-900 border border-surface-200 dark:border-surface-700 rounded-2xl p-6 shadow-xs">
+        <div class="flex justify-between items-center mb-6">
+          <p-skeleton width="50%" height="1.5rem"></p-skeleton>
+          <p-skeleton width="80px" height="1.5rem"></p-skeleton>
+        </div>
+        <div class="flex flex-col gap-4">
+          @for (i of [1, 2, 3, 4, 5]; track i) {
+            <div class="flex justify-between items-center gap-4 py-2 border-b border-surface-100 dark:border-surface-800 last:border-none">
+              <p-skeleton width="15%" height="1rem"></p-skeleton>
+              <p-skeleton width="25%" height="1rem"></p-skeleton>
+              <p-skeleton width="25%" height="1rem"></p-skeleton>
+              <p-skeleton width="15%" height="1rem"></p-skeleton>
+              <p-skeleton width="10%" height="1.5rem" class="rounded-full"></p-skeleton>
+            </div>
+          }
+        </div>
       </div>
     </div>
+  } @else {
+    @if(vm.stats) {
+      <div class="dashboard-grid lg:px-6">
+        <app-card icon="pi pi-file" [value]="vm.stats.total.toString()" [label]="'dashboard.stats.total' | transloco" iconBg="#3b82f6" />
+        <app-card icon="pi pi-sync" [value]="vm.stats.reviewing.toString()" [label]="'dashboard.stats.reviewing' | transloco" iconBg="#f59e0b" />
+        <app-card icon="pi pi-check-circle" [value]="vm.stats.approved.toString()" [label]="'dashboard.stats.approved' | transloco" iconBg="#10b981" />
+        <app-card icon="pi pi-times-circle" [value]="vm.stats.rejected.toString()" [label]="'dashboard.stats.rejected' | transloco" iconBg="#ef4444" />
+      </div>
+
+      <div class="dashboard-charts lg:px-6">
+        <div class="chart-card">
+          <h3 class="chart-title">{{ 'dashboard.charts.monthly' | transloco }}</h3>
+          @if(monthlyChartData$ | async; as monthlyChartData) {
+            <p-chart type="bar" [data]="monthlyChartData" [options]="monthlyChartOptions" height="300px" />
+          }
+        </div>
+        <div class="chart-card">
+          <h3 class="chart-title">{{ 'dashboard.charts.status' | transloco }}</h3>
+          @if(statusChartData$ | async; as statusChartData) {
+            <p-chart type="doughnut" [data]="statusChartData" [options]="statusChartOptions" height="300px" />
+          }
+        </div>
+      </div>
+
+      <div class="recent-section">
+        <div class="recent-header">
+          <h3 class="recent-title">{{ 'dashboard.recent.title' | transloco }}</h3>
+          <button class="recent-link" (click)="goToList()">
+            {{ 'dashboard.recent.viewAll' | transloco }}
+            <i class="pi pi-arrow-right"></i>
+          </button>
+        </div>
+
+        @if(vm.stats.recent.length > 0) {
+          <div class="recent-table">
+            <app-data-table [columns]="columns" [value]="vm.stats.recent" selectionMode="single" (rowSelect)="goToDetail($event)">
+              <ng-template pTemplate="status" let-rowData>
+                <p-tag [value]="getStatusLabel(rowData.status)" [severity]="getStatusSeverity(rowData.status)"></p-tag>
+              </ng-template>
+            </app-data-table>
+          </div>
+        } @else {
+          <div class="empty-state">
+            <div class="empty-state__icon">
+              <i class="pi pi-inbox"></i>
+            </div>
+            <h4 class="empty-state__title">{{ 'dashboard.empty.title' | transloco }}</h4>
+            <p class="empty-state__desc">{{ 'dashboard.empty.desc' | transloco }}</p>
+            <button class="empty-state__action" (click)="goToList()">
+              <i class="pi pi-plus-circle"></i>
+              {{ 'dashboard.empty.action' | transloco }}
+            </button>
+          </div>
+        }
+      </div>
+    } @else {
+      @if(loadError()) {
+        <div class="error-state lg:px-6">
+          <div class="error-state__card">
+            <div class="error-state__icon">
+              <i class="pi pi-exclamation-circle"></i>
+            </div>
+            <h4 class="error-state__title">{{ 'dashboard.error.title' | transloco }}</h4>
+            <p class="error-state__desc">{{ 'dashboard.error.desc' | transloco }}</p>
+            <button class="error-state__retry" (click)="ngOnInit()">
+              <i class="pi pi-refresh"></i>
+              {{ 'dashboard.error.retry' | transloco }}
+            </button>
+          </div>
+        </div>
+      }
+    }
   }
 }

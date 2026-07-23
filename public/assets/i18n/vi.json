@@ -66,6 +66,8 @@
     }
   },
   "dashboard": {
+    "autoRefresh": "Tự động cập nhật",
+    "refreshingIn": "Tự động tải lại sau",
     "stats": {
       "total": "Tổng số hồ sơ",
       "reviewing": "Đang xử lý",
@@ -120,7 +122,8 @@
     "search": "Tìm kiếm",
     "choose": "Chọn",
     "upload": "Tải lên",
-    "dateFormat": "dd/mm/yy"
+    "dateFormat": "dd/mm/yy",
+    "refresh": "Tải lại"
   },
   "message": {
     "success": {
