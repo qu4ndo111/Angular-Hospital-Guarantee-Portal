@@ -3,7 +3,8 @@ import { Card } from '@app/shared/ui/card/card';
 import { Title } from '@app/shared/components/title/title';
 import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 import { AsyncPipe } from '@angular/common';
-import { Observable, Subject, catchError, map, of, takeUntil } from 'rxjs';
+import { Observable, Subject, BehaviorSubject, merge, timer, of, filter } from 'rxjs';
+import { catchError, map, switchMap, tap, takeUntil } from 'rxjs/operators';
 import { GuaranteeService } from '../guarantee/services/guarantee.service';
 import { GuaranteeRequest, GuaranteeStatus } from '../guarantee/models/guarantee.model';
 import { Router } from '@angular/router';
@@ -12,9 +13,14 @@ import { DataTable } from '@app/shared/ui/data-table/data-table';
 import { TableColumn } from '@app/shared/ui/data-table/data-table.model';
 import { ChartModule } from 'primeng/chart';
 import { ThemeService } from '../../core/services/theme.service';
+import { ToggleSwitchModule } from 'primeng/toggleswitch';
+import { FormsModule } from '@angular/forms';
+import { ButtonDirective } from "primeng/button";
+import { Tooltip } from "primeng/tooltip";
+import { Skeleton } from "primeng/skeleton";
 @Component({
   selector: 'app-dashboard',
-  imports: [Card, Title, TranslocoPipe, AsyncPipe, TagModule, DataTable, ChartModule],
+  imports: [Card, Title, TranslocoPipe, AsyncPipe, TagModule, DataTable, ChartModule, ToggleSwitchModule, FormsModule, ButtonDirective, Tooltip, Skeleton],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
 })
@@ -26,6 +32,25 @@ export class Dashboard implements OnInit, OnDestroy {
     rejected: number;
     recent: GuaranteeRequest[];
   } | null>;
+
+  private manualRefresh$ = new Subject<void>();
+  autoRefresh$ = new BehaviorSubject<boolean>(false);
+  countdown$!: Observable<number | null>;
+  loading = signal<boolean>(false);
+
+  private pollingTrigger$ = this.autoRefresh$.pipe(
+    switchMap(enabled => {
+      if (enabled) {
+        return timer(0, 1000).pipe(
+          filter(tick => tick % 10 === 0),
+          map(() => undefined)
+        );
+      }
+      return of(undefined);
+    })
+  );
+
+  private refreshTrigger$ = merge(this.manualRefresh$, this.pollingTrigger$);
 
   loadError = signal<string | null>(null);
   columns: TableColumn[] = []
@@ -41,25 +66,31 @@ export class Dashboard implements OnInit, OnDestroy {
     private guaranteeService: GuaranteeService,
     private router: Router,
     private translocoService: TranslocoService,
-    private themeService: ThemeService
+    private themeService: ThemeService,
   ) {
     effect(() => {
       this.themeService.getTheme()();
-      setTimeout(() => {
-        this.initChartOptions();
-        this.monthlyChartOptions = { ...this.monthlyChartOptions };
-        this.statusChartOptions = { ...this.statusChartOptions };
-      });
+      this.initChartOptions();
+      this.monthlyChartOptions = { ...this.monthlyChartOptions };
+      this.statusChartOptions = { ...this.statusChartOptions };
     });
   }
-
   ngOnInit() {
+    this.countdown$ = this.autoRefresh$.pipe(
+      switchMap(enabled => {
+        if (!enabled) return of(null);
+        return timer(0, 1000).pipe(
+          map(tick => 10 - (tick % 10))
+        );
+      })
+    );
+
     this.translocoService.langChanges$.pipe(
       takeUntil(this.destroy$)
     ).subscribe(() => {
-      this.initChartTotalByMonthly()
-      this.initChartStatus()
-      this.initChartOptions()
+      this.initChartTotalByMonthly();
+      this.initChartStatus();
+      this.initChartOptions();
       this.columns = [
         {
           field: 'id',
@@ -82,28 +113,40 @@ export class Dashboard implements OnInit, OnDestroy {
           header: this.translocoService.translate('guarantee.list.table.cols.status'),
           template: 'status'
         },
-      ]
-    })
-    this.loadError.set(null);
-    this.stats$ = this.guaranteeService.getGuaranteeRequests().pipe(
-      map(requests => ({
-        total: requests.guaranteeRequests.length,
-        reviewing: requests.guaranteeRequests.filter(r => r.status === 'SUBMITTED' || r.status === 'REVIEWING').length,
-        approved: requests.guaranteeRequests.filter(r => r.status === 'APPROVED' || r.status === 'PAID').length,
-        rejected: requests.guaranteeRequests.filter(r => r.status === 'REJECTED').length,
-        recent: [...requests.guaranteeRequests]
-          .sort((a, b) => b.submittedAt.localeCompare(a.submittedAt))
-          .slice(0, 5)
-      })),
+      ];
+    });
+
+    this.stats$ = this.refreshTrigger$.pipe(
+      tap(() => {
+        this.loadError.set(null);
+        this.loading.set(true);
+      }),
+      switchMap(() => this.guaranteeService.getGuaranteeRequests()),
+      map(requests => {
+        return {
+          total: requests.guaranteeRequests.length,
+          reviewing: requests.guaranteeRequests.filter(r => r.status === 'SUBMITTED' || r.status === 'REVIEWING').length,
+          approved: requests.guaranteeRequests.filter(r => r.status === 'APPROVED' || r.status === 'PAID').length,
+          rejected: requests.guaranteeRequests.filter(r => r.status === 'REJECTED').length,
+          recent: [...requests.guaranteeRequests]
+            .sort((a, b) => b.submittedAt.localeCompare(a.submittedAt))
+            .slice(0, 5)
+        };
+      }),
+      tap(() => {
+        this.loading.set(false);
+      }),
       catchError(err => {
         this.loadError.set(err?.message ?? 'Unknown error');
+        this.loading.set(false);
         return of(null);
       })
     );
   }
 
   initChartTotalByMonthly() {
-    this.monthlyChartData$ = this.guaranteeService.getMonthlyChartData().pipe(
+    this.monthlyChartData$ = this.refreshTrigger$.pipe(
+      switchMap(() => this.guaranteeService.getMonthlyChartData()),
       map((res) => ({
         labels: res.map(item => {
           const date = new Date(item.month + '-01');
@@ -127,7 +170,8 @@ export class Dashboard implements OnInit, OnDestroy {
   }
 
   initChartStatus() {
-    this.statusChartData$ = this.guaranteeService.getStatusChartData().pipe(
+    this.statusChartData$ = this.refreshTrigger$.pipe(
+      switchMap(() => this.guaranteeService.getStatusChartData()),
       map((res) => {
         const colors: Record<string, string> = {
           'DRAFT': '#64748b',
@@ -252,5 +296,9 @@ export class Dashboard implements OnInit, OnDestroy {
 
   goToDetail(event: any) {
     this.router.navigate(['/guarantee/detail', event.id]);
+  }
+
+  manualRefresh() {
+    this.manualRefresh$.next();
   }
 }

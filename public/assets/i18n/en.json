@@ -66,6 +66,8 @@
     }
   },
   "dashboard": {
+    "autoRefresh": "Auto Refresh",
+    "refreshingIn": "Refreshing in",
     "stats": {
       "total": "Total Claims",
       "reviewing": "Pending Review",
@@ -120,7 +122,8 @@
     "search": "Search",
     "choose": "Choose",
     "upload": "Upload",
-    "dateFormat": "mm/dd/yy"
+    "dateFormat": "mm/dd/yy",
+    "refresh": "Refresh"
   },
   "message": {
     "success": {
