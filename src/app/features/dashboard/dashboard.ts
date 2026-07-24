@@ -121,8 +121,18 @@ export class Dashboard implements OnInit, OnDestroy {
         this.loadError.set(null);
         this.loading.set(true);
       }),
-      switchMap(() => this.guaranteeService.getGuaranteeRequests()),
+      switchMap(() => 
+        this.guaranteeService.getGuaranteeRequests().pipe(
+          catchError(err => {
+            this.loadError.set(err?.message ?? 'Unknown error');
+            this.loading.set(false);
+            return of(null);
+          })
+        )
+      ),
       map(requests => {
+        this.loading.set(false);
+        if (!requests) return null;
         return {
           total: requests.guaranteeRequests.length,
           reviewing: requests.guaranteeRequests.filter(r => r.status === 'SUBMITTED' || r.status === 'REVIEWING').length,
@@ -132,47 +142,53 @@ export class Dashboard implements OnInit, OnDestroy {
             .sort((a, b) => b.submittedAt.localeCompare(a.submittedAt))
             .slice(0, 5)
         };
-      }),
-      tap(() => {
-        this.loading.set(false);
-      }),
-      catchError(err => {
-        this.loadError.set(err?.message ?? 'Unknown error');
-        this.loading.set(false);
-        return of(null);
       })
     );
   }
 
   initChartTotalByMonthly() {
     this.monthlyChartData$ = this.refreshTrigger$.pipe(
-      switchMap(() => this.guaranteeService.getMonthlyChartData()),
-      map((res) => ({
-        labels: res.map(item => {
-          const date = new Date(item.month + '-01');
-          const lang = this.translocoService.getActiveLang();
-          return new Intl.DateTimeFormat(lang === 'vi' ? 'vi-VN' : 'en-US', { month: 'short', year: 'numeric' }).format(date);
-        }),
-        datasets: [
-          {
-            label: this.translocoService.translate('dashboard.stats.total'),
-            data: res.map(item => item.count),
-            backgroundColor: '#3b82f6',
-            borderRadius: 4
-          }
-        ]
-      })),
-      catchError(err => {
-        this.loadError.set(err?.message ?? 'Unknown error');
-        return of(null);
+      switchMap(() => 
+        this.guaranteeService.getMonthlyChartData().pipe(
+          catchError(err => {
+            this.loadError.set(err?.message ?? 'Unknown error');
+            return of(null);
+          })
+        )
+      ),
+      map((res) => {
+        if (!res) return null;
+        return {
+          labels: res.map(item => {
+            const date = new Date(item.month + '-01');
+            const lang = this.translocoService.getActiveLang();
+            return new Intl.DateTimeFormat(lang === 'vi' ? 'vi-VN' : 'en-US', { month: 'short', year: 'numeric' }).format(date);
+          }),
+          datasets: [
+            {
+              label: this.translocoService.translate('dashboard.stats.total'),
+              data: res.map(item => item.count),
+              backgroundColor: '#3b82f6',
+              borderRadius: 4
+            }
+          ]
+        };
       })
     );
   }
 
   initChartStatus() {
     this.statusChartData$ = this.refreshTrigger$.pipe(
-      switchMap(() => this.guaranteeService.getStatusChartData()),
+      switchMap(() => 
+        this.guaranteeService.getStatusChartData().pipe(
+          catchError(err => {
+            this.loadError.set(err?.message ?? 'Unknown error');
+            return of(null);
+          })
+        )
+      ),
       map((res) => {
+        if (!res) return null;
         const colors: Record<string, string> = {
           'DRAFT': '#64748b',
           'SUBMITTED': '#0ea5e9',
@@ -192,10 +208,6 @@ export class Dashboard implements OnInit, OnDestroy {
             }
           ]
         };
-      }),
-      catchError(err => {
-        this.loadError.set(err?.message ?? 'Unknown error');
-        return of(null);
       })
     );
   }
