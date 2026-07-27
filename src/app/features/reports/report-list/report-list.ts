@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, effect } from '@angular/core';
 import { BehaviorSubject, combineLatest, merge, Observable, of, Subject } from 'rxjs';
 import { catchError, distinctUntilChanged, filter, map, startWith, switchMap, takeUntil, tap } from 'rxjs/operators';
 
@@ -19,6 +19,8 @@ import { ReportsService } from '../services/reports.service';
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { LoadingService } from '@app/shared/services/loading.service';
 import { ToastService } from '@app/shared/services/toast.service';
+import { ChartModule } from 'primeng/chart';
+import { ThemeService } from '@app/core/services/theme.service';
 
 @Component({
   selector: 'app-report-list',
@@ -33,7 +35,8 @@ import { ToastService } from '@app/shared/services/toast.service';
     AsyncPipe,
     ɵInternalFormsSharedModule,
     ReactiveFormsModule,
-    CommonModule
+    CommonModule,
+    ChartModule
   ],
   templateUrl: './report-list.html',
   styleUrl: './report-list.scss',
@@ -56,14 +59,21 @@ export class ReportList implements OnInit, OnDestroy {
   monthlyPage = new BehaviorSubject<number>(1)
   monthlyPageSize = new BehaviorSubject<number>(10)
   monthlyVm$!: Observable<{ data: MonthlyReportModel[]; total: number }>;
-  monthlyLoading: boolean = false
+  monthlyLoading: boolean = false;
+  monthlyChartData$!: Observable<any>;
+  monthlyChartOptions: any;
 
   hospitalPage = new BehaviorSubject<number>(1)
   hospitalPageSize = new BehaviorSubject<number>(10)
   hospitalVm$!: Observable<{ data: HospitalPerformanceModel[]; total: number }>;
   hospitalLoading: boolean = false;
 
-  constructor(private translocoService: TranslocoService, private reportsService: ReportsService, private loadingService: LoadingService, private toastService: ToastService) { }
+  constructor(private translocoService: TranslocoService, private reportsService: ReportsService, private loadingService: LoadingService, private toastService: ToastService, private themeService: ThemeService) {
+    effect(() => {
+      this.themeService.getTheme()();
+      this.initMonthlyChartOption();
+    })
+  }
 
   ngOnInit(): void {
     this.translocoService.langChanges$
@@ -88,6 +98,7 @@ export class ReportList implements OnInit, OnDestroy {
           { label: this.translocoService.translate(typeKeys['EMERGENCY']), value: 'EMERGENCY' }
         ];
         this.initColumn()
+        this.initMonthlyChartOption();
       });
     this.loadData()
   }
@@ -143,6 +154,8 @@ export class ReportList implements OnInit, OnDestroy {
 
     this.initMonthly(filter$, resetPageOnFilter$)
     this.initHospital(filter$, resetPageOnFilter$)
+    this.initMonthlyChartOption()
+    this.initMonthlyChartData()
   }
 
   initMonthly(filter$: Observable<{
@@ -190,6 +203,82 @@ export class ReportList implements OnInit, OnDestroy {
       tap(() => this.monthlyLoading = false),
     )
 
+  }
+
+  initMonthlyChartOption() {
+    const documentStyle = getComputedStyle(document.documentElement);
+    const textColor = documentStyle.getPropertyValue('--text-primary').trim() || '#4b5563';
+    const textColorSecondary = documentStyle.getPropertyValue('--text-muted').trim() || '#9ca3af';
+    const surfaceBorder = documentStyle.getPropertyValue('--border-color').trim() || '#e5e7eb';
+
+    this.monthlyChartOptions = {
+      plugins: {
+        legend: {
+          labels: {
+            color: textColor
+          }
+        }
+      },
+      scales: {
+        y: {
+          ticks: {
+            color: textColorSecondary,
+            callback: (value: any) => {
+              const lang = this.translocoService.getActiveLang();
+              return new Intl.NumberFormat(lang === 'vi' ? 'vi-VN' : 'en-US', {
+                notation: 'compact',
+                compactDisplay: 'short'
+              }).format(value) + ' ₫';
+            }
+          },
+          grid: {
+            color: surfaceBorder,
+            drawBorder: false
+          }
+        },
+        x: {
+          ticks: {
+            color: textColorSecondary
+          },
+          grid: {
+            color: surfaceBorder,
+            drawBorder: false
+          }
+        }
+      }
+    };
+    this.monthlyChartOptions = { ...this.monthlyChartOptions };
+  }
+
+  initMonthlyChartData() {
+    this.monthlyChartData$ = combineLatest([
+      this.monthlyVm$,
+      this.translocoService.langChanges$
+    ]).pipe(
+      map(([vm]) => {
+        const data = vm.data;
+        const labels = data.map(item => item.month);
+        const claimedAmount = data.map(item => item.claimedAmount);
+        const assessedAmount = data.map(item => item.assessedAmount);
+        return {
+          labels,
+          datasets: [
+            {
+              label: this.translocoService.translate('report.list.monthlyTable.claimedAmount'),
+              data: claimedAmount,
+              backgroundColor: '#3b82f6',
+              borderRadius: 4
+            },
+            {
+              label: this.translocoService.translate('report.list.monthlyTable.assessedAmount'),
+              data: assessedAmount,
+              backgroundColor: '#10b981',
+              borderRadius: 4
+            }
+          ]
+        };
+      })
+    );
   }
 
   initHospital(filter$: Observable<{
