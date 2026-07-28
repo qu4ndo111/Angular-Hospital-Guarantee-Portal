@@ -320,6 +320,10 @@
         "monthly": "Monthly Overview",
         "hospital": "Hospital Performance"
       },
+      "charts": {
+        "monthlyTitle": "Monthly Guarantee Amount Trend",
+        "hospitalTitle": "Top 5 Hospitals by Request Volume"
+      },
       "filter": {
         "selectDateRange": "Select date range",
         "treatmentType": "Select type...",

@@ -1,12 +1,12 @@
 <app-title [title]="'report.list.title' | transloco" [menu]="menu"></app-title>
 
 <div class="flex flex-col gap-6 lg:py-6">
-  <div class="flex gap-4 w-full">
+  <div class="flex gap-4 w-full flex-wrap">
     <p-datepicker [formControl]="dateRange" selectionMode="range" appendTo="body"
       [placeholder]="'report.list.filter.selectDateRange' | transloco" iconDisplay="input" [showIcon]="true"
       [dateFormat]="'common.dateFormat' | transloco"></p-datepicker>
     <p-select showClear="true" [formControl]="treatmentType" [options]="treatmentTypeOptions" optionLabel="label"
-      optionValue="value" [placeholder]="'report.list.filter.treatmentType' | transloco" class="w-[300px]"
+      optionValue="value" [placeholder]="'report.list.filter.treatmentType' | transloco" class="w-75"
       appendTo="body"></p-select>
     @if((dateRange.value && dateRange.value.length > 0) || (treatmentType.value && treatmentType.value.length > 0)) {
     <p-button type="button" icon="pi pi-times" [label]="'common.actions.delete' | transloco" (onClick)="clearFilter()"
@@ -36,6 +36,11 @@
               [label]="'common.actions.export' | transloco" (click)="exportMonthly()"></button>
           </div>
           @if(monthlyVm$ | async; as monthly) {
+            @if(monthlyChartData$ | async; as chartData) {
+              <div class="lg:w-[70%] mx-auto w-full">
+                <p-chart type="bar" [data]="chartData" [options]="monthlyChartOptions" height="300px"></p-chart>
+              </div>
+            }
           <app-data-table [loading]="monthlyLoading" [columns]="monthlyReportColumn" [value]="monthly.data"
             [paginator]="true" [rows]="monthlyPageSize.value" [lazy]="true" [totalRecords]="monthly.total"
             (lazyLoad)="onMonthlyPage($event)">
@@ -60,6 +65,11 @@
               [label]="'common.actions.export' | transloco" (click)="exportHospital()"></button>
           </div>
           @if(hospitalVm$ | async; as hospital) {
+            @if(hospitalChartData$ | async; as chartData) {
+              <div class="lg:w-[70%] mx-auto w-full">
+                <p-chart type="bar" [data]="chartData" [options]="hospitalChartOptions" height="300px"></p-chart>
+              </div>
+            }
           <app-data-table [loading]="hospitalLoading" [columns]="hospitalPerformanceColumn" [value]="hospital.data"
             [paginator]="true" [rows]="hospitalPageSize.value" [lazy]="true" [totalRecords]="hospital.total"
             (lazyLoad)="onHospitalPage($event)">
