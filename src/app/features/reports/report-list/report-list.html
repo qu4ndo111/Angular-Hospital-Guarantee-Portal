@@ -37,7 +37,9 @@
           </div>
           @if(monthlyVm$ | async; as monthly) {
             @if(monthlyChartData$ | async; as chartData) {
-              <p-chart type="bar" [data]="chartData" [options]="monthlyChartOptions" height="300px"></p-chart>
+              <div class="lg:w-[70%] mx-auto w-full">
+                <p-chart type="bar" [data]="chartData" [options]="monthlyChartOptions" height="300px"></p-chart>
+              </div>
             }
           <app-data-table [loading]="monthlyLoading" [columns]="monthlyReportColumn" [value]="monthly.data"
             [paginator]="true" [rows]="monthlyPageSize.value" [lazy]="true" [totalRecords]="monthly.total"
@@ -63,6 +65,11 @@
               [label]="'common.actions.export' | transloco" (click)="exportHospital()"></button>
           </div>
           @if(hospitalVm$ | async; as hospital) {
+            @if(hospitalChartData$ | async; as chartData) {
+              <div class="lg:w-[70%] mx-auto w-full">
+                <p-chart type="bar" [data]="chartData" [options]="hospitalChartOptions" height="300px"></p-chart>
+              </div>
+            }
           <app-data-table [loading]="hospitalLoading" [columns]="hospitalPerformanceColumn" [value]="hospital.data"
             [paginator]="true" [rows]="hospitalPageSize.value" [lazy]="true" [totalRecords]="hospital.total"
             (lazyLoad)="onHospitalPage($event)">

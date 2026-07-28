@@ -320,6 +320,10 @@
         "monthly": "Tổng quan theo tháng",
         "hospital": "Hiệu suất bệnh viện"
       },
+      "charts": {
+        "monthlyTitle": "Xu hướng Số tiền Bảo lãnh theo tháng",
+        "hospitalTitle": "Top 5 Bệnh viện có sản lượng cao nhất"
+      },
       "filter": {
         "selectDateRange": "Chọn khoảng thời gian",
         "treatmentType": "Chọn hình thức...",
