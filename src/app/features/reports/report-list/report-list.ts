@@ -21,6 +21,7 @@ import { LoadingService } from '@app/shared/services/loading.service';
 import { ToastService } from '@app/shared/services/toast.service';
 import { ChartModule } from 'primeng/chart';
 import { ThemeService } from '@app/core/services/theme.service';
+import { ErrorTemplateComponent } from '@app/shared/components/error/error-template.component';
 
 @Component({
   selector: 'app-report-list',
@@ -36,7 +37,8 @@ import { ThemeService } from '@app/core/services/theme.service';
     ɵInternalFormsSharedModule,
     ReactiveFormsModule,
     CommonModule,
-    ChartModule
+    ChartModule,
+    ErrorTemplateComponent
   ],
   templateUrl: './report-list.html',
   styleUrl: './report-list.scss',

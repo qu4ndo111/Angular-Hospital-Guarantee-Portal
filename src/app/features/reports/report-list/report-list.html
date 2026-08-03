@@ -30,17 +30,18 @@
     </p-tablist>
     <p-tabpanels>
       <p-tabpanel [value]="0">
+        @if(monthlyVm$ | async; as monthly) {
+        @if(monthly.data.length > 0) {
         <div class="flex flex-col gap-4">
           <div class="flex justify-end">
-            <button pButton type="button" icon="pi pi-file-export"
-              [label]="'common.actions.export' | transloco" (click)="exportMonthly()"></button>
+            <button pButton type="button" icon="pi pi-file-export" [label]="'common.actions.export' | transloco"
+              (click)="exportMonthly()"></button>
           </div>
-          @if(monthlyVm$ | async; as monthly) {
-            @if(monthlyChartData$ | async; as chartData) {
-              <div class="lg:w-[70%] mx-auto w-full">
-                <p-chart type="bar" [data]="chartData" [options]="monthlyChartOptions" height="300px"></p-chart>
-              </div>
-            }
+          @if(monthlyChartData$ | async; as chartData) {
+          <div class="lg:w-[70%] mx-auto w-full">
+            <p-chart type="bar" [data]="chartData" [options]="monthlyChartOptions" height="300px"></p-chart>
+          </div>
+          }
           <app-data-table [loading]="monthlyLoading" [columns]="monthlyReportColumn" [value]="monthly.data"
             [paginator]="true" [rows]="monthlyPageSize.value" [lazy]="true" [totalRecords]="monthly.total"
             (lazyLoad)="onMonthlyPage($event)">
@@ -55,28 +56,43 @@
               </span>
             </ng-template>
           </app-data-table>
-          }
         </div>
+        } @else {
+        <div class="lg:px-6 block">
+          <app-error-template [title]="'common.error.title' | transloco" [desc]="'common.error.desc' | transloco"
+            [retryText]="'common.error.retry' | transloco" (retry)="ngOnInit()">
+          </app-error-template>
+        </div>
+        }
+        }
       </p-tabpanel>
       <p-tabpanel [value]="1">
-        <div class="flex flex-col gap-4">
+        @if(hospitalVm$ | async; as hospital) {
+        @if(hospital.data.length > 0) {
+          <div class="flex flex-col gap-4">
           <div class="flex justify-end">
-            <button pButton type="button" icon="pi pi-file-export"
-              [label]="'common.actions.export' | transloco" (click)="exportHospital()"></button>
+            <button pButton type="button" icon="pi pi-file-export" [label]="'common.actions.export' | transloco"
+              (click)="exportHospital()"></button>
           </div>
-          @if(hospitalVm$ | async; as hospital) {
-            @if(hospitalChartData$ | async; as chartData) {
-              <div class="lg:w-[70%] mx-auto w-full">
-                <p-chart type="bar" [data]="chartData" [options]="hospitalChartOptions" height="300px"></p-chart>
-              </div>
-            }
+          @if(hospitalChartData$ | async; as chartData) {
+          <div class="lg:w-[70%] mx-auto w-full">
+            <p-chart type="bar" [data]="chartData" [options]="hospitalChartOptions" height="300px"></p-chart>
+          </div>
+          }
           <app-data-table [loading]="hospitalLoading" [columns]="hospitalPerformanceColumn" [value]="hospital.data"
             [paginator]="true" [rows]="hospitalPageSize.value" [lazy]="true" [totalRecords]="hospital.total"
             (lazyLoad)="onHospitalPage($event)">
 
           </app-data-table>
-          }
         </div>
+        } @else {
+        <div class="lg:px-6 block">
+          <app-error-template [title]="'common.error.title' | transloco" [desc]="'common.error.desc' | transloco"
+            [retryText]="'common.error.retry' | transloco" (retry)="ngOnInit()">
+          </app-error-template>
+        </div>
+        }
+        }
       </p-tabpanel>
     </p-tabpanels>
   </p-tabs>
