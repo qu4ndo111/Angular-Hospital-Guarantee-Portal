@@ -18,9 +18,10 @@ import { FormsModule } from '@angular/forms';
 import { ButtonDirective } from "primeng/button";
 import { Tooltip } from "primeng/tooltip";
 import { Skeleton } from "primeng/skeleton";
+import { ErrorTemplateComponent } from '@app/shared/components/error/error-template.component';
 @Component({
   selector: 'app-dashboard',
-  imports: [Card, Title, TranslocoPipe, AsyncPipe, TagModule, DataTable, ChartModule, ToggleSwitchModule, FormsModule, ButtonDirective, Tooltip, Skeleton],
+  imports: [Card, Title, TranslocoPipe, AsyncPipe, TagModule, DataTable, ChartModule, ToggleSwitchModule, FormsModule, ButtonDirective, Tooltip, Skeleton, ErrorTemplateComponent],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
 })
@@ -121,7 +122,7 @@ export class Dashboard implements OnInit, OnDestroy {
         this.loadError.set(null);
         this.loading.set(true);
       }),
-      switchMap(() => 
+      switchMap(() =>
         this.guaranteeService.getGuaranteeRequests().pipe(
           catchError(err => {
             this.loadError.set(err?.message ?? 'Unknown error');
@@ -148,7 +149,7 @@ export class Dashboard implements OnInit, OnDestroy {
 
   initChartTotalByMonthly() {
     this.monthlyChartData$ = this.refreshTrigger$.pipe(
-      switchMap(() => 
+      switchMap(() =>
         this.guaranteeService.getMonthlyChartData().pipe(
           catchError(err => {
             this.loadError.set(err?.message ?? 'Unknown error');
@@ -179,7 +180,7 @@ export class Dashboard implements OnInit, OnDestroy {
 
   initChartStatus() {
     this.statusChartData$ = this.refreshTrigger$.pipe(
-      switchMap(() => 
+      switchMap(() =>
         this.guaranteeService.getStatusChartData().pipe(
           catchError(err => {
             this.loadError.set(err?.message ?? 'Unknown error');

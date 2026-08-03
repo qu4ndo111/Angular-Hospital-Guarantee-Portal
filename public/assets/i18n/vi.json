@@ -123,7 +123,12 @@
     "choose": "Chọn",
     "upload": "Tải lên",
     "dateFormat": "dd/mm/yy",
-    "refresh": "Tải lại"
+    "refresh": "Tải lại",
+    "error": {
+      "title": "Không thể tải dữ liệu",
+      "desc": "Đã xảy ra lỗi khi tải dữ liệu. Vui lòng thử lại.",
+      "retry": "Thử lại"
+    }
   },
   "message": {
     "success": {

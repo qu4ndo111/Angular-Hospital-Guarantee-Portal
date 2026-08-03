@@ -1,17 +1,24 @@
 import { Injectable, inject } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { GuaranteeService } from '../../guarantee/services/guarantee.service';
 import { GuaranteeRequest } from '../../guarantee/models/guarantee.model';
 import { MonthlyReportModel, HospitalPerformanceModel, ReportFilter } from '../models/report.model';
+import { ErrorSimulatorService } from '@app/shared/services/error-simulator.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ReportsService {
   private guaranteeService = inject(GuaranteeService);
+  private errorSimulator = inject(ErrorSimulatorService);
+
+  private get shouldError(): boolean {
+    return this.errorSimulator.simulateError();
+  }
 
   getMonthlyReportData(filters?: ReportFilter, page?: number, pageSize?: number): Observable<{ data: MonthlyReportModel[]; total: number }> {
+    if (this.shouldError) return throwError(() => new Error('Simulated error: getMonthlyReportData'));
     return this.guaranteeService.getGuaranteeRequests().pipe(
       map(requests => {
         let filtered = requests.guaranteeRequests;
@@ -86,6 +93,7 @@ export class ReportsService {
   }
 
   getHospitalPerformanceReportData(filters?: ReportFilter, page?: number, pageSize?: number): Observable<{ data: HospitalPerformanceModel[]; total: number }> {
+    if (this.shouldError) return throwError(() => new Error('Simulated error: getHospitalPerformanceReportData'));
     return this.guaranteeService.getGuaranteeRequests().pipe(
       map(requests => {
         let filtered = requests.guaranteeRequests;
